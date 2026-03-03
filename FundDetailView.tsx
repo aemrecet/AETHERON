@@ -1,0 +1,221 @@
+import React, { useEffect, useState } from 'react';
+
+interface FundDetailViewProps {
+  fundId: string;
+  onBack: () => void;
+}
+
+export const FundDetailView: React.FC<FundDetailViewProps> = ({ fundId, onBack }) => {
+  const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const r = await fetch(`/api/insider/funds/${fundId}`);
+        const d = await r.json();
+        setData(d);
+      } catch (e) { console.error(e); }
+      setLoading(false);
+    };
+    fetchData();
+  }, [fundId]);
+
+  const cardClass = "card";
+  const innerCardClass = "bg-[rgba(255,255,255,0.03)] border border-[var(--color-border-subtle)] rounded-lg";
+
+  const formatVal = (v: any) => {
+    const n = typeof v === 'number' ? v : parseFloat(String(v)) || 0;
+    if (!n || isNaN(n)) return '$0';
+    if (Math.abs(n) >= 1e12) return `$${(n/1e12).toFixed(1)}T`;
+    if (Math.abs(n) >= 1e9) return `$${(n/1e9).toFixed(1)}B`;
+    if (Math.abs(n) >= 1e6) return `$${(n/1e6).toFixed(1)}M`;
+    if (Math.abs(n) >= 1e3) return `$${(n/1e3).toFixed(0)}K`;
+    return `$${n.toFixed(0)}`;
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 border-2 border-[#ffffff22] border-t-[#89beff] rounded-full animate-spin"></div>
+          <p className="text-sm text-[#89a5c9]">Loading fund intelligence...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) return null;
+
+  return (
+    <div className="space-y-4 view-animate">
+      <button
+        onClick={onBack}
+        className="inline-flex items-center gap-1.5 text-[12px] text-[#9cc8ff] hover:text-[#d6e9ff] transition-colors duration-100 font-medium px-2.5 py-1.5 rounded-lg"
+        style={{ background: 'rgba(89, 129, 191, 0.18)', border: '1px solid rgba(123, 160, 214, 0.28)' }}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+      </button>
+
+      <div className={`${cardClass} p-3`}>
+        <p className="text-[10px] uppercase tracking-[0.1em] text-[#88a8cf] font-semibold mb-2">Fund Command Center</p>
+        <div className="flex items-start gap-3 mb-3">
+          <div className="w-10 h-10 rounded-lg bg-[#22232b] flex items-center justify-center overflow-hidden shrink-0 p-1.5">
+            {data.logo || data.ticker ? (
+              <img src={data.logo || `https://assets.parqet.com/logos/symbol/${data.ticker}?format=png`} alt="" className="w-full h-full object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+            ) : (
+              <span className="text-sm font-bold text-[#555962]">{data.name?.substring(0,2)}</span>
+            )}
+          </div>
+          <div className="flex-1">
+            <h2 className="text-base font-bold text-[#e4e8ee]">{data.name}</h2>
+            <div className="flex items-center gap-2 mt-1">
+              {data.ticker && <span className="text-sm text-[#555962]">{data.ticker}</span>}
+              <span className="text-xs text-[#4c8bf5] font-semibold">{data.type}</span>
+              <span className="text-xs text-[#555962]">Founded {data.founded}</span>
+            </div>
+            <p className="text-xs text-[#868c98] mt-1.5 leading-relaxed max-w-2xl">{data.description}</p>
+          </div>
+          <div className="text-right shrink-0">
+            <p className="text-lg font-bold text-[#4c8bf5] tabular-nums font-mono">{data.aum}</p>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">AUM</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+          <div className={`${innerCardClass} p-2 text-center`}>
+            <p className="text-sm font-bold text-[#e4e8ee]">{data.hq}</p>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Headquarters</p>
+          </div>
+          <div className={`${innerCardClass} p-2 text-center`}>
+            <p className="text-sm font-bold text-[#e4e8ee] tabular-nums font-mono">{data.employees?.toLocaleString()}</p>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Employees</p>
+          </div>
+          {data.performance && (
+            <>
+              <div className={`${innerCardClass} p-2 text-center`}>
+                <p className={`text-sm font-bold tabular-nums font-mono ${data.performance.ytd >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>{data.performance.ytd >= 0 ? '+' : ''}{data.performance.ytd}%</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">YTD Return</p>
+              </div>
+              <div className={`${innerCardClass} p-2 text-center`}>
+                <p className={`text-sm font-bold tabular-nums font-mono ${data.performance.oneYear >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>{data.performance.oneYear >= 0 ? '+' : ''}{data.performance.oneYear}%</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">1Y Return</p>
+              </div>
+              <div className={`${innerCardClass} p-2 text-center`}>
+                <p className={`text-sm font-bold tabular-nums font-mono ${data.performance.fiveYear >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>{data.performance.fiveYear >= 0 ? '+' : ''}{data.performance.fiveYear}%</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">5Y Return</p>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+        <div className={`${cardClass} p-3`}>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-2">Management Team</p>
+          <div className="space-y-2">
+            {(data.managers || []).map((m: any, i: number) => (
+              <div key={i} className={`${innerCardClass} p-2`}>
+                <p className="text-sm font-bold text-[#e4e8ee]">{m.name}</p>
+                <div className="flex items-center justify-between mt-1">
+                  <span className="text-xs text-[#4c8bf5]">{m.title}</span>
+                  <span className="text-xs text-[#555962]">Since {m.since}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {data.topEtfs?.length > 0 && (
+            <>
+              <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mt-4 mb-2">Top ETFs</p>
+              <div className="flex flex-wrap gap-1.5">
+                {data.topEtfs.map((etf: string, i: number) => (
+                  <span key={i} className={`${innerCardClass} text-xs text-[#868c98] px-2 py-1`}>{etf}</span>
+                ))}
+              </div>
+            </>
+          )}
+
+          {data.topETFsData?.length > 0 && (
+            <>
+              <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mt-4 mb-2">ETF Live Prices</p>
+              <div className="space-y-1">
+                {data.topETFsData.map((etf: any, i: number) => (
+                  <div key={i} className="flex items-center justify-between py-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-[#e4e8ee]">{etf.ticker}</span>
+                      <span className="text-xs text-[#555962] truncate max-w-[120px]">{etf.name}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-bold text-[#e4e8ee] tabular-nums font-mono">${etf.price?.toFixed(2)}</span>
+                      <span className={`text-xs font-semibold tabular-nums font-mono ${etf.change >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
+                        {etf.change >= 0 ? '+' : ''}{etf.change?.toFixed(2)}%
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className={`lg:col-span-2 ${cardClass} p-3`}>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-2">Top Holdings</p>
+          <div className="space-y-0.5 max-h-[500px] overflow-y-auto">
+            {(data.holdings || []).map((h: any, i: number) => (
+              <div key={i} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#1c1d24] transition-colors">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="text-xs text-[#555962] w-5 text-right shrink-0">{i+1}</span>
+                  <div className="w-6 h-6 rounded-lg bg-[#22232b] flex items-center justify-center overflow-hidden shrink-0 p-0.5">
+                    <img src={`https://assets.parqet.com/logos/symbol/${h.ticker}?format=png`} alt="" className="w-full h-full object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                  </div>
+                  <span className="text-sm font-bold text-[#e4e8ee]">{h.ticker}</span>
+                </div>
+                <div className="flex items-center gap-4 shrink-0">
+                  <span className="text-xs text-[#555962] tabular-nums font-mono w-12 text-right">{h.weight}%</span>
+                  <span className="text-xs text-[#868c98] tabular-nums font-mono w-16 text-right">{h.value}</span>
+                  <span className={`text-xs font-semibold tabular-nums w-14 text-right font-mono ${h.change >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
+                    {h.change >= 0 ? '+' : ''}{h.change}%
+                  </span>
+                  <div className="w-16 h-1.5 bg-[#22232b] rounded-full overflow-hidden">
+                    <div className="h-full rounded-full bg-[#4c8bf5]" style={{ width: `${Math.min(h.weight * 5, 100)}%` }}></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className={`${cardClass} p-3`}>
+        <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-2">Recent Trades</p>
+        <div className="space-y-0.5">
+          {(data.recentTrades || []).map((t: any, i: number) => {
+            const isBuy = t.type === 'Buy';
+            return (
+              <div key={i} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#1c1d24] transition-colors">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-md bg-[#22232b] flex items-center justify-center overflow-hidden shrink-0 p-0.5">
+                    <img src={`https://assets.parqet.com/logos/symbol/${t.ticker}?format=png`} alt="" className="w-full h-full object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                  </div>
+                  <span className="text-xs font-bold text-[#e4e8ee]">{t.ticker}</span>
+                  <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-md ${isBuy ? 'text-[#10b981] bg-[#0f2d1f]' : 'text-[#ef4444] bg-[#2d1520]'}`}>
+                    {t.type}
+                  </span>
+                </div>
+                <div className="flex items-center gap-4 shrink-0">
+                  <span className="text-xs text-[#868c98] tabular-nums font-mono">{t.shares?.toLocaleString()} shares</span>
+                  <span className="text-sm font-bold text-[#e4e8ee] tabular-nums font-mono">{t.value}</span>
+                  <span className="text-xs text-[#555962] tabular-nums font-mono w-20 text-right">{t.date}</span>
+                  <span className="text-[10px] text-[#555962]">{t.quarterFiled}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+};

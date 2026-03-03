@@ -1,0 +1,42 @@
+{
+  "name": "aethron",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npx tsx server/index.ts\" \"vite\"",
+    "dev:server": "npx tsx server/index.ts",
+    "dev:client": "vite",
+    "build": "vite build",
+    "start": "NODE_ENV=production npx tsx server/index.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@google/genai": "^1.40.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "concurrently": "^9.2.1",
+    "cors": "^2.8.6",
+    "drizzle-zod": "^0.8.3",
+    "express": "^5.2.1",
+    "lucide-react": "^0.563.0",
+    "openai": "^6.18.0",
+    "p-limit": "^7.3.0",
+    "p-retry": "^7.1.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "react-markdown": "^10.1.0",
+    "recharts": "^3.7.0",
+    "remark-gfm": "^4.0.1",
+    "tsx": "^4.21.0",
+    "yahoo-finance2": "^3.13.0",
+    "zod": "^4.3.6",
+    "zod-validation-error": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

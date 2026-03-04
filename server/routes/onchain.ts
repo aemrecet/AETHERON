@@ -41,22 +41,39 @@ router.get('/coin-list', async (_req, res) => {
 router.get('/gas', async (_req, res) => {
   try {
     const ETHERSCAN_KEY = await getApiKey('ETHERSCAN');
-    const ethGasRes = await fetch(
-      `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${ETHERSCAN_KEY}`
-    );
-    const ethGas = await ethGasRes.json();
 
-    const result = ethGas?.result || {};
+    const [ethGasRes, bscGasRes, polygonGasRes] = await Promise.allSettled([
+      fetch(`https://api.etherscan.io/v2/api?chainid=1&module=gastracker&action=gasoracle&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
+      fetch(`https://api.etherscan.io/v2/api?chainid=56&module=gastracker&action=gasoracle&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
+      fetch(`https://api.etherscan.io/v2/api?chainid=137&module=gastracker&action=gasoracle&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
+    ]);
+
+    const ethResult = ethGasRes.status === 'fulfilled' ? ethGasRes.value?.result || {} : {};
+    const bscResult = bscGasRes.status === 'fulfilled' ? bscGasRes.value?.result || {} : {};
+    const polygonResult = polygonGasRes.status === 'fulfilled' ? polygonGasRes.value?.result || {} : {};
+
     res.json({
       ethereum: {
-        low: parseInt(result.SafeGasPrice) || 12,
-        standard: parseInt(result.ProposeGasPrice) || 18,
-        fast: parseInt(result.FastGasPrice) || 25,
-        instant: Math.round((parseInt(result.FastGasPrice) || 25) * 1.4),
-        baseFee: parseFloat(result.suggestBaseFee) || 15,
+        low: parseInt(ethResult.SafeGasPrice) || 12,
+        standard: parseInt(ethResult.ProposeGasPrice) || 18,
+        fast: parseInt(ethResult.FastGasPrice) || 25,
+        instant: Math.round((parseInt(ethResult.FastGasPrice) || 25) * 1.4),
+        baseFee: parseFloat(ethResult.suggestBaseFee) || 15,
       },
-      bsc: { low: 3, standard: 5, fast: 7, instant: 10, baseFee: 3.5 },
-      polygon: { low: 30, standard: 50, fast: 80, instant: 120, baseFee: 35 },
+      bsc: {
+        low: parseInt(bscResult.SafeGasPrice) || 3,
+        standard: parseInt(bscResult.ProposeGasPrice) || 5,
+        fast: parseInt(bscResult.FastGasPrice) || 7,
+        instant: Math.round((parseInt(bscResult.FastGasPrice) || 7) * 1.4),
+        baseFee: parseFloat(bscResult.suggestBaseFee) || 3.5,
+      },
+      polygon: {
+        low: parseInt(polygonResult.SafeGasPrice) || 30,
+        standard: parseInt(polygonResult.ProposeGasPrice) || 50,
+        fast: parseInt(polygonResult.FastGasPrice) || 80,
+        instant: Math.round((parseInt(polygonResult.FastGasPrice) || 80) * 1.4),
+        baseFee: parseFloat(polygonResult.suggestBaseFee) || 35,
+      },
       solana: { low: 0.000005, standard: 0.000005, fast: 0.00001, instant: 0.00005, baseFee: 0.000005 },
     });
   } catch (err) {
@@ -74,7 +91,7 @@ router.get('/top-wallets', async (_req, res) => {
   try {
     const ETHERSCAN_KEY = await getApiKey('ETHERSCAN');
     const ethRes = await fetch(
-      `https://api.etherscan.io/api?module=account&action=balancemulti&address=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8,0xDA9dfA130Df4dE4673b89022EE50ff26f6EA73Cf,0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489,0x8103683202aa8DA10536036EDef04CDd865C225E&tag=latest&apikey=${ETHERSCAN_KEY}`
+      `https://api.etherscan.io/v2/api?chainid=1&module=account&action=balancemulti&address=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8,0xDA9dfA130Df4dE4673b89022EE50ff26f6EA73Cf,0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489,0x8103683202aa8DA10536036EDef04CDd865C225E&tag=latest&apikey=${ETHERSCAN_KEY}`
     );
     const ethData = await ethRes.json();
 
@@ -159,9 +176,9 @@ router.get('/wallet/:address', async (req, res) => {
 
     const ETHERSCAN_KEY = await getApiKey('ETHERSCAN');
     const [balRes, txRes, tokenRes] = await Promise.allSettled([
-      fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
-      fetch(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=20&sort=desc&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
-      fetch(`https://api.etherscan.io/api?module=account&action=tokentx&address=${address}&page=1&offset=20&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
+      fetch(`https://api.etherscan.io/v2/api?chainid=1&module=account&action=balance&address=${address}&tag=latest&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
+      fetch(`https://api.etherscan.io/v2/api?chainid=1&module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=20&sort=desc&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
+      fetch(`https://api.etherscan.io/v2/api?chainid=1&module=account&action=tokentx&address=${address}&page=1&offset=20&startblock=0&endblock=99999999&sort=desc&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
     ]);
 
     const ethPriceRes = await cgFetch('/simple/price', { ids: 'ethereum', vs_currencies: 'usd' });
@@ -205,6 +222,88 @@ router.get('/wallet/:address', async (req, res) => {
   } catch (err) {
     console.error('[onchain/wallet]', err);
     res.json({ address: req.params.address, ethBalance: 0, ethPrice: 0, tokens: [], transactions: [] });
+  }
+});
+
+router.get('/solana-wallet/:address', async (req, res) => {
+  try {
+    const address = req.params.address;
+    if (!address || address.length < 32 || address.length > 44) {
+      return res.json({ error: 'Invalid Solana address' });
+    }
+
+    const QN_KEY = await getApiKey('QUICKNODE');
+    const rpcUrl = QN_KEY
+      ? `https://winter-methodical-liquid.solana-mainnet.quiknode.pro/${QN_KEY}`
+      : 'https://api.mainnet-beta.solana.com';
+
+    const rpcCall = async (method: string, params: any[]) => {
+      const rpcRes = await fetch(rpcUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }),
+      });
+      return rpcRes.json();
+    };
+
+    const [balanceRes, tokenRes, txRes] = await Promise.allSettled([
+      rpcCall('getBalance', [address]),
+      rpcCall('getTokenAccountsByOwner', [
+        address,
+        { programId: 'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA' },
+        { encoding: 'jsonParsed' },
+      ]),
+      rpcCall('getSignaturesForAddress', [address, { limit: 20 }]),
+    ]);
+
+    const solBalance = balanceRes.status === 'fulfilled'
+      ? (balanceRes.value?.result?.value || 0) / 1e9
+      : 0;
+
+    const solPriceRes = await cgFetch('/simple/price', { ids: 'solana', vs_currencies: 'usd' });
+    const solPrice = solPriceRes?.solana?.usd || 150;
+
+    const tokens: any[] = [];
+    if (tokenRes.status === 'fulfilled' && tokenRes.value?.result?.value) {
+      tokenRes.value.result.value.forEach((account: any) => {
+        const info = account?.account?.data?.parsed?.info;
+        if (!info) return;
+        const tokenAmount = info.tokenAmount;
+        if (!tokenAmount || tokenAmount.uiAmount === 0) return;
+        tokens.push({
+          mint: info.mint || '',
+          balance: tokenAmount.uiAmount || 0,
+          decimals: tokenAmount.decimals || 0,
+          symbol: '',
+          name: '',
+        });
+      });
+    }
+
+    const signatures: any[] = [];
+    if (txRes.status === 'fulfilled' && txRes.value?.result) {
+      txRes.value.result.forEach((sig: any) => {
+        signatures.push({
+          signature: sig.signature || '',
+          slot: sig.slot || 0,
+          blockTime: sig.blockTime ? sig.blockTime * 1000 : 0,
+          err: sig.err || null,
+          memo: sig.memo || null,
+        });
+      });
+    }
+
+    res.json({
+      address,
+      solBalance,
+      solPrice,
+      balanceUsd: solBalance * solPrice,
+      tokens,
+      recentTransactions: signatures,
+    });
+  } catch (err) {
+    console.error('[onchain/solana-wallet]', err);
+    res.json({ address: req.params.address, solBalance: 0, solPrice: 0, balanceUsd: 0, tokens: [], recentTransactions: [] });
   }
 });
 

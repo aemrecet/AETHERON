@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import yahooFinance from 'yahoo-finance2';
+import { getApiKey } from '../apiKeys.js';
 
 const router = Router();
 
@@ -24,38 +25,61 @@ const generateIntradayCurve = (current: number, high: number, low: number) => {
   return data;
 };
 
-const CRYPTO_SYMBOLS = [
-  { yahoo: 'BTC-USD', symbol: 'BTC', name: 'Bitcoin' },
-  { yahoo: 'ETH-USD', symbol: 'ETH', name: 'Ethereum' },
-  { yahoo: 'SOL-USD', symbol: 'SOL', name: 'Solana' },
-  { yahoo: 'BNB-USD', symbol: 'BNB', name: 'Binance Coin' },
-  { yahoo: 'XRP-USD', symbol: 'XRP', name: 'Ripple' },
-  { yahoo: 'ADA-USD', symbol: 'ADA', name: 'Cardano' },
-  { yahoo: 'AVAX-USD', symbol: 'AVAX', name: 'Avalanche' },
-  { yahoo: 'DOGE-USD', symbol: 'DOGE', name: 'Dogecoin' },
-  { yahoo: 'DOT-USD', symbol: 'DOT', name: 'Polkadot' },
-  { yahoo: 'LINK-USD', symbol: 'LINK', name: 'Chainlink' },
-  { yahoo: 'MATIC-USD', symbol: 'MATIC', name: 'Polygon' },
-  { yahoo: 'UNI-USD', symbol: 'UNI', name: 'Uniswap' },
-  { yahoo: 'SHIB-USD', symbol: 'SHIB', name: 'Shiba Inu' },
-  { yahoo: 'LTC-USD', symbol: 'LTC', name: 'Litecoin' },
-  { yahoo: 'ATOM-USD', symbol: 'ATOM', name: 'Cosmos' },
-  { yahoo: 'FIL-USD', symbol: 'FIL', name: 'Filecoin' },
-  { yahoo: 'NEAR-USD', symbol: 'NEAR', name: 'NEAR Protocol' },
-  { yahoo: 'APT-USD', symbol: 'APT', name: 'Aptos' },
-  { yahoo: 'ARB11841-USD', symbol: 'ARB', name: 'Arbitrum' },
-  { yahoo: 'OP-USD', symbol: 'OP', name: 'Optimism' },
-  { yahoo: 'AAVE-USD', symbol: 'AAVE', name: 'Aave' },
-  { yahoo: 'MKR-USD', symbol: 'MKR', name: 'Maker' },
-  { yahoo: 'GRT-USD', symbol: 'GRT', name: 'The Graph' },
-  { yahoo: 'INJ-USD', symbol: 'INJ', name: 'Injective' },
-  { yahoo: 'TIA-USD', symbol: 'TIA', name: 'Celestia' },
-  { yahoo: 'SUI20947-USD', symbol: 'SUI', name: 'Sui' },
-  { yahoo: 'SEI-USD', symbol: 'SEI', name: 'Sei' },
-  { yahoo: 'RENDER-USD', symbol: 'RNDR', name: 'Render' },
-  { yahoo: 'FET-USD', symbol: 'FET', name: 'Fetch.ai' },
-  { yahoo: 'PEPE24478-USD', symbol: 'PEPE', name: 'Pepe' },
-];
+router.get('/crypto', async (req, res) => {
+  try {
+    const page = parseInt(req.query.page as string) || 1;
+    const perPage = Math.min(parseInt(req.query.per_page as string) || 100, 250);
+    const CG_KEY = await getApiKey('COINGECKO');
+
+    const url = new URL('https://api.coingecko.com/api/v3/coins/markets');
+    url.searchParams.set('vs_currency', 'usd');
+    url.searchParams.set('order', 'market_cap_desc');
+    url.searchParams.set('per_page', String(perPage));
+    url.searchParams.set('page', String(page));
+    url.searchParams.set('sparkline', 'true');
+    url.searchParams.set('price_change_percentage', '24h,7d');
+    if (CG_KEY) url.searchParams.set('x_cg_demo_api_key', CG_KEY);
+
+    const cgRes = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
+    if (!cgRes.ok) throw new Error(`CoinGecko ${cgRes.status}`);
+    const coins = await cgRes.json();
+
+    const stocks = (coins || []).map((c: any) => {
+      const price = c.current_price || 0;
+      const high = c.high_24h || price * 1.02;
+      const low = c.low_24h || price * 0.98;
+      return {
+        symbol: c.symbol?.toUpperCase() || '',
+        name: c.name || '',
+        price,
+        change: c.price_change_24h || 0,
+        changePercent: c.price_change_percentage_24h || 0,
+        changePercent7d: c.price_change_percentage_7d_in_currency || 0,
+        volume: c.total_volume ? `$${(c.total_volume / 1e9).toFixed(1)}B` : '-',
+        volumeRaw: c.total_volume || 0,
+        marketCap: c.market_cap ? `$${(c.market_cap / 1e9).toFixed(0)}B` : '-',
+        marketCapRaw: c.market_cap || 0,
+        sector: 'Crypto',
+        market: 'CRYPTO',
+        dayHigh: high,
+        dayLow: low,
+        logo: c.image || `https://assets.coincap.io/assets/icons/${(c.symbol || '').toLowerCase()}@2x.png`,
+        sparkline: c.sparkline_in_7d?.price || [],
+        rank: c.market_cap_rank || 0,
+        ath: c.ath || 0,
+        athChangePercentage: c.ath_change_percentage || 0,
+        circulatingSupply: c.circulating_supply || 0,
+        totalSupply: c.total_supply || 0,
+        data: generateIntradayCurve(price, high, low),
+      };
+    });
+
+    res.json(stocks);
+  } catch (err) {
+    console.error('[crypto]', err);
+    res.json([]);
+  }
+});
 
 const NASDAQ_SYMBOLS = [
   { yahoo: 'AAPL', name: 'Apple' },
@@ -151,39 +175,6 @@ async function fetchQuotes(symbols: string[]) {
   return results;
 }
 
-router.get('/crypto', async (_req, res) => {
-  try {
-    const quotes = await fetchQuotes(CRYPTO_SYMBOLS.map((s) => s.yahoo));
-    const stocks = quotes.map((q) => {
-      const meta = CRYPTO_SYMBOLS.find((s) => s.yahoo === q.symbol);
-      const price = q.regularMarketPrice || 0;
-      const change = q.regularMarketChange || 0;
-      const changePct = q.regularMarketChangePercent || 0;
-      const high = q.regularMarketDayHigh || price * 1.02;
-      const low = q.regularMarketDayLow || price * 0.98;
-      return {
-        symbol: meta?.symbol || q.symbol.replace('-USD', ''),
-        name: meta?.name || q.shortName || '',
-        price,
-        change,
-        changePercent: changePct,
-        volume: q.regularMarketVolume ? `$${(q.regularMarketVolume / 1e9).toFixed(1)}B` : '-',
-        marketCap: q.marketCap ? `$${(q.marketCap / 1e9).toFixed(0)}B` : '-',
-        sector: 'Crypto',
-        market: 'CRYPTO',
-        dayHigh: high,
-        dayLow: low,
-        logo: `https://assets.coincap.io/assets/icons/${(meta?.symbol || '').toLowerCase()}@2x.png`,
-        data: generateIntradayCurve(price, high, low),
-      };
-    });
-    res.json(stocks);
-  } catch (err) {
-    console.error('[crypto]', err);
-    res.json([]);
-  }
-});
-
 router.get('/nasdaq', async (_req, res) => {
   try {
     const quotes = await fetchQuotes(NASDAQ_SYMBOLS.map((s) => s.yahoo));
@@ -246,6 +237,202 @@ router.get('/bist', async (_req, res) => {
   } catch (err) {
     console.error('[bist]', err);
     res.json([]);
+  }
+});
+
+router.get('/stock-detail/:symbol', async (req, res) => {
+  try {
+    const symbol = req.params.symbol.toUpperCase();
+    const [quote, summary] = await Promise.allSettled([
+      yahooFinance.quote(symbol),
+      yahooFinance.quoteSummary(symbol, {
+        modules: ['price', 'summaryDetail', 'summaryProfile', 'financialData', 'defaultKeyStatistics', 'earningsHistory', 'recommendationTrend'],
+      }),
+    ]);
+
+    const q = quote.status === 'fulfilled' ? quote.value : null;
+    const s = summary.status === 'fulfilled' ? summary.value : null;
+
+    if (!q) return res.json({ error: 'Symbol not found' });
+
+    const price = q.regularMarketPrice || 0;
+    const summaryDetail = s?.summaryDetail || {};
+    const profile = s?.summaryProfile || {};
+    const financialData = s?.financialData || {};
+    const keyStats = s?.defaultKeyStatistics || {};
+
+    res.json({
+      symbol,
+      name: q.shortName || q.longName || '',
+      price,
+      change: q.regularMarketChange || 0,
+      changePercent: q.regularMarketChangePercent || 0,
+      dayHigh: q.regularMarketDayHigh || 0,
+      dayLow: q.regularMarketDayLow || 0,
+      open: q.regularMarketOpen || 0,
+      previousClose: q.regularMarketPreviousClose || 0,
+      volume: q.regularMarketVolume || 0,
+      marketCap: q.marketCap || 0,
+      fiftyTwoWeekHigh: (summaryDetail as any).fiftyTwoWeekHigh || 0,
+      fiftyTwoWeekLow: (summaryDetail as any).fiftyTwoWeekLow || 0,
+      peRatio: (summaryDetail as any).trailingPE || 0,
+      forwardPE: (summaryDetail as any).forwardPE || 0,
+      dividendYield: (summaryDetail as any).dividendYield || 0,
+      beta: (summaryDetail as any).beta || 0,
+      eps: (keyStats as any).trailingEps || 0,
+      targetPrice: (financialData as any).targetMeanPrice || 0,
+      recommendation: (financialData as any).recommendationKey || '',
+      sector: (profile as any).sector || '',
+      industry: (profile as any).industry || '',
+      description: (profile as any).longBusinessSummary || '',
+      website: (profile as any).website || '',
+      employees: (profile as any).fullTimeEmployees || 0,
+      country: (profile as any).country || '',
+      revenue: (financialData as any).totalRevenue || 0,
+      grossProfit: (financialData as any).grossProfits || 0,
+      operatingMargin: (financialData as any).operatingMargins || 0,
+      profitMargin: (financialData as any).profitMargins || 0,
+      returnOnEquity: (financialData as any).returnOnEquity || 0,
+      debtToEquity: (financialData as any).debtToEquity || 0,
+      recommendationTrend: s?.recommendationTrend?.trend || [],
+      earningsHistory: s?.earningsHistory?.history || [],
+      data: generateIntradayCurve(price, q.regularMarketDayHigh || price * 1.02, q.regularMarketDayLow || price * 0.98),
+    });
+  } catch (err) {
+    console.error('[stock-detail]', err);
+    res.json({ error: 'Failed to fetch stock detail' });
+  }
+});
+
+router.get('/memecoins/:chain', async (req, res) => {
+  try {
+    const chain = req.params.chain.toLowerCase();
+    const chainMap: Record<string, string> = {
+      solana: 'solana',
+      ethereum: 'ethereum',
+      bsc: 'bsc',
+    };
+    const dexChain = chainMap[chain] || 'solana';
+
+    const dexRes = await fetch(`https://api.dexscreener.com/latest/dex/search?q=meme&chain=${dexChain}`);
+    if (!dexRes.ok) throw new Error(`DexScreener ${dexRes.status}`);
+    const dexData = await dexRes.json();
+
+    const pairs = (dexData?.pairs || []).slice(0, 50).map((p: any) => ({
+      name: p.baseToken?.name || '',
+      symbol: p.baseToken?.symbol || '',
+      address: p.baseToken?.address || '',
+      pairAddress: p.pairAddress || '',
+      chain: p.chainId || dexChain,
+      dex: p.dexId || '',
+      price: parseFloat(p.priceUsd || '0'),
+      priceNative: parseFloat(p.priceNative || '0'),
+      change5m: p.priceChange?.m5 || 0,
+      change1h: p.priceChange?.h1 || 0,
+      change6h: p.priceChange?.h6 || 0,
+      change24h: p.priceChange?.h24 || 0,
+      volume24h: p.volume?.h24 || 0,
+      volume6h: p.volume?.h6 || 0,
+      volume1h: p.volume?.h1 || 0,
+      liquidity: p.liquidity?.usd || 0,
+      fdv: p.fdv || 0,
+      marketCap: p.marketCap || p.fdv || 0,
+      pairCreatedAt: p.pairCreatedAt || '',
+      txns24h: {
+        buys: p.txns?.h24?.buys || 0,
+        sells: p.txns?.h24?.sells || 0,
+      },
+      logo: p.info?.imageUrl || '',
+      url: p.url || '',
+    }));
+
+    res.json(pairs);
+  } catch (err) {
+    console.error('[memecoins]', err);
+    res.json([]);
+  }
+});
+
+router.get('/market-intelligence', async (_req, res) => {
+  try {
+    const CG_KEY = await getApiKey('COINGECKO');
+    const url = new URL('https://api.coingecko.com/api/v3/coins/markets');
+    url.searchParams.set('vs_currency', 'usd');
+    url.searchParams.set('order', 'market_cap_desc');
+    url.searchParams.set('per_page', '100');
+    url.searchParams.set('page', '1');
+    url.searchParams.set('price_change_percentage', '24h,7d');
+    if (CG_KEY) url.searchParams.set('x_cg_demo_api_key', CG_KEY);
+
+    const cgRes = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
+    const coins = cgRes.ok ? await cgRes.json() : [];
+
+    let nasdaqQuotes: any[] = [];
+    try {
+      nasdaqQuotes = await fetchQuotes(['AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META', 'TSLA']);
+    } catch {}
+
+    const allAssets = [
+      ...(coins || []).map((c: any) => ({
+        symbol: c.symbol?.toUpperCase(),
+        name: c.name,
+        price: c.current_price || 0,
+        changePercent: c.price_change_percentage_24h || 0,
+        marketCap: c.market_cap || 0,
+        volume: c.total_volume || 0,
+        sector: 'Crypto',
+      })),
+      ...nasdaqQuotes.map((q: any) => ({
+        symbol: q.symbol,
+        name: q.shortName || '',
+        price: q.regularMarketPrice || 0,
+        changePercent: q.regularMarketChangePercent || 0,
+        marketCap: q.marketCap || 0,
+        volume: q.regularMarketVolume || 0,
+        sector: 'Stocks',
+      })),
+    ];
+
+    const sorted = [...allAssets].sort((a, b) => b.changePercent - a.changePercent);
+    const topGainers = sorted.slice(0, 10);
+    const topLosers = sorted.slice(-10).reverse();
+
+    const sectorMap = new Map<string, { totalCap: number; avgChange: number; count: number }>();
+    allAssets.forEach((a) => {
+      const sec = a.sector;
+      if (!sectorMap.has(sec)) sectorMap.set(sec, { totalCap: 0, avgChange: 0, count: 0 });
+      const s = sectorMap.get(sec)!;
+      s.totalCap += a.marketCap;
+      s.avgChange += a.changePercent;
+      s.count++;
+    });
+
+    const sectorAnalysis = Array.from(sectorMap.entries()).map(([name, data]) => ({
+      name,
+      totalMarketCap: data.totalCap,
+      avgChange24h: data.count > 0 ? data.avgChange / data.count : 0,
+      assetCount: data.count,
+    }));
+
+    const totalVolume = allAssets.reduce((s, a) => s + a.volume, 0);
+    const avgChange = allAssets.length > 0
+      ? allAssets.reduce((s, a) => s + a.changePercent, 0) / allAssets.length
+      : 0;
+
+    res.json({
+      topGainers,
+      topLosers,
+      sectorAnalysis,
+      summary: {
+        totalAssets: allAssets.length,
+        totalVolume24h: totalVolume,
+        avgChange24h: avgChange,
+        marketSentiment: avgChange > 1 ? 'Bullish' : avgChange < -1 ? 'Bearish' : 'Neutral',
+      },
+    });
+  } catch (err) {
+    console.error('[market-intelligence]', err);
+    res.json({ topGainers: [], topLosers: [], sectorAnalysis: [], summary: {} });
   }
 });
 

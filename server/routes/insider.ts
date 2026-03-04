@@ -14,8 +14,44 @@ const qqFetch = async (path: string) => {
 
 router.get('/trades', async (_req, res) => {
   try {
-    const data = await qqFetch('/live/insiders?page_size=30');
-    const trades = (Array.isArray(data) ? data : []).map((t: any) => ({
+    const FINNHUB_KEY = await getApiKey('FINNHUB');
+    const symbols = ['AAPL', 'MSFT', 'NVDA', 'TSLA', 'META', 'AMZN', 'GOOGL'];
+    const now = new Date();
+    const from = new Date(now);
+    from.setMonth(from.getMonth() - 3);
+
+    const allTrades: any[] = [];
+    const results = await Promise.allSettled(
+      symbols.map(async (sym) => {
+        const url = `https://finnhub.io/api/v1/stock/insider-transactions?symbol=${sym}&from=${from.toISOString().split('T')[0]}&to=${now.toISOString().split('T')[0]}&token=${FINNHUB_KEY}`;
+        const r = await fetch(url);
+        if (!r.ok) return [];
+        const data = await r.json();
+        return (data?.data || []).slice(0, 10).map((t: any) => ({
+          symbol: sym,
+          transactionType: t.transactionType || (t.change > 0 ? 'Buy' : 'Sale'),
+          name: t.name || '',
+          share: Math.abs(t.share || t.change || 0),
+          value: Math.abs((t.share || t.change || 0) * (t.transactionPrice || 0)),
+          transactionDate: t.transactionDate || t.filingDate || '',
+          title: t.name || '',
+          transactionPrice: t.transactionPrice || 0,
+          source: 'Finnhub',
+        }));
+      })
+    );
+
+    results.forEach((r) => {
+      if (r.status === 'fulfilled' && Array.isArray(r.value)) allTrades.push(...r.value);
+    });
+
+    if (allTrades.length > 0) {
+      allTrades.sort((a, b) => new Date(b.transactionDate).getTime() - new Date(a.transactionDate).getTime());
+      return res.json(allTrades.slice(0, 50));
+    }
+
+    const qqData = await qqFetch('/live/insiders?page_size=30');
+    const trades = (Array.isArray(qqData) ? qqData : []).map((t: any) => ({
       symbol: t.Ticker || t.ticker || '',
       transactionType: (t.TransactionType || t.transaction_type || '').includes('P') ? 'Buy' : 'Sale',
       name: t.Name || t.insider_name || '',
@@ -23,6 +59,7 @@ router.get('/trades', async (_req, res) => {
       value: t.Value || t.value || 0,
       transactionDate: t.Date || t.date || '',
       title: t.Title || t.insider_title || '',
+      source: 'QuiverQuant',
     }));
     res.json(trades);
   } catch (err) {
@@ -37,6 +74,7 @@ router.get('/trades', async (_req, res) => {
         value: t.Value || t.value || 0,
         transactionDate: t.Date || t.date || '',
         title: t.Title || t.insider_title || '',
+        source: 'QuiverQuant',
       }));
       res.json(trades);
     } catch {
@@ -47,40 +85,92 @@ router.get('/trades', async (_req, res) => {
 
 router.get('/congress', async (_req, res) => {
   try {
-    const data = await qqFetch('/live/congresstrading?page_size=50');
-    const raw = Array.isArray(data) ? data : [];
+    let raw: any[] = [];
+    let source = 'HouseStockWatcher';
+
+    try {
+      const hswRes = await fetch('https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/all_transactions.json');
+      if (hswRes.ok) {
+        const hswData = await hswRes.json();
+        raw = Array.isArray(hswData) ? hswData.slice(-200) : [];
+      }
+    } catch {
+      source = 'QuiverQuant';
+    }
+
+    if (raw.length === 0) {
+      const qqData = await qqFetch('/live/congresstrading?page_size=50');
+      raw = Array.isArray(qqData) ? qqData : [];
+      source = 'QuiverQuant';
+    }
 
     const memberMap = new Map<string, any>();
-    raw.forEach((t: any) => {
-      const name = t.Representative || t.representative || '';
-      if (!name) return;
-      if (!memberMap.has(name)) {
-        memberMap.set(name, {
-          name,
-          party: t.Party || t.party || '',
-          state: t.State || t.state || '',
-          chamber: t.Chamber || t.chamber || t.House || 'House',
-          totalBuys: 0,
-          totalSells: 0,
-          totalTrades: 0,
-          topTickers: new Set<string>(),
-          trades: [],
+
+    if (source === 'HouseStockWatcher') {
+      raw.forEach((t: any) => {
+        const name = t.representative || '';
+        if (!name) return;
+        if (!memberMap.has(name)) {
+          memberMap.set(name, {
+            name,
+            party: t.party || '',
+            state: t.state || '',
+            chamber: t.type === 'Senator' ? 'Senate' : 'House',
+            totalBuys: 0,
+            totalSells: 0,
+            totalTrades: 0,
+            topTickers: new Set<string>(),
+            trades: [],
+          });
+        }
+        const member = memberMap.get(name)!;
+        const type = (t.type_of_transaction || t.transaction_type || '').toLowerCase();
+        if (type.includes('purchase') || type.includes('buy')) member.totalBuys++;
+        else if (type.includes('sale') || type.includes('sell')) member.totalSells++;
+        member.totalTrades++;
+        if (t.ticker) member.topTickers.add(t.ticker);
+        member.trades.push({
+          symbol: t.ticker || '',
+          type: type.includes('purchase') || type.includes('buy') ? 'purchase' : 'sale',
+          amount: t.amount || '',
+          date: t.transaction_date || '',
+          assetType: t.asset_description || 'Stock',
+          source: 'HouseStockWatcher',
         });
-      }
-      const member = memberMap.get(name)!;
-      const type = (t.Transaction || t.transaction || '').toLowerCase();
-      if (type.includes('purchase') || type.includes('buy')) member.totalBuys++;
-      else if (type.includes('sale') || type.includes('sell')) member.totalSells++;
-      member.totalTrades++;
-      if (t.Ticker || t.ticker) member.topTickers.add(t.Ticker || t.ticker);
-      member.trades.push({
-        symbol: t.Ticker || t.ticker || '',
-        type: type.includes('purchase') || type.includes('buy') ? 'purchase' : 'sale',
-        amount: t.Range || t.amount || '',
-        date: t.TransactionDate || t.transaction_date || '',
-        assetType: t.AssetType || 'Stock',
       });
-    });
+    } else {
+      raw.forEach((t: any) => {
+        const name = t.Representative || t.representative || '';
+        if (!name) return;
+        if (!memberMap.has(name)) {
+          memberMap.set(name, {
+            name,
+            party: t.Party || t.party || '',
+            state: t.State || t.state || '',
+            chamber: t.Chamber || t.chamber || t.House || 'House',
+            totalBuys: 0,
+            totalSells: 0,
+            totalTrades: 0,
+            topTickers: new Set<string>(),
+            trades: [],
+          });
+        }
+        const member = memberMap.get(name)!;
+        const type = (t.Transaction || t.transaction || '').toLowerCase();
+        if (type.includes('purchase') || type.includes('buy')) member.totalBuys++;
+        else if (type.includes('sale') || type.includes('sell')) member.totalSells++;
+        member.totalTrades++;
+        if (t.Ticker || t.ticker) member.topTickers.add(t.Ticker || t.ticker);
+        member.trades.push({
+          symbol: t.Ticker || t.ticker || '',
+          type: type.includes('purchase') || type.includes('buy') ? 'purchase' : 'sale',
+          amount: t.Range || t.amount || '',
+          date: t.TransactionDate || t.transaction_date || '',
+          assetType: t.AssetType || 'Stock',
+          source: 'QuiverQuant',
+        });
+      });
+    }
 
     const members = Array.from(memberMap.values())
       .map((m) => ({
@@ -93,81 +183,78 @@ router.get('/congress', async (_req, res) => {
     res.json(members);
   } catch (err) {
     console.error('[insider/congress]', err);
-    try {
-      const data = await qqFetch('/bulk/congresstrading');
-      const raw = Array.isArray(data) ? data.slice(0, 100) : [];
-      const memberMap = new Map<string, any>();
-      raw.forEach((t: any) => {
-        const name = t.Representative || t.representative || '';
-        if (!name) return;
-        if (!memberMap.has(name)) {
-          memberMap.set(name, {
-            name,
-            party: t.Party || t.party || '',
-            state: t.State || t.state || '',
-            chamber: t.Chamber || t.chamber || 'House',
-            totalBuys: 0,
-            totalSells: 0,
-            totalTrades: 0,
-            topTickers: new Set<string>(),
-          });
-        }
-        const member = memberMap.get(name)!;
-        const type = (t.Transaction || t.transaction || '').toLowerCase();
-        if (type.includes('purchase')) member.totalBuys++;
-        else member.totalSells++;
-        member.totalTrades++;
-        if (t.Ticker || t.ticker) member.topTickers.add(t.Ticker || t.ticker);
-      });
-      const members = Array.from(memberMap.values())
-        .map((m) => ({ ...m, topTickers: Array.from(m.topTickers).slice(0, 6) }))
-        .sort((a, b) => b.totalTrades - a.totalTrades)
-        .slice(0, 30);
-      res.json(members);
-    } catch {
-      res.json([]);
-    }
+    res.json([]);
   }
 });
 
 router.get('/congress/:name', async (req, res) => {
   try {
     const name = decodeURIComponent(req.params.name);
-    const data = await qqFetch('/live/congresstrading?page_size=100');
-    const raw = Array.isArray(data) ? data : [];
-    const memberTrades = raw.filter((t: any) => (t.Representative || t.representative) === name);
+    let raw: any[] = [];
+    let source = 'HouseStockWatcher';
 
-    if (memberTrades.length === 0) return res.json(null);
+    try {
+      const hswRes = await fetch('https://house-stock-watcher-data.s3-us-west-2.amazonaws.com/data/all_transactions.json');
+      if (hswRes.ok) {
+        const hswData = await hswRes.json();
+        raw = (Array.isArray(hswData) ? hswData : []).filter((t: any) => t.representative === name);
+      }
+    } catch {}
 
-    const first = memberTrades[0];
+    if (raw.length === 0) {
+      const qqData = await qqFetch('/live/congresstrading?page_size=100');
+      raw = (Array.isArray(qqData) ? qqData : []).filter((t: any) => (t.Representative || t.representative) === name);
+      source = 'QuiverQuant';
+    }
+
+    if (raw.length === 0) return res.json(null);
+
+    const first = raw[0];
     const topTickers = new Set<string>();
     let totalBuys = 0, totalSells = 0;
 
-    const trades = memberTrades.map((t: any) => {
-      const type = (t.Transaction || t.transaction || '').toLowerCase();
+    const trades = raw.map((t: any) => {
+      let type: string;
+      if (source === 'HouseStockWatcher') {
+        type = (t.type_of_transaction || t.transaction_type || '').toLowerCase();
+      } else {
+        type = (t.Transaction || t.transaction || '').toLowerCase();
+      }
+
       if (type.includes('purchase') || type.includes('buy')) totalBuys++;
       else totalSells++;
-      if (t.Ticker || t.ticker) topTickers.add(t.Ticker || t.ticker);
+
+      const ticker = source === 'HouseStockWatcher'
+        ? (t.ticker || '')
+        : (t.Ticker || t.ticker || '');
+      if (ticker) topTickers.add(ticker);
+
       return {
-        symbol: t.Ticker || t.ticker || '',
+        symbol: ticker,
         type: type.includes('purchase') || type.includes('buy') ? 'purchase' : 'sale',
-        amount: t.Range || t.amount || '',
-        date: t.TransactionDate || t.transaction_date || '',
-        assetType: t.AssetType || 'Stock',
+        amount: source === 'HouseStockWatcher' ? (t.amount || '') : (t.Range || t.amount || ''),
+        date: source === 'HouseStockWatcher' ? (t.transaction_date || '') : (t.TransactionDate || t.transaction_date || ''),
+        assetType: source === 'HouseStockWatcher' ? (t.asset_description || 'Stock') : (t.AssetType || 'Stock'),
       };
     });
 
+    const party = source === 'HouseStockWatcher' ? (first.party || '') : (first.Party || first.party || '');
+    const state = source === 'HouseStockWatcher' ? (first.state || '') : (first.State || first.state || '');
+    const chamber = source === 'HouseStockWatcher'
+      ? (first.type === 'Senator' ? 'Senate' : 'House')
+      : (first.Chamber || first.chamber || 'House');
+
     res.json({
       name,
-      party: first.Party || first.party || '',
-      state: first.State || first.state || '',
-      chamber: first.Chamber || first.chamber || 'House',
+      party,
+      state,
+      chamber,
       totalBuys,
       totalSells,
-      totalTrades: memberTrades.length,
+      totalTrades: raw.length,
       topTickers: Array.from(topTickers).slice(0, 6),
       trades: trades.slice(0, 20),
-      bio: `${name} is a ${(first.Party || '') === 'D' ? 'Democratic' : 'Republican'} member of the ${first.Chamber || 'House'} representing ${first.State || first.state || ''}.`,
+      bio: `${name} is a ${party === 'D' ? 'Democratic' : 'Republican'} member of the ${chamber} representing ${state}.`,
     });
   } catch (err) {
     console.error('[insider/congress/:name]', err);

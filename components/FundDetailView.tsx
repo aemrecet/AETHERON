@@ -52,7 +52,7 @@ export const FundDetailView: React.FC<FundDetailViewProps> = ({ fundId, onBack }
     <div className="space-y-4 view-animate">
       <button
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-[12px] text-[#9cc8ff] hover:text-[#d6e9ff] transition-colors duration-100 font-medium px-2.5 py-1.5 rounded-lg"
+        className="inline-flex items-center gap-1.5 text-[12px] text-[#7db8ff] hover:text-[#d0e4ff] transition-colors duration-100 font-medium px-2.5 py-1.5 rounded-lg"
         style={{ background: 'rgba(89, 129, 191, 0.18)', border: '1px solid rgba(123, 160, 214, 0.28)' }}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>

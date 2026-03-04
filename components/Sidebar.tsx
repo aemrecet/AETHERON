@@ -7,7 +7,7 @@ interface SidebarProps {
 }
 
 const NavIcon: React.FC<{ id: TabView; active: boolean; size?: number }> = ({ id, active, size = 17 }) => {
-  const color = active ? '#eef5ff' : '#8fa8cb';
+  const color = active ? '#eef5ff' : '#7b95b8';
   const sw = active ? '1.9' : '1.6';
 
   switch (id) {
@@ -73,57 +73,53 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
   return (
     <>
       <header
-        className="hidden md:flex items-center w-full fixed top-0 left-0 right-0 z-50 h-[68px] border-b"
+        className="hidden md:flex items-center w-full fixed top-0 left-0 right-0 z-50 h-[60px]"
         style={{
-          background: 'rgba(7, 13, 24, 0.78)',
-          borderColor: 'var(--color-border-subtle)',
-          backdropFilter: 'blur(20px) saturate(140%)',
-          WebkitBackdropFilter: 'blur(20px) saturate(140%)',
+          background: 'rgba(6, 10, 18, 0.82)',
+          borderBottom: '1px solid rgba(120, 160, 220, 0.08)',
+          backdropFilter: 'blur(24px) saturate(130%)',
+          WebkitBackdropFilter: 'blur(24px) saturate(130%)',
         }}
       >
-        <div className="max-w-[1680px] w-full mx-auto px-5 lg:px-7 flex items-center gap-4">
+        <div className="max-w-[1680px] w-full mx-auto px-5 lg:px-7 flex items-center gap-5">
           <button
-            className="flex items-center cursor-pointer shrink-0 select-none gap-2.5"
+            className="flex items-center cursor-pointer shrink-0 select-none gap-2.5 group"
             onClick={() => setActiveTab(TabView.ASK)}
           >
             <div
-              className="w-8 h-8 rounded-xl flex items-center justify-center"
+              className="w-8 h-8 rounded-lg flex items-center justify-center transition-all group-hover:scale-105"
               style={{
-                background: 'linear-gradient(140deg, rgba(94, 161, 254, 0.36), rgba(38, 201, 212, 0.22))',
-                border: '1px solid rgba(150, 196, 255, 0.52)',
+                background: 'linear-gradient(135deg, rgba(61, 139, 253, 0.2), rgba(34, 201, 144, 0.12))',
+                border: '1px solid rgba(61, 139, 253, 0.3)',
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d6e9ff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d0e4ff" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                 <path d="M2 17l10 5 10-5" />
                 <path d="M2 12l10 5 10-5" />
               </svg>
             </div>
-            <span className="text-[13px] font-semibold tracking-[0.2em] uppercase text-[#edf5ff]">AETHRON</span>
+            <span className="text-[13px] font-bold tracking-[0.18em] uppercase text-[#e8f0ff]">AETHRON</span>
           </button>
 
-          <nav className="flex items-center gap-1.5 overflow-x-auto scrollbar-hide">
+          <div className="w-px h-6 bg-[rgba(120,160,220,0.1)]" />
+
+          <nav className="flex items-center gap-0.5 overflow-x-auto scrollbar-hide">
             {menuItems.map((item) => {
               const isActive = activeTab === item.id;
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className="nav-item h-10 px-3.5 rounded-xl text-[12px] font-semibold transition-all inline-flex items-center gap-1.5"
-                  style={isActive
-                    ? {
-                        color: '#eef5ff',
-                        border: '1px solid rgba(140, 183, 243, 0.44)',
-                        background: 'linear-gradient(180deg, rgba(89, 151, 236, 0.24), rgba(16, 28, 46, 0.38))',
-                        boxShadow: 'inset 0 0 0 1px rgba(143, 187, 245, 0.2)',
-                      }
-                    : {
-                        color: '#8fa8cb',
-                        border: '1px solid transparent',
-                        background: 'transparent',
-                      }}
+                  className="nav-item h-9 px-3.5 rounded-lg text-[12px] font-semibold inline-flex items-center gap-2 relative"
+                  style={{
+                    color: isActive ? '#eef5ff' : '#7b95b8',
+                    background: isActive ? 'rgba(61, 139, 253, 0.1)' : 'transparent',
+                    border: isActive ? '1px solid rgba(61, 139, 253, 0.2)' : '1px solid transparent',
+                    transition: 'all 180ms ease',
+                  }}
                 >
-                  <span className="opacity-90 scale-[0.9]">
+                  <span className="opacity-80 scale-[0.88]">
                     <NavIcon id={item.id} active={isActive} size={15} />
                   </span>
                   <span>{item.label}</span>
@@ -134,20 +130,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
 
           <div className="flex-1" />
 
-          <div className="hidden lg:flex items-center gap-2 rounded-xl px-2.5 py-1.5" style={{ background: 'rgba(15, 27, 45, 0.7)', border: '1px solid var(--color-border-subtle)' }}>
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#20d39b] opacity-60"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#20d39b]"></span>
+          <div className="hidden lg:flex items-center gap-2 rounded-lg px-2.5 py-1.5" style={{ background: 'rgba(14, 24, 42, 0.5)', border: '1px solid rgba(120, 160, 220, 0.08)' }}>
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22c990] opacity-50"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#22c990]"></span>
             </span>
-            <span className="text-[10px] uppercase tracking-[0.08em] text-[#a9c2e4] font-medium">Realtime</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#8ca3c4] font-medium">Live</span>
           </div>
 
           <button
-            className="h-10 px-4 rounded-xl text-[11px] font-semibold tracking-[0.03em] text-[#f7fbff] transition-all"
+            className="h-9 px-4 rounded-lg text-[11px] font-semibold tracking-[0.02em] text-white transition-all hover:brightness-110 active:scale-[0.98]"
             style={{
-              background: 'linear-gradient(140deg, #4f99f8 0%, #53b8f3 100%)',
-              border: '1px solid rgba(164, 205, 255, 0.75)',
-              boxShadow: '0 10px 22px rgba(36, 119, 221, 0.34)',
+              background: 'linear-gradient(135deg, #3d8bfd 0%, #2b7af0 100%)',
+              border: '1px solid rgba(100, 170, 255, 0.35)',
+              boxShadow: '0 4px 12px rgba(42, 110, 224, 0.2)',
             }}
             onClick={() => setActiveTab(TabView.ASK)}
           >
@@ -156,15 +152,15 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
         </div>
       </header>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 px-2 pb-[max(env(safe-area-inset-bottom),8px)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 px-3 pb-[max(env(safe-area-inset-bottom),6px)]">
         <div
-          className="rounded-2xl p-1.5"
+          className="rounded-2xl p-1"
           style={{
-            background: 'rgba(7, 13, 24, 0.92)',
-            border: '1px solid var(--color-border-subtle)',
-            boxShadow: '0 14px 36px rgba(4, 10, 24, 0.36)',
-            backdropFilter: 'blur(18px) saturate(145%)',
-            WebkitBackdropFilter: 'blur(18px) saturate(145%)',
+            background: 'rgba(6, 10, 18, 0.92)',
+            border: '1px solid rgba(120, 160, 220, 0.08)',
+            boxShadow: '0 -4px 24px rgba(0, 0, 0, 0.3)',
+            backdropFilter: 'blur(24px) saturate(130%)',
+            WebkitBackdropFilter: 'blur(24px) saturate(130%)',
           }}
         >
           <div className="flex items-stretch justify-around">
@@ -174,13 +170,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className="flex flex-col items-center justify-center gap-1 flex-1 py-2 rounded-xl relative"
-                  style={isActive ? { background: 'rgba(86, 149, 235, 0.2)' } : {}}
+                  className="flex flex-col items-center justify-center gap-0.5 flex-1 py-2 rounded-xl relative transition-all"
+                  style={isActive ? { background: 'rgba(61, 139, 253, 0.1)' } : {}}
                 >
                   <NavIcon id={item.id} active={isActive} />
-                  <span className="text-[9px] font-semibold" style={{ color: isActive ? '#eef5ff' : '#8fa8cb' }}>{item.shortLabel}</span>
+                  <span className="text-[9px] font-semibold" style={{ color: isActive ? '#eef5ff' : '#7b95b8' }}>{item.shortLabel}</span>
                   {isActive && (
-                    <span className="absolute top-1.5 w-1.5 h-1.5 rounded-full" style={{ background: '#9ed0ff' }} />
+                    <span className="absolute top-1 w-1 h-1 rounded-full bg-[#3d8bfd]" />
                   )}
                 </button>
               );

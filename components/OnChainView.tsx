@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Search, Wallet, ArrowUpRight, ArrowDownRight, ExternalLink, Copy, Check, Layers, Image, RefreshCw, Bell, BellRing, X, ChevronDown, Filter } from 'lucide-react';
+import { Search, Wallet, ArrowUpRight, ArrowDownRight, ExternalLink, Copy, Check, Layers, Image, RefreshCw, Bell, BellRing, X, ChevronDown, ListFilter as Filter } from 'lucide-react';
 
 type SubTab = 'wallet' | 'gas' | 'whales' | 'whale-alerts';
 
@@ -1389,7 +1389,7 @@ export const OnChainView: React.FC = () => {
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
             <p className="text-[10px] uppercase tracking-[0.12em] text-[#88a8cf] font-semibold">On-Chain Intelligence</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#edf4ff] tracking-[-0.02em] mt-1">Whale, Gas & Wallet Command</h2>
+            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#eaf2ff] tracking-[-0.02em] mt-1">Whale, Gas & Wallet Command</h2>
           </div>
           <span className="badge badge-accent text-[10px] uppercase tracking-[0.06em]">Realtime Monitor</span>
         </div>

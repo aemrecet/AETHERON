@@ -323,7 +323,7 @@ export const InsiderView: React.FC<InsiderViewProps> = ({ onCongressMemberClick,
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
             <p className="text-[10px] uppercase tracking-[0.12em] text-[#88a8cf] font-semibold">Insider Intelligence</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#edf4ff] tracking-[-0.02em] mt-1">Capital Movers Dashboard</h2>
+            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#eaf2ff] tracking-[-0.02em] mt-1">Capital Movers Dashboard</h2>
           </div>
           <span className="badge badge-accent text-[10px] uppercase tracking-[0.06em]">Live Tracking</span>
         </div>

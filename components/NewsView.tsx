@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { NewsItem } from '../types';
-import { RefreshCw, AlertTriangle } from 'lucide-react';
+import { RefreshCw, TriangleAlert as AlertTriangle } from 'lucide-react';
 import { fetchEconomicCalendar } from '../services/geminiService';
 
 interface NewsViewProps {
@@ -308,7 +308,7 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
                     ))}
                   </div>
 
-                  <p className="text-[12px] font-medium leading-snug text-[#edf4ff] line-clamp-2 flex-1">{item.title}</p>
+                  <p className="text-[12px] font-medium leading-snug text-[#eaf2ff] line-clamp-2 flex-1">{item.title}</p>
 
                   <div className="flex items-center gap-2 flex-wrap">
                     {tokens.length > 0 && (
@@ -323,7 +323,7 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
                     {entities.length > 0 && (
                       <div className="flex items-center gap-1">
                         <span className="text-[9px] text-[#6f8ab0]">Source:</span>
-                        <span className="text-[9px] text-[#a9bfdd]">{entities[0]}</span>
+                        <span className="text-[9px] text-[#9cb4d4]">{entities[0]}</span>
                       </div>
                     )}
 
@@ -344,9 +344,9 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
             <div className="card p-3 flex items-center gap-3">
               <AlertTriangle className="w-3.5 h-3.5 text-[#ffb066] shrink-0" />
               <span className="text-[9px] uppercase tracking-[0.08em] text-[#ffb066] font-semibold shrink-0">Next Event</span>
-              <span className="text-[11px] font-semibold text-[#edf4ff] truncate flex-1">{nextEvent.event}</span>
+              <span className="text-[11px] font-semibold text-[#eaf2ff] truncate flex-1">{nextEvent.event}</span>
               <span className="text-[9px] text-[#6f8ab0] font-mono tabular-nums shrink-0">{formatEventDate(nextEvent.date)}</span>
-              <span className={`text-[11px] font-bold font-mono tabular-nums shrink-0 ${nextEventDays <= 3 ? 'text-[#ff6b6b]' : nextEventDays <= 7 ? 'text-[#ffb066]' : 'text-[#9cd0ff]'}`}>
+              <span className={`text-[11px] font-bold font-mono tabular-nums shrink-0 ${nextEventDays <= 3 ? 'text-[#ff6b6b]' : nextEventDays <= 7 ? 'text-[#ffb066]' : 'text-[#7db8ff]'}`}>
                 {nextEventDays === 0 ? 'TODAY' : `${nextEventDays}d`}
               </span>
             </div>
@@ -370,7 +370,7 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
 
           {calendarLoading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="w-6 h-6 border-2 border-[#ffffff2a] border-t-[#9cd0ff] rounded-full animate-spin"></div>
+              <div className="w-6 h-6 border-2 border-[#ffffff2a] border-t-[#7db8ff] rounded-full animate-spin"></div>
             </div>
           ) : filteredCalendarEvents.length === 0 ? (
             <div className="p-10 card text-center text-[#6f8ab0]">No events found for this filter.</div>
@@ -395,10 +395,10 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
 
                     return (
                       <tr key={`${evt.date}-${evt.event}-${idx}`} className={`table-row table-row-stripe border-t border-[#ffffff10] ${isToday ? 'bg-[#ff6b6b14]' : ''}`}>
-                        <td className="px-2.5 py-2 text-[10px] text-[#a9bfdd] font-mono tabular-nums whitespace-nowrap">{formatEventDate(evt.date)}</td>
-                        <td className="px-2.5 py-2 text-[10px] text-[#a9bfdd]">{getCountryFlag(evt.country)}</td>
+                        <td className="px-2.5 py-2 text-[10px] text-[#9cb4d4] font-mono tabular-nums whitespace-nowrap">{formatEventDate(evt.date)}</td>
+                        <td className="px-2.5 py-2 text-[10px] text-[#9cb4d4]">{getCountryFlag(evt.country)}</td>
                         <td className="px-2.5 py-2">
-                          <span className="text-[11px] font-medium text-[#edf4ff] truncate block max-w-[320px]">{evt.event}</span>
+                          <span className="text-[11px] font-medium text-[#eaf2ff] truncate block max-w-[320px]">{evt.event}</span>
                           <span className="text-[9px] text-[#6f8ab0] truncate block max-w-[320px]">{evt.description}</span>
                         </td>
                         <td className="px-2.5 py-2 text-center">
@@ -416,7 +416,7 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
                           )}
                         </td>
                         <td className="px-2.5 py-2 text-right">
-                          <span className={`text-[10px] font-bold font-mono tabular-nums ${isToday ? 'text-[#ff6b6b]' : daysUntil <= 7 ? 'text-[#ffb066]' : 'text-[#a9bfdd]'}`}>
+                          <span className={`text-[10px] font-bold font-mono tabular-nums ${isToday ? 'text-[#ff6b6b]' : daysUntil <= 7 ? 'text-[#ffb066]' : 'text-[#9cb4d4]'}`}>
                             {isToday ? 'TODAY' : `${daysUntil}d`}
                           </span>
                         </td>

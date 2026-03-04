@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Stock, NewsItem } from '../types';
 import { StockChart } from './StockChart';
 import { askGemini } from '../services/geminiService';
-import { ArrowLeft, ExternalLink, Globe, Users, TrendingUp, TrendingDown, Building2, BarChart3, Activity, GitFork, Star, MessageCircle, Newspaper } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Globe, Users, TrendingUp, TrendingDown, Building2, ChartBar as BarChart3, Activity, GitFork, Star, MessageCircle, Newspaper } from 'lucide-react';
 
 interface StockDetailViewProps {
   stock: Stock;
@@ -134,7 +134,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
         <button
           onClick={onBack}
           className="flex items-center gap-1.5 text-[11px] font-medium card-interactive px-2.5 py-1.5 rounded-lg"
-          style={{ color: '#9cc8ff', border: '1px solid var(--color-border-subtle)', background: 'rgba(89, 129, 191, 0.14)' }}
+          style={{ color: '#7db8ff', border: '1px solid var(--color-border-subtle)', background: 'rgba(89, 129, 191, 0.14)' }}
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Back

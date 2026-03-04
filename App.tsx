@@ -99,17 +99,8 @@ const App: React.FC = () => {
     <div className="min-h-screen font-sans text-[var(--color-text-primary)] relative">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(760px 460px at 10% 8%, rgba(84, 149, 242, 0.19), transparent 72%), radial-gradient(700px 420px at 92% 10%, rgba(28, 169, 179, 0.16), transparent 74%), radial-gradient(620px 360px at 50% 100%, rgba(41, 100, 186, 0.12), transparent 74%)',
-          zIndex: 0,
-        }}
-      />
-
-      <main className="relative z-10 w-full pb-20 md:pt-[68px] md:pb-0 min-h-screen flex flex-col">
-        <div className={`flex-1 ${activeTab !== TabView.ASK ? 'px-3 sm:px-4 lg:px-8 pt-4 pb-8 max-w-[1680px] w-full mx-auto' : ''}`}>
+      <main className="relative z-10 w-full pb-20 md:pt-[60px] md:pb-0 min-h-screen flex flex-col">
+        <div className={`flex-1 ${activeTab !== TabView.ASK ? 'px-3 sm:px-4 lg:px-8 pt-5 pb-8 max-w-[1680px] w-full mx-auto' : ''}`}>
           {renderContent()}
         </div>
       </main>

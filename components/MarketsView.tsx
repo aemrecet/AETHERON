@@ -150,7 +150,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        stroke={isActive ? '#9cd0ff' : '#6583ab'}
+        stroke={isActive ? '#7db8ff' : '#6583ab'}
         style={{ opacity: isActive ? 1 : 0.5 }}
       >
         {isActive && isAsc ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
@@ -240,7 +240,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
               height="13"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#7f98bc"
+              stroke="#6b84a8"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"

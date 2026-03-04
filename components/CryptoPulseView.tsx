@@ -881,14 +881,14 @@ export const CryptoPulseView: React.FC = () => {
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
             <p className="text-[10px] uppercase tracking-[0.12em] text-[#88a8cf] font-semibold">Crypto Pulse</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#edf4ff] tracking-[-0.02em] mt-1">Market Structure & Liquidity Radar</h2>
+            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#eaf2ff] tracking-[-0.02em] mt-1">Market Structure & Liquidity Radar</h2>
           </div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1dd39a] opacity-60"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#1dd39a]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22c990] opacity-60"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22c990]"></span>
             </span>
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#a8c3e6] font-medium">Live {lastUpdate.toLocaleTimeString()}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#9cb4d4] font-medium">Live {lastUpdate.toLocaleTimeString()}</span>
           </div>
         </div>
       </div>

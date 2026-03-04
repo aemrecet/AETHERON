@@ -9,7 +9,7 @@ interface MetricCardProps {
 
 export const MetricCard: React.FC<MetricCardProps> = ({ stock, onClick }) => {
   const isPositive = stock.changePercent >= 0;
-  const chartColor = isPositive ? '#00c076' : '#ff3b3b';
+  const chartColor = isPositive ? '#0d9f6e' : '#dc2626';
   const chartGradientId = `gradient-${stock.symbol}`;
 
   return (
@@ -19,18 +19,18 @@ export const MetricCard: React.FC<MetricCardProps> = ({ stock, onClick }) => {
     >
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {stock.logo ? (
-          <div className="w-8 h-8 rounded-[3px] overflow-hidden shrink-0 flex items-center justify-center bg-[#111] border border-[#1e1e1e]">
+          <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 flex items-center justify-center bg-[#f4f5f7] border border-[#e2e5ea]">
             <img src={stock.logo} alt={stock.symbol} className="w-5 h-5 object-contain" />
           </div>
         ) : (
-          <div className="w-8 h-8 rounded-[3px] flex items-center justify-center shrink-0 text-[10px] font-bold text-[#555] bg-[#111] border border-[#1e1e1e] font-mono">
+          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 text-[10px] font-bold text-[#8b91a0] bg-[#f4f5f7] border border-[#e2e5ea] font-mono">
             {stock.symbol.slice(0, 2)}
           </div>
         )}
 
         <div className="min-w-0">
-          <p className="text-[12px] font-semibold text-white truncate font-mono">{stock.symbol}</p>
-          <p className="text-[10px] text-[#555] truncate">{stock.name}</p>
+          <p className="text-[12px] font-semibold text-[#0a0a23] truncate font-mono">{stock.symbol}</p>
+          <p className="text-[10px] text-[#8b91a0] truncate">{stock.name}</p>
         </div>
       </div>
 
@@ -49,10 +49,10 @@ export const MetricCard: React.FC<MetricCardProps> = ({ stock, onClick }) => {
       </div>
 
       <div className="text-right shrink-0 min-w-[80px]">
-        <p className="text-[12px] font-semibold text-white tabular-nums font-mono">
+        <p className="text-[12px] font-semibold text-[#0a0a23] tabular-nums font-mono">
           ${stock.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
         </p>
-        <span className={`inline-block text-[11px] font-semibold tabular-nums font-mono mt-0.5 ${isPositive ? 'text-[#00c076]' : 'text-[#ff3b3b]'}`}>
+        <span className={`inline-block text-[11px] font-semibold tabular-nums font-mono mt-0.5 ${isPositive ? 'text-[#0d9f6e]' : 'text-[#dc2626]'}`}>
           {isPositive ? '+' : ''}{stock.changePercent.toFixed(2)}%
         </span>
       </div>

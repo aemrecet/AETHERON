@@ -97,8 +97,8 @@ const CopyButton: React.FC<{ text: string }> = ({ text }) => {
     setTimeout(() => setCopied(false), 2000);
   };
   return (
-    <button onClick={handleCopy} className="text-[#555] hover:text-[#888] transition-colors">
-      {copied ? <Check className="w-3.5 h-3.5 text-[#10b981]" /> : <Copy className="w-3.5 h-3.5" />}
+    <button onClick={handleCopy} className="text-[#8b91a0] hover:text-[#4a4f5c] transition-colors">
+      {copied ? <Check className="w-3.5 h-3.5 text-[#0d9f6e]" /> : <Copy className="w-3.5 h-3.5" />}
     </button>
   );
 };
@@ -107,33 +107,33 @@ const GasCard: React.FC<{ chain: string; icon: string; color: string; data: { lo
   <div className={`${cardClass} p-2`}>
     <div className="flex items-center gap-2 mb-2.5">
       <span className="text-[11px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: `${color}20`, color }}>{icon}</span>
-      <span className="text-[13px] font-bold text-[#fff]">{chain}</span>
+      <span className="text-[13px] font-bold text-[#0a0a23]">{chain}</span>
     </div>
     {data ? (
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Slow</span>
-          <span className="text-[13px] font-bold text-[#10b981] tabular-nums font-mono">{data.low} Gwei</span>
+          <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Slow</span>
+          <span className="text-[13px] font-bold text-[#0d9f6e] tabular-nums font-mono">{data.low} Gwei</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Standard</span>
+          <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Standard</span>
           <span className="text-[13px] font-bold text-[#f59e0b] tabular-nums font-mono">{data.average} Gwei</span>
         </div>
         <div className="flex items-center justify-between">
-          <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Fast</span>
-          <span className="text-[13px] font-bold text-[#ef4444] tabular-nums font-mono">{data.fast} Gwei</span>
+          <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Fast</span>
+          <span className="text-[13px] font-bold text-[#dc2626] tabular-nums font-mono">{data.fast} Gwei</span>
         </div>
         {data.baseFee !== undefined && data.baseFee > 0 && (
-          <div className="pt-1.5 border-t border-[#1e1e1e]">
+          <div className="pt-1.5 border-t border-[#e2e5ea]">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Base Fee</span>
-              <span className="text-[12px] text-[#888] tabular-nums font-mono">{data.baseFee} Gwei</span>
+              <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Base Fee</span>
+              <span className="text-[12px] text-[#4a4f5c] tabular-nums font-mono">{data.baseFee} Gwei</span>
             </div>
           </div>
         )}
       </div>
     ) : (
-      <p className="text-[12px] text-[#555]">Unavailable</p>
+      <p className="text-[12px] text-[#8b91a0]">Unavailable</p>
     )}
   </div>
 );
@@ -402,20 +402,20 @@ export const OnChainView: React.FC = () => {
     <div className="space-y-3">
       <div className="flex gap-2">
         <div className="relative flex-1">
-          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#555]" />
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#8b91a0]" />
           <input
             type="text"
             placeholder="Enter Ethereum (0x...) or Solana address"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && lookupWallet()}
-            className="w-full bg-[#0d0d0d] border border-[#1e1e1e] rounded-[4px] pl-8 pr-3 py-2 text-[12px] text-[#fff] focus:outline-none focus:border-[#2762bc] focus:ring-1 focus:ring-[#2762bc] transition-colors placeholder-[#555]"
+            className="w-full bg-[#fff] border border-[#e2e5ea] rounded-[4px] pl-8 pr-3 py-2 text-[12px] text-[#0a0a23] focus:outline-none focus:border-[#2762bc] focus:ring-1 focus:ring-[#2762bc] transition-colors placeholder-[#555]"
           />
         </div>
         <button
           onClick={lookupWallet}
           disabled={walletLoading}
-          className="px-4 py-2 bg-[#2762bc] hover:bg-[#3578d8] text-white text-[12px] font-semibold rounded-[4px] transition-colors disabled:opacity-50"
+          className="px-4 py-2 bg-[#2762bc] hover:bg-[#3578d8] text-[#0a0a23] text-[12px] font-semibold rounded-[4px] transition-colors disabled:opacity-50"
         >
           {walletLoading ? 'Loading...' : 'Lookup'}
         </button>
@@ -423,15 +423,15 @@ export const OnChainView: React.FC = () => {
 
       {walletError && (
         <div className={`${cardClass} p-3`}>
-          <p className="text-[#ef4444] text-[12px]">{walletError}</p>
+          <p className="text-[#dc2626] text-[12px]">{walletError}</p>
         </div>
       )}
 
       {walletLoading && (
         <div className="flex items-center justify-center py-10">
           <div className="flex flex-col items-center gap-2">
-            <div className="w-5 h-5 border-2 border-[#1e1e1e] border-t-[#5a9aee] rounded-full animate-spin"></div>
-            <p className="text-[#555] text-[11px]">Scanning blockchain...</p>
+            <div className="w-5 h-5 border-2 border-[#e2e5ea] border-t-[#5a9aee] rounded-full animate-spin"></div>
+            <p className="text-[#8b91a0] text-[11px]">Scanning blockchain...</p>
           </div>
         </div>
       )}
@@ -441,22 +441,22 @@ export const OnChainView: React.FC = () => {
           <div className={`${cardClass} p-3`}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-[4px] bg-[#111] flex items-center justify-center border border-[#1e1e1e]">
-                  <Wallet className="w-4 h-4 text-[#5a9aee]" />
+                <div className="w-8 h-8 rounded-[4px] bg-[#f4f5f7] flex items-center justify-center border border-[#e2e5ea]">
+                  <Wallet className="w-4 h-4 text-[#1a6bdb]" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[12px] font-mono text-[#fff]">{shortAddr(walletData.address)}</span>
+                    <span className="text-[12px] font-mono text-[#0a0a23]">{shortAddr(walletData.address)}</span>
                     <CopyButton text={walletData.address} />
                   </div>
-                  <p className="text-[10px] text-[#555] font-mono">{walletData.address}</p>
+                  <p className="text-[10px] text-[#8b91a0] font-mono">{walletData.address}</p>
                 </div>
               </div>
               <a
                 href={`https://etherscan.io/address/${walletData.address}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#5a9aee] hover:text-[#888] transition-colors"
+                className="text-[#1a6bdb] hover:text-[#4a4f5c] transition-colors"
               >
                 <ExternalLink className="w-4 h-4" />
               </a>
@@ -464,22 +464,22 @@ export const OnChainView: React.FC = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">ETH Balance</p>
-                <p className="text-[16px] font-bold text-[#5a9aee] tabular-nums font-mono">{walletData.ethBalance.toFixed(4)}</p>
-                <p className="text-[10px] text-[#888] font-mono tabular-nums">{formatNum(walletData.ethBalance * (walletData.ethPrice || 0))}</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium mb-0.5">ETH Balance</p>
+                <p className="text-[16px] font-bold text-[#1a6bdb] tabular-nums font-mono">{walletData.ethBalance.toFixed(4)}</p>
+                <p className="text-[10px] text-[#4a4f5c] font-mono tabular-nums">{formatNum(walletData.ethBalance * (walletData.ethPrice || 0))}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Tokens</p>
-                <p className="text-[16px] font-bold text-[#fff] tabular-nums font-mono">{walletData.tokens?.length || 0}</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium mb-0.5">Tokens</p>
+                <p className="text-[16px] font-bold text-[#0a0a23] tabular-nums font-mono">{walletData.tokens?.length || 0}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Transactions</p>
-                <p className="text-[16px] font-bold text-[#fff] tabular-nums font-mono">{walletData.transactions?.length || 0}</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium mb-0.5">Transactions</p>
+                <p className="text-[16px] font-bold text-[#0a0a23] tabular-nums font-mono">{walletData.transactions?.length || 0}</p>
               </div>
             </div>
           </div>
 
-          <div className="flex gap-0 border-b border-[#1e1e1e]">
+          <div className="flex gap-0 border-b border-[#e2e5ea]">
             {(['tokens', 'txns', 'nfts'] as const).map(tab => (
               <button
                 key={tab}
@@ -498,34 +498,34 @@ export const OnChainView: React.FC = () => {
             <div className={`${cardClass} overflow-hidden`}>
               <table className="w-full">
                 <thead>
-                  <tr className="table-header border-b border-[#1e1e1e]">
-                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Token</th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Balance</th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 hidden sm:table-cell font-medium">Contract</th>
+                  <tr className="table-header border-b border-[#e2e5ea]">
+                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Token</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Balance</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 hidden sm:table-cell font-medium">Contract</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(walletData.tokens || []).slice(0, 50).map((token, i) => (
-                    <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
+                    <tr key={i} className="table-row table-row-stripe border-b border-[#eef0f4]">
                       <td className="px-2 py-1.5">
                         <div>
-                          <span className="text-[12px] font-semibold text-[#fff]">{token.symbol || '???'}</span>
-                          <span className="text-[10px] text-[#555] ml-2 hidden sm:inline">{token.name}</span>
+                          <span className="text-[12px] font-semibold text-[#0a0a23]">{token.symbol || '???'}</span>
+                          <span className="text-[10px] text-[#8b91a0] ml-2 hidden sm:inline">{token.name}</span>
                         </div>
                       </td>
-                      <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#fff] tabular-nums font-mono">
+                      <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#0a0a23] tabular-nums font-mono">
                         {token.balance >= 1000 ? formatNum(token.balance, '') : token.balance.toFixed(4)}
                       </td>
                       <td className="px-2 py-1.5 text-right hidden sm:table-cell">
                         <div className="flex items-center justify-end gap-1.5">
-                          <span className="text-[10px] text-[#555] font-mono">{shortAddr(token.contractAddress)}</span>
+                          <span className="text-[10px] text-[#8b91a0] font-mono">{shortAddr(token.contractAddress)}</span>
                           <CopyButton text={token.contractAddress} />
                         </div>
                       </td>
                     </tr>
                   ))}
                   {(walletData.tokens || []).length === 0 && (
-                    <tr><td colSpan={3} className="px-2 py-6 text-center text-[#555] text-[12px]">No tokens found</td></tr>
+                    <tr><td colSpan={3} className="px-2 py-6 text-center text-[#8b91a0] text-[12px]">No tokens found</td></tr>
                   )}
                 </tbody>
               </table>
@@ -537,45 +537,45 @@ export const OnChainView: React.FC = () => {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="table-header border-b border-[#1e1e1e]">
-                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Hash</th>
-                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 hidden sm:table-cell font-medium">From/To</th>
-                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Value</th>
-                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Age</th>
+                    <tr className="table-header border-b border-[#e2e5ea]">
+                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Hash</th>
+                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 hidden sm:table-cell font-medium">From/To</th>
+                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Value</th>
+                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Age</th>
                     </tr>
                   </thead>
                   <tbody>
                     {(walletData.transactions || []).map((tx, i) => {
                       const isOutgoing = tx.from?.toLowerCase() === walletData.address.toLowerCase();
                       return (
-                        <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
+                        <tr key={i} className="table-row table-row-stripe border-b border-[#eef0f4]">
                           <td className="px-2 py-1.5">
                             <div className="flex items-center gap-2">
                               <div className={`w-5 h-5 rounded-[4px] flex items-center justify-center ${isOutgoing ? 'bg-[rgba(255,59,59,0.1)]' : 'bg-[rgba(0,192,118,0.1)]'}`}>
-                                {isOutgoing ? <ArrowUpRight className="w-3 h-3 text-[#ef4444]" /> : <ArrowDownRight className="w-3 h-3 text-[#10b981]" />}
+                                {isOutgoing ? <ArrowUpRight className="w-3 h-3 text-[#dc2626]" /> : <ArrowDownRight className="w-3 h-3 text-[#0d9f6e]" />}
                               </div>
-                              <a href={`https://etherscan.io/tx/${tx.hash}`} target="_blank" rel="noopener noreferrer" className="text-[11px] font-mono text-[#5a9aee] hover:text-[#888] transition-colors">
+                              <a href={`https://etherscan.io/tx/${tx.hash}`} target="_blank" rel="noopener noreferrer" className="text-[11px] font-mono text-[#1a6bdb] hover:text-[#4a4f5c] transition-colors">
                                 {shortAddr(tx.hash)}
                               </a>
-                              {tx.isError === '1' && <span className="text-[8px] bg-[rgba(255,59,59,0.1)] text-[#ef4444] px-1.5 py-0.5 rounded-full font-bold">FAIL</span>}
+                              {tx.isError === '1' && <span className="text-[8px] bg-[rgba(255,59,59,0.1)] text-[#dc2626] px-1.5 py-0.5 rounded-full font-bold">FAIL</span>}
                             </div>
                           </td>
                           <td className="px-2 py-1.5 hidden sm:table-cell">
-                            <div className="text-[10px] text-[#888] font-mono">
+                            <div className="text-[10px] text-[#4a4f5c] font-mono">
                               {isOutgoing ? `To: ${shortAddr(tx.to)}` : `From: ${shortAddr(tx.from)}`}
                             </div>
                           </td>
                           <td className="px-2 py-1.5 text-right">
-                            <span className={`text-[12px] font-bold tabular-nums font-mono ${isOutgoing ? 'text-[#ef4444]' : 'text-[#10b981]'}`}>
+                            <span className={`text-[12px] font-bold tabular-nums font-mono ${isOutgoing ? 'text-[#dc2626]' : 'text-[#0d9f6e]'}`}>
                               {isOutgoing ? '-' : '+'}{typeof tx.value === 'number' ? tx.value.toFixed(4) : parseFloat(String(tx.value || '0')).toFixed(4)} ETH
                             </span>
                           </td>
-                          <td className="px-2 py-1.5 text-right text-[10px] text-[#555] font-mono tabular-nums">{timeAgo(tx.timeStamp)}</td>
+                          <td className="px-2 py-1.5 text-right text-[10px] text-[#8b91a0] font-mono tabular-nums">{timeAgo(tx.timeStamp)}</td>
                         </tr>
                       );
                     })}
                     {(walletData.transactions || []).length === 0 && (
-                      <tr><td colSpan={4} className="px-2 py-6 text-center text-[#555] text-[12px]">No transactions found</td></tr>
+                      <tr><td colSpan={4} className="px-2 py-6 text-center text-[#8b91a0] text-[12px]">No transactions found</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -588,17 +588,17 @@ export const OnChainView: React.FC = () => {
               {nfts.length > 0 ? (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 p-3">
                   {nfts.slice(0, 40).map((nft, i) => (
-                    <div key={i} className="bg-[#111] border border-[#1e1e1e] rounded-[4px] p-2">
-                      <div className="w-full aspect-square rounded-[4px] bg-[#0d0d0d] flex items-center justify-center mb-1.5 border border-[#1e1e1e]">
-                        <Image className="w-6 h-6 text-[#333]" />
+                    <div key={i} className="bg-[#f4f5f7] border border-[#e2e5ea] rounded-[4px] p-2">
+                      <div className="w-full aspect-square rounded-[4px] bg-[#fff] flex items-center justify-center mb-1.5 border border-[#e2e5ea]">
+                        <Image className="w-6 h-6 text-[#c8cdd5]" />
                       </div>
-                      <p className="text-[10px] font-semibold text-[#fff] truncate">{nft.tokenName || 'Unknown'}</p>
-                      <p className="text-[9px] text-[#555] font-mono">#{nft.tokenId?.slice(0, 8)}</p>
+                      <p className="text-[10px] font-semibold text-[#0a0a23] truncate">{nft.tokenName || 'Unknown'}</p>
+                      <p className="text-[9px] text-[#8b91a0] font-mono">#{nft.tokenId?.slice(0, 8)}</p>
                     </div>
                   ))}
                 </div>
               ) : (
-                <div className="px-3 py-6 text-center text-[#555] text-[12px]">No NFTs found</div>
+                <div className="px-3 py-6 text-center text-[#8b91a0] text-[12px]">No NFTs found</div>
               )}
             </div>
           )}
@@ -610,23 +610,23 @@ export const OnChainView: React.FC = () => {
           <div className={`${cardClass} p-3`}>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-[4px] bg-[#111] flex items-center justify-center border border-[#1e1e1e]">
-                  <span className="text-[10px] font-bold font-mono text-[#888]">SOL</span>
+                <div className="w-8 h-8 rounded-[4px] bg-[#f4f5f7] flex items-center justify-center border border-[#e2e5ea]">
+                  <span className="text-[10px] font-bold font-mono text-[#4a4f5c]">SOL</span>
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[13px] font-mono text-[#fff]">{shortAddr(solWalletData.address)}</span>
-                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#111] text-[#888] font-bold border border-[#1e1e1e]">SOLANA</span>
+                    <span className="text-[13px] font-mono text-[#0a0a23]">{shortAddr(solWalletData.address)}</span>
+                    <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#f4f5f7] text-[#4a4f5c] font-bold border border-[#e2e5ea]">SOLANA</span>
                     <CopyButton text={solWalletData.address} />
                   </div>
-                  <p className="text-[10px] text-[#555] font-mono">{solWalletData.address}</p>
+                  <p className="text-[10px] text-[#8b91a0] font-mono">{solWalletData.address}</p>
                 </div>
               </div>
               <a
                 href={`https://solscan.io/account/${solWalletData.address}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#888] hover:text-[#888] transition-colors"
+                className="text-[#4a4f5c] hover:text-[#4a4f5c] transition-colors"
               >
                 <ExternalLink className="w-4 h-4" />
               </a>
@@ -634,22 +634,22 @@ export const OnChainView: React.FC = () => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">SOL Balance</p>
-                <p className="text-[16px] font-bold text-[#888] tabular-nums font-mono">{solWalletData.solBalance?.toFixed(4)}</p>
-                <p className="text-[10px] text-[#888] font-mono tabular-nums">{formatNum(solWalletData.solBalance * (solWalletData.solPrice || 0))}</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium mb-0.5">SOL Balance</p>
+                <p className="text-[16px] font-bold text-[#4a4f5c] tabular-nums font-mono">{solWalletData.solBalance?.toFixed(4)}</p>
+                <p className="text-[10px] text-[#4a4f5c] font-mono tabular-nums">{formatNum(solWalletData.solBalance * (solWalletData.solPrice || 0))}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">SPL Tokens</p>
-                <p className="text-[16px] font-bold text-[#fff] tabular-nums font-mono">{solWalletData.tokens?.length || 0}</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium mb-0.5">SPL Tokens</p>
+                <p className="text-[16px] font-bold text-[#0a0a23] tabular-nums font-mono">{solWalletData.tokens?.length || 0}</p>
               </div>
               <div>
-                <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Transactions</p>
-                <p className="text-[16px] font-bold text-[#fff] tabular-nums font-mono">{solWalletData.transactions?.length || 0}</p>
+                <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium mb-0.5">Transactions</p>
+                <p className="text-[16px] font-bold text-[#0a0a23] tabular-nums font-mono">{solWalletData.transactions?.length || 0}</p>
               </div>
             </div>
           </div>
 
-          <div className="flex gap-0 border-b border-[#1e1e1e]">
+          <div className="flex gap-0 border-b border-[#e2e5ea]">
             {(['tokens', 'txns'] as const).map(tab => (
               <button
                 key={tab}
@@ -667,33 +667,33 @@ export const OnChainView: React.FC = () => {
             <div className={`${cardClass} overflow-hidden`}>
               <table className="w-full">
                 <thead>
-                  <tr className="table-header border-b border-[#1e1e1e]">
-                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Token Mint</th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Balance</th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 hidden sm:table-cell font-medium">Explorer</th>
+                  <tr className="table-header border-b border-[#e2e5ea]">
+                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Token Mint</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Balance</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 hidden sm:table-cell font-medium">Explorer</th>
                   </tr>
                 </thead>
                 <tbody>
                   {(solWalletData.tokens || []).map((token: any, i: number) => (
-                    <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
+                    <tr key={i} className="table-row table-row-stripe border-b border-[#eef0f4]">
                       <td className="px-2 py-1.5">
                         <div className="flex items-center gap-2">
-                          <span className="text-[12px] font-mono text-[#fff]">{shortAddr(token.mint)}</span>
+                          <span className="text-[12px] font-mono text-[#0a0a23]">{shortAddr(token.mint)}</span>
                           <CopyButton text={token.mint} />
                         </div>
                       </td>
-                      <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#fff] tabular-nums font-mono">
+                      <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#0a0a23] tabular-nums font-mono">
                         {token.balance >= 1000 ? formatNum(token.balance, '') : token.balance.toFixed(4)}
                       </td>
                       <td className="px-2 py-1.5 text-right hidden sm:table-cell">
-                        <a href={`https://solscan.io/token/${token.mint}`} target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#888] hover:text-[#888] transition-colors">
+                        <a href={`https://solscan.io/token/${token.mint}`} target="_blank" rel="noopener noreferrer" className="text-[10px] text-[#4a4f5c] hover:text-[#4a4f5c] transition-colors">
                           Solscan
                         </a>
                       </td>
                     </tr>
                   ))}
                   {(solWalletData.tokens || []).length === 0 && (
-                    <tr><td colSpan={3} className="px-2 py-6 text-center text-[#555] text-[12px]">No SPL tokens found</td></tr>
+                    <tr><td colSpan={3} className="px-2 py-6 text-center text-[#8b91a0] text-[12px]">No SPL tokens found</td></tr>
                   )}
                 </tbody>
               </table>
@@ -705,36 +705,36 @@ export const OnChainView: React.FC = () => {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="table-header border-b border-[#1e1e1e]">
-                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Signature</th>
-                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 hidden sm:table-cell font-medium">Slot</th>
-                      <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Status</th>
-                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Age</th>
+                    <tr className="table-header border-b border-[#e2e5ea]">
+                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Signature</th>
+                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 hidden sm:table-cell font-medium">Slot</th>
+                      <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Status</th>
+                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Age</th>
                     </tr>
                   </thead>
                   <tbody>
                     {(solWalletData.transactions || []).map((tx: any, i: number) => (
-                      <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
+                      <tr key={i} className="table-row table-row-stripe border-b border-[#eef0f4]">
                         <td className="px-2 py-1.5">
-                          <a href={`https://solscan.io/tx/${tx.signature}`} target="_blank" rel="noopener noreferrer" className="text-[11px] font-mono text-[#888] hover:text-[#888] transition-colors">
+                          <a href={`https://solscan.io/tx/${tx.signature}`} target="_blank" rel="noopener noreferrer" className="text-[11px] font-mono text-[#4a4f5c] hover:text-[#4a4f5c] transition-colors">
                             {shortAddr(tx.signature)}
                           </a>
                         </td>
                         <td className="px-2 py-1.5 text-right hidden sm:table-cell">
-                          <span className="text-[11px] text-[#888] tabular-nums font-mono">{tx.slot?.toLocaleString()}</span>
+                          <span className="text-[11px] text-[#4a4f5c] tabular-nums font-mono">{tx.slot?.toLocaleString()}</span>
                         </td>
                         <td className="px-2 py-1.5 text-center">
                           {tx.err ? (
-                            <span className="text-[9px] bg-[rgba(255,59,59,0.1)] text-[#ef4444] px-2 py-0.5 rounded-full font-bold">FAIL</span>
+                            <span className="text-[9px] bg-[rgba(255,59,59,0.1)] text-[#dc2626] px-2 py-0.5 rounded-full font-bold">FAIL</span>
                           ) : (
-                            <span className="text-[9px] bg-[rgba(0,192,118,0.1)] text-[#10b981] px-2 py-0.5 rounded-full font-bold">OK</span>
+                            <span className="text-[9px] bg-[rgba(0,192,118,0.1)] text-[#0d9f6e] px-2 py-0.5 rounded-full font-bold">OK</span>
                           )}
                         </td>
-                        <td className="px-2 py-1.5 text-right text-[10px] text-[#555] font-mono tabular-nums">{tx.blockTime ? timeAgo(String(tx.blockTime)) : '-'}</td>
+                        <td className="px-2 py-1.5 text-right text-[10px] text-[#8b91a0] font-mono tabular-nums">{tx.blockTime ? timeAgo(String(tx.blockTime)) : '-'}</td>
                       </tr>
                     ))}
                     {(solWalletData.transactions || []).length === 0 && (
-                      <tr><td colSpan={4} className="px-2 py-6 text-center text-[#555] text-[12px]">No transactions found</td></tr>
+                      <tr><td colSpan={4} className="px-2 py-6 text-center text-[#8b91a0] text-[12px]">No transactions found</td></tr>
                     )}
                   </tbody>
                 </table>
@@ -769,17 +769,17 @@ export const OnChainView: React.FC = () => {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-[14px] font-bold text-[#fff]">Multi-Chain Gas Tracker</h3>
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Live gas prices across networks</p>
+            <h3 className="text-[14px] font-bold text-[#0a0a23]">Multi-Chain Gas Tracker</h3>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Live gas prices across networks</p>
           </div>
-          <button onClick={fetchGas} disabled={gasLoading} className="p-2 rounded-[4px] bg-[#111] hover:bg-[#161616] transition-colors border border-[#1e1e1e]">
-            <RefreshCw className={`w-4 h-4 text-[#888] ${gasLoading ? 'animate-spin' : ''}`} />
+          <button onClick={fetchGas} disabled={gasLoading} className="p-2 rounded-[4px] bg-[#f4f5f7] hover:bg-[#f4f5f7] transition-colors border border-[#e2e5ea]">
+            <RefreshCw className={`w-4 h-4 text-[#4a4f5c] ${gasLoading ? 'animate-spin' : ''}`} />
           </button>
         </div>
 
         {gasLoading && !gasData ? (
           <div className="flex items-center justify-center py-12">
-            <div className="w-6 h-6 border-2 border-[#1e1e1e] border-t-[#5a9aee] rounded-full animate-spin"></div>
+            <div className="w-6 h-6 border-2 border-[#e2e5ea] border-t-[#5a9aee] rounded-full animate-spin"></div>
           </div>
         ) : (
           <>
@@ -793,22 +793,22 @@ export const OnChainView: React.FC = () => {
               <div className={`${cardClass} p-2`}>
                 <div className="flex items-center gap-2 mb-2.5">
                   <span className="text-[11px] font-bold font-mono px-1.5 py-0.5 rounded" style={{ background: '#a855f720', color: '#a855f7' }}>SOL</span>
-                  <span className="text-[13px] font-bold text-[#fff]">Solana</span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#111] text-[#888] border border-[#1e1e1e]">AVG</span>
+                  <span className="text-[13px] font-bold text-[#0a0a23]">Solana</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#f4f5f7] text-[#4a4f5c] border border-[#e2e5ea]">AVG</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">TX Fee</span>
-                    <span className="text-[13px] font-bold text-[#10b981] tabular-nums font-mono">~0.000005 SOL</span>
+                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">TX Fee</span>
+                    <span className="text-[13px] font-bold text-[#0d9f6e] tabular-nums font-mono">~0.000005 SOL</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Priority Fee</span>
-                    <span className="text-[13px] font-bold text-[#888] tabular-nums font-mono">~0.00001 SOL</span>
+                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Priority Fee</span>
+                    <span className="text-[13px] font-bold text-[#4a4f5c] tabular-nums font-mono">~0.00001 SOL</span>
                   </div>
-                  <div className="pt-1.5 border-t border-[#1e1e1e]">
+                  <div className="pt-1.5 border-t border-[#e2e5ea]">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Est. Cost</span>
-                      <span className="text-[12px] text-[#888] tabular-nums font-mono">~$0.002</span>
+                      <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Est. Cost</span>
+                      <span className="text-[12px] text-[#4a4f5c] tabular-nums font-mono">~$0.002</span>
                     </div>
                   </div>
                 </div>
@@ -816,23 +816,23 @@ export const OnChainView: React.FC = () => {
 
               <div className={`${cardClass} p-2`}>
                 <div className="flex items-center gap-2 mb-2.5">
-                  <span className="text-[11px] font-bold font-mono text-[#fff]">AVAX</span>
-                  <span className="text-[13px] font-bold text-[#fff]">Avalanche</span>
-                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#111] text-[#888] border border-[#1e1e1e]">AVG</span>
+                  <span className="text-[11px] font-bold font-mono text-[#0a0a23]">AVAX</span>
+                  <span className="text-[13px] font-bold text-[#0a0a23]">Avalanche</span>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#f4f5f7] text-[#4a4f5c] border border-[#e2e5ea]">AVG</span>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Gas Price</span>
-                    <span className="text-[13px] font-bold text-[#ef4444] tabular-nums font-mono">25 nAVAX</span>
+                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Gas Price</span>
+                    <span className="text-[13px] font-bold text-[#dc2626] tabular-nums font-mono">25 nAVAX</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Simple TX</span>
+                    <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Simple TX</span>
                     <span className="text-[13px] font-bold text-[#f59e0b] tabular-nums font-mono">~0.000525 AVAX</span>
                   </div>
-                  <div className="pt-1.5 border-t border-[#1e1e1e]">
+                  <div className="pt-1.5 border-t border-[#e2e5ea]">
                     <div className="flex items-center justify-between">
-                      <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Est. Cost</span>
-                      <span className="text-[12px] text-[#888] tabular-nums font-mono">~$0.02</span>
+                      <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Est. Cost</span>
+                      <span className="text-[12px] text-[#4a4f5c] tabular-nums font-mono">~$0.02</span>
                     </div>
                   </div>
                 </div>
@@ -842,28 +842,28 @@ export const OnChainView: React.FC = () => {
         )}
 
         {gasData?.lastUpdated && (
-          <p className="text-[10px] text-[#555] text-right font-mono tabular-nums">
+          <p className="text-[10px] text-[#8b91a0] text-right font-mono tabular-nums">
             Updated {timeAgo(gasData.lastUpdated)}
           </p>
         )}
 
         {ethAvgGas > 0 && (
           <div className={`${cardClass} p-3`}>
-            <h4 className="text-[12px] font-bold text-[#fff] mb-2">Estimated Transaction Costs (Ethereum)</h4>
-            <p className="text-[10px] text-[#555] mb-2">Based on current standard gas price of <span className="font-mono tabular-nums">{ethAvgGas} Gwei</span> · ETH ≈ <span className="font-mono tabular-nums">${ethPrice.toLocaleString()}</span></p>
+            <h4 className="text-[12px] font-bold text-[#0a0a23] mb-2">Estimated Transaction Costs (Ethereum)</h4>
+            <p className="text-[10px] text-[#8b91a0] mb-2">Based on current standard gas price of <span className="font-mono tabular-nums">{ethAvgGas} Gwei</span> · ETH ≈ <span className="font-mono tabular-nums">${ethPrice.toLocaleString()}</span></p>
             <div className="space-y-2">
               {txTypes.map(tx => {
                 const costUsd = estimateCostUsd(tx.gasUnits, ethAvgGas);
                 const costGwei = tx.gasUnits * ethAvgGas;
                 return (
-                  <div key={tx.label} className="flex items-center justify-between py-1.5 border-b border-[#151515] last:border-0">
+                  <div key={tx.label} className="flex items-center justify-between py-1.5 border-b border-[#eef0f4] last:border-0">
                     <div className="flex items-center gap-3">
-                      <span className="text-[11px] text-[#888]">{tx.label}</span>
-                      <span className="text-[9px] text-[#555] font-mono tabular-nums">{tx.gasUnits.toLocaleString()} gas</span>
+                      <span className="text-[11px] text-[#4a4f5c]">{tx.label}</span>
+                      <span className="text-[9px] text-[#8b91a0] font-mono tabular-nums">{tx.gasUnits.toLocaleString()} gas</span>
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="text-[10px] text-[#555] tabular-nums font-mono">{(costGwei / 1e9).toFixed(6)} ETH</span>
-                      <span className="text-[12px] font-bold text-[#5a9aee] tabular-nums font-mono">${costUsd.toFixed(2)}</span>
+                      <span className="text-[10px] text-[#8b91a0] tabular-nums font-mono">{(costGwei / 1e9).toFixed(6)} ETH</span>
+                      <span className="text-[12px] font-bold text-[#1a6bdb] tabular-nums font-mono">${costUsd.toFixed(2)}</span>
                     </div>
                   </div>
                 );
@@ -873,25 +873,25 @@ export const OnChainView: React.FC = () => {
         )}
 
         <div className={`${cardClass} p-3`}>
-          <h4 className="text-[12px] font-bold text-[#fff] mb-2">Gas Price Guide</h4>
+          <h4 className="text-[12px] font-bold text-[#0a0a23] mb-2">Gas Price Guide</h4>
           <div className="space-y-1.5">
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-[rgba(0,192,118,0.1)]"></div>
-              <span className="text-[11px] text-[#888]"><span className="text-[#fff] font-semibold">Slow</span> - Typically confirms in 5-10 min, best for non-urgent transfers</span>
+              <span className="text-[11px] text-[#4a4f5c]"><span className="text-[#0a0a23] font-semibold">Slow</span> - Typically confirms in 5-10 min, best for non-urgent transfers</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-[rgba(245,166,35,0.1)]"></div>
-              <span className="text-[11px] text-[#888]"><span className="text-[#fff] font-semibold">Standard</span> - Confirms in 1-3 min, recommended for most transactions</span>
+              <span className="text-[11px] text-[#4a4f5c]"><span className="text-[#0a0a23] font-semibold">Standard</span> - Confirms in 1-3 min, recommended for most transactions</span>
             </div>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-[rgba(255,59,59,0.1)]"></div>
-              <span className="text-[11px] text-[#888]"><span className="text-[#fff] font-semibold">Fast</span> - Next block confirmation, use for time-sensitive trades</span>
+              <span className="text-[11px] text-[#4a4f5c]"><span className="text-[#0a0a23] font-semibold">Fast</span> - Next block confirmation, use for time-sensitive trades</span>
             </div>
           </div>
-          <div className="mt-3 pt-3 border-t border-[#1e1e1e] space-y-1.5">
-            <p className="text-[10px] text-[#888]">Gas = computational work required. More complex operations (swaps, mints) use more gas units.</p>
-            <p className="text-[10px] text-[#888]">EIP-1559: Base fee is burned, priority fee (tip) goes to validators. Total fee = (Base Fee + Priority Fee) x Gas Units.</p>
-            <p className="text-[10px] text-[#888]">L2 chains (Polygon, Arbitrum) and alt-L1s (Solana, Avalanche) offer significantly lower fees than Ethereum mainnet.</p>
+          <div className="mt-3 pt-3 border-t border-[#e2e5ea] space-y-1.5">
+            <p className="text-[10px] text-[#4a4f5c]">Gas = computational work required. More complex operations (swaps, mints) use more gas units.</p>
+            <p className="text-[10px] text-[#4a4f5c]">EIP-1559: Base fee is burned, priority fee (tip) goes to validators. Total fee = (Base Fee + Priority Fee) x Gas Units.</p>
+            <p className="text-[10px] text-[#4a4f5c]">L2 chains (Polygon, Arbitrum) and alt-L1s (Solana, Avalanche) offer significantly lower fees than Ethereum mainnet.</p>
           </div>
         </div>
       </div>
@@ -919,28 +919,28 @@ export const OnChainView: React.FC = () => {
       <div className="space-y-2">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
           <div>
-            <h3 className="text-[14px] font-bold text-[#fff] flex items-center gap-2">
+            <h3 className="text-[14px] font-bold text-[#0a0a23] flex items-center gap-2">
               Whale Alerts
               <div className="w-1.5 h-1.5 rounded-full bg-[rgba(0,192,118,0.1)] animate-pulse"></div>
             </h3>
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Track large crypto transactions across chains</p>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Track large crypto transactions across chains</p>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => { setShowAlertPanel(!showAlertPanel); setNewAlertNotifs(0); }}
-              className={`relative p-2 rounded-[4px] transition-all ${showAlertPanel ? 'bg-[#111] text-[#5a9aee] border border-[#1e1e1e]' : 'bg-[#111] text-[#888] hover:text-[#fff] hover:bg-[#161616] border border-[#1e1e1e]'}`}
+              className={`relative p-2 rounded-[4px] transition-all ${showAlertPanel ? 'bg-[#f4f5f7] text-[#1a6bdb] border border-[#e2e5ea]' : 'bg-[#f4f5f7] text-[#4a4f5c] hover:text-[#0a0a23] hover:bg-[#f4f5f7] border border-[#e2e5ea]'}`}
             >
               {alertsEnabled && enabledRules.length > 0 ? <BellRing className="w-4 h-4" /> : <Bell className="w-4 h-4" />}
               {newAlertNotifs > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[rgba(255,59,59,0.1)] text-[8px] text-white flex items-center justify-center font-bold">{newAlertNotifs > 9 ? '9+' : newAlertNotifs}</span>
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[rgba(255,59,59,0.1)] text-[8px] text-[#0a0a23] flex items-center justify-center font-bold">{newAlertNotifs > 9 ? '9+' : newAlertNotifs}</span>
               )}
             </button>
             <button
               onClick={() => fetchWhaleAlerts()}
               disabled={whaleAlertsLoading}
-              className="p-2 rounded-[4px] bg-[#111] hover:bg-[#161616] transition-colors border border-[#1e1e1e]"
+              className="p-2 rounded-[4px] bg-[#f4f5f7] hover:bg-[#f4f5f7] transition-colors border border-[#e2e5ea]"
             >
-              <RefreshCw className={`w-4 h-4 text-[#888] ${whaleAlertsLoading ? 'animate-spin' : ''}`} />
+              <RefreshCw className={`w-4 h-4 text-[#4a4f5c] ${whaleAlertsLoading ? 'animate-spin' : ''}`} />
             </button>
           </div>
         </div>
@@ -948,8 +948,8 @@ export const OnChainView: React.FC = () => {
         {showAlertPanel && (
           <div className={`${cardClass} p-3`}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-[12px] font-bold text-[#fff] flex items-center gap-2">
-                <Bell className="w-3.5 h-3.5 text-[#5a9aee]" />
+              <p className="text-[12px] font-bold text-[#0a0a23] flex items-center gap-2">
+                <Bell className="w-3.5 h-3.5 text-[#1a6bdb]" />
                 Alert Rules
               </p>
               <div className="flex items-center gap-2">
@@ -963,7 +963,7 @@ export const OnChainView: React.FC = () => {
                     }
                   }}
                   className={`px-3 py-1.5 rounded-[4px] text-[10px] font-semibold transition-all ${
-                    alertsEnabled ? 'bg-[#111] text-[#5a9aee] border border-[#1e1e1e]' : 'bg-[#111] text-[#888] border border-[#1e1e1e]'
+                    alertsEnabled ? 'bg-[#f4f5f7] text-[#1a6bdb] border border-[#e2e5ea]' : 'bg-[#f4f5f7] text-[#4a4f5c] border border-[#e2e5ea]'
                   }`}
                 >
                   {alertsEnabled ? 'Alerts ON' : 'Enable Alerts'}
@@ -972,35 +972,35 @@ export const OnChainView: React.FC = () => {
             </div>
 
             {notifPermission === 'denied' && (
-              <div className="bg-[rgba(255,59,59,0.1)] border border-[#1e1e1e] rounded-[4px] p-3 mb-3">
-                <p className="text-[10px] text-[#ef4444]">Browser notifications are blocked. Please enable them in your browser settings.</p>
+              <div className="bg-[rgba(255,59,59,0.1)] border border-[#e2e5ea] rounded-[4px] p-3 mb-3">
+                <p className="text-[10px] text-[#dc2626]">Browser notifications are blocked. Please enable them in your browser settings.</p>
               </div>
             )}
 
             <div className="space-y-1.5 mb-3">
               {alertRules.length === 0 ? (
                 <div className="text-center py-4">
-                  <p className="text-[11px] text-[#555]">No alert rules yet</p>
-                  <p className="text-[9px] text-[#555] mt-1">Search a coin or enter a wallet address below to add alerts</p>
+                  <p className="text-[11px] text-[#8b91a0]">No alert rules yet</p>
+                  <p className="text-[9px] text-[#8b91a0] mt-1">Search a coin or enter a wallet address below to add alerts</p>
                 </div>
               ) : (
                 alertRules.map(rule => (
-                  <div key={rule.id} className="flex items-center justify-between bg-[#111] border border-[#1e1e1e] rounded-[4px] p-2.5">
+                  <div key={rule.id} className="flex items-center justify-between bg-[#f4f5f7] border border-[#e2e5ea] rounded-[4px] p-2.5">
                     <div className="flex items-center gap-2 min-w-0">
                       <span className={`text-[8px] font-semibold uppercase px-1.5 py-0.5 rounded-full ${
-                        rule.type === 'coin' ? 'bg-[rgba(245,166,35,0.1)] text-[#f5a623] border border-[#1e1e1e]' : 'bg-[#111] text-[#5a9aee] border border-[#1e1e1e]'
+                        rule.type === 'coin' ? 'bg-[rgba(245,166,35,0.1)] text-[#d97706] border border-[#e2e5ea]' : 'bg-[#f4f5f7] text-[#1a6bdb] border border-[#e2e5ea]'
                       }`}>{rule.type}</span>
-                      <span className="text-[11px] font-semibold text-[#fff] truncate">{rule.label}</span>
-                      <span className="text-[9px] text-[#555] font-mono tabular-nums">{formatNum(rule.minValue)}+</span>
+                      <span className="text-[11px] font-semibold text-[#0a0a23] truncate">{rule.label}</span>
+                      <span className="text-[9px] text-[#8b91a0] font-mono tabular-nums">{formatNum(rule.minValue)}+</span>
                     </div>
                     <div className="flex items-center gap-1.5 shrink-0">
                       <button
                         onClick={() => toggleAlertRule(rule.id)}
                         className={`w-8 h-4 rounded-full transition-all relative ${rule.enabled ? 'bg-[#2762bc]' : 'bg-[#3a3b45]'}`}
                       >
-                        <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-[#0d0d0d] transition-all ${rule.enabled ? 'left-[18px]' : 'left-0.5'}`}></div>
+                        <div className={`absolute top-0.5 w-3 h-3 rounded-full bg-[#fff] transition-all ${rule.enabled ? 'left-[18px]' : 'left-0.5'}`}></div>
                       </button>
-                      <button onClick={() => removeAlertRule(rule.id)} className="text-[#555] hover:text-[#ef4444] transition-colors">
+                      <button onClick={() => removeAlertRule(rule.id)} className="text-[#8b91a0] hover:text-[#dc2626] transition-colors">
                         <X className="w-3.5 h-3.5" />
                       </button>
                     </div>
@@ -1013,7 +1013,7 @@ export const OnChainView: React.FC = () => {
               <input
                 type="text"
                 placeholder="Add wallet address to watch..."
-                className="flex-1 bg-[#0d0d0d] border border-[#1e1e1e] rounded-[4px] px-3 py-2 text-[11px] text-[#fff] placeholder-[#555] outline-none focus:border-[#2762bc] focus:ring-1 focus:ring-[#2762bc]"
+                className="flex-1 bg-[#fff] border border-[#e2e5ea] rounded-[4px] px-3 py-2 text-[11px] text-[#0a0a23] placeholder-[#555] outline-none focus:border-[#2762bc] focus:ring-1 focus:ring-[#2762bc]"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     const val = (e.target as HTMLInputElement).value.trim();
@@ -1031,7 +1031,7 @@ export const OnChainView: React.FC = () => {
                   }
                 }}
                 disabled={!whaleCoinFilter}
-                className="px-3 py-2 rounded-[4px] text-[10px] font-semibold bg-[#111] text-[#5a9aee] border border-[#1e1e1e] hover:bg-[#111] transition-all disabled:opacity-30"
+                className="px-3 py-2 rounded-[4px] text-[10px] font-semibold bg-[#f4f5f7] text-[#1a6bdb] border border-[#e2e5ea] hover:bg-[#f4f5f7] transition-all disabled:opacity-30"
               >
                 + Watch {whaleCoinFilter || 'Coin'}
               </button>
@@ -1046,7 +1046,7 @@ export const OnChainView: React.FC = () => {
                 key={c}
                 onClick={() => { setWhaleChainFilter(c); fetchWhaleAlerts(c); }}
                 className={`px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all flex items-center gap-1 ${
-                  whaleChainFilter === c ? 'bg-[#111] text-[#5a9aee] border border-[#1e1e1e]' : 'bg-[#111] text-[#555] hover:text-[#fff] border border-[#1e1e1e]'
+                  whaleChainFilter === c ? 'bg-[#f4f5f7] text-[#1a6bdb] border border-[#e2e5ea]' : 'bg-[#f4f5f7] text-[#8b91a0] hover:text-[#0a0a23] border border-[#e2e5ea]'
                 }`}
               >
                 {c === 'all' ? 'All Chains' : c.charAt(0).toUpperCase() + c.slice(1)}
@@ -1058,7 +1058,7 @@ export const OnChainView: React.FC = () => {
             <button
               onClick={() => { setCoinSearchOpen(!coinSearchOpen); if (!coinSearchOpen) setCoinSearchQuery(''); }}
               className={`px-3 py-1.5 rounded-full text-[10px] font-semibold transition-all flex items-center gap-1.5 ${
-                whaleCoinFilter ? 'bg-[rgba(245,166,35,0.1)] text-[#f5a623] border border-[#1e1e1e]' : 'bg-[#111] text-[#555] hover:text-[#fff] border border-[#1e1e1e]'
+                whaleCoinFilter ? 'bg-[rgba(245,166,35,0.1)] text-[#d97706] border border-[#e2e5ea]' : 'bg-[#f4f5f7] text-[#8b91a0] hover:text-[#0a0a23] border border-[#e2e5ea]'
               }`}
             >
               <Search className="w-3 h-3" />
@@ -1066,21 +1066,21 @@ export const OnChainView: React.FC = () => {
               {whaleCoinFilter && (
                 <span
                   onClick={(e) => { e.stopPropagation(); setWhaleCoinFilter(''); fetchWhaleAlerts(undefined, ''); }}
-                  className="ml-1 hover:text-[#fff] cursor-pointer"
+                  className="ml-1 hover:text-[#0a0a23] cursor-pointer"
                 >×</span>
               )}
               <ChevronDown className="w-3 h-3" />
             </button>
 
             {coinSearchOpen && (
-              <div className="absolute top-full left-0 mt-1 w-56 bg-[#0d0d0d] border border-[#1e1e1e] rounded-[4px] z-50 overflow-hidden">
-                <div className="p-2 border-b border-[#1e1e1e]">
+              <div className="absolute top-full left-0 mt-1 w-56 bg-[#fff] border border-[#e2e5ea] rounded-[4px] z-50 overflow-hidden">
+                <div className="p-2 border-b border-[#e2e5ea]">
                   <input
                     type="text"
                     placeholder="Search coins..."
                     value={coinSearchQuery}
                     onChange={(e) => setCoinSearchQuery(e.target.value)}
-                    className="w-full bg-[#111] border border-[#1e1e1e] rounded-[4px] px-2.5 py-1.5 text-[11px] text-[#fff] placeholder-[#555] outline-none focus:border-[#2762bc]"
+                    className="w-full bg-[#f4f5f7] border border-[#e2e5ea] rounded-[4px] px-2.5 py-1.5 text-[11px] text-[#0a0a23] placeholder-[#555] outline-none focus:border-[#2762bc]"
                     autoFocus
                   />
                 </div>
@@ -1093,16 +1093,16 @@ export const OnChainView: React.FC = () => {
                         setCoinSearchOpen(false);
                         fetchWhaleAlerts(undefined, c.symbol);
                       }}
-                      className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-[#111] transition-colors ${
-                        whaleCoinFilter === c.symbol ? 'bg-[#111]' : ''
+                      className={`w-full text-left px-3 py-2 flex items-center justify-between hover:bg-[#f4f5f7] transition-colors ${
+                        whaleCoinFilter === c.symbol ? 'bg-[#f4f5f7]' : ''
                       }`}
                     >
                       <div>
-                        <span className="text-[11px] font-semibold text-[#fff]">{c.symbol}</span>
-                        <span className="text-[10px] text-[#555] ml-1.5">{c.name}</span>
+                        <span className="text-[11px] font-semibold text-[#0a0a23]">{c.symbol}</span>
+                        <span className="text-[10px] text-[#8b91a0] ml-1.5">{c.name}</span>
                       </div>
                       <span className={`text-[8px] px-1.5 py-0.5 rounded-full ${
-                        c.chain === 'solana' ? 'text-[#888] bg-[#111] border border-[#1e1e1e]' : c.chain === 'both' ? 'text-[#888] bg-[#111] border border-[#1e1e1e]' : 'text-[#5a9aee] bg-[#111] border border-[#1e1e1e]'
+                        c.chain === 'solana' ? 'text-[#4a4f5c] bg-[#f4f5f7] border border-[#e2e5ea]' : c.chain === 'both' ? 'text-[#4a4f5c] bg-[#f4f5f7] border border-[#e2e5ea]' : 'text-[#1a6bdb] bg-[#f4f5f7] border border-[#e2e5ea]'
                       }`}>
                         {c.chain === 'both' ? 'MULTI' : c.chain.toUpperCase()}
                       </span>
@@ -1114,13 +1114,13 @@ export const OnChainView: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-1">
-            <Filter className="w-3 h-3 text-[#555]" />
+            <Filter className="w-3 h-3 text-[#8b91a0]" />
             {valueFilters.map(f => (
               <button
                 key={f.value}
                 onClick={() => { setWhaleMinValue(f.value); fetchWhaleAlerts(undefined, undefined, f.value); }}
                 className={`px-2 py-1 rounded-full text-[9px] font-semibold transition-all ${
-                  whaleMinValue === f.value ? 'bg-[rgba(255,59,59,0.1)] text-[#ef4444] border border-[#1e1e1e]' : 'bg-[#111] text-[#555] hover:text-[#fff] border border-[#1e1e1e]'
+                  whaleMinValue === f.value ? 'bg-[rgba(255,59,59,0.1)] text-[#dc2626] border border-[#e2e5ea]' : 'bg-[#f4f5f7] text-[#8b91a0] hover:text-[#0a0a23] border border-[#e2e5ea]'
                 }`}
               >
                 {f.label}
@@ -1132,18 +1132,18 @@ export const OnChainView: React.FC = () => {
         <div className={`${cardClass} p-3`}>
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Transactions</span>
-              <span className="text-[8px] font-semibold px-1.5 py-0.5 rounded-full text-[#f5a623] bg-[rgba(245,166,35,0.1)] border border-[#1e1e1e]">{formatNum(whaleMinValue)}+</span>
-              {whaleCoinFilter && <span className="text-[8px] font-semibold px-1.5 py-0.5 rounded-full text-[#5a9aee] bg-[#111] border border-[#1e1e1e]">{whaleCoinFilter}</span>}
+              <span className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Transactions</span>
+              <span className="text-[8px] font-semibold px-1.5 py-0.5 rounded-full text-[#d97706] bg-[rgba(245,166,35,0.1)] border border-[#e2e5ea]">{formatNum(whaleMinValue)}+</span>
+              {whaleCoinFilter && <span className="text-[8px] font-semibold px-1.5 py-0.5 rounded-full text-[#1a6bdb] bg-[#f4f5f7] border border-[#e2e5ea]">{whaleCoinFilter}</span>}
             </div>
-            <span className="text-[9px] text-[#555] font-mono tabular-nums">{whaleAlerts.length} txns</span>
+            <span className="text-[9px] text-[#8b91a0] font-mono tabular-nums">{whaleAlerts.length} txns</span>
           </div>
 
           {whaleAlertsLoading && whaleAlerts.length === 0 ? (
             <div className="flex items-center justify-center py-12">
               <div className="flex flex-col items-center gap-3">
-                <div className="w-6 h-6 border-2 border-[#1e1e1e] border-t-[#5a9aee] rounded-full animate-spin"></div>
-                <p className="text-[#555] text-[11px]">Fetching whale transactions...</p>
+                <div className="w-6 h-6 border-2 border-[#e2e5ea] border-t-[#5a9aee] rounded-full animate-spin"></div>
+                <p className="text-[#8b91a0] text-[11px]">Fetching whale transactions...</p>
               </div>
             </div>
           ) : (
@@ -1164,20 +1164,20 @@ export const OnChainView: React.FC = () => {
                 })();
 
                 return (
-                  <div key={i} className="bg-[#111] border border-[#1e1e1e] rounded-[4px] p-2 hover:bg-[#1a1a1a] transition-colors">
+                  <div key={i} className="bg-[#f4f5f7] border border-[#e2e5ea] rounded-[4px] p-2 hover:bg-[#eef0f4] transition-colors">
                     <div className="flex items-center justify-between mb-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: alertColor }}></div>
-                        <span className="text-[12px] font-bold text-[#fff]">{w.symbol}</span>
-                        <span className={`text-[8px] px-1 py-0.5 rounded-full ${isSol ? 'text-[#888] bg-[#111] border border-[#1e1e1e]' : 'text-[#5a9aee] bg-[#111] border border-[#1e1e1e]'}`}>
+                        <span className="text-[12px] font-bold text-[#0a0a23]">{w.symbol}</span>
+                        <span className={`text-[8px] px-1 py-0.5 rounded-full ${isSol ? 'text-[#4a4f5c] bg-[#f4f5f7] border border-[#e2e5ea]' : 'text-[#1a6bdb] bg-[#f4f5f7] border border-[#e2e5ea]'}`}>
                           {isSol ? 'SOL' : w.blockchain?.toUpperCase().slice(0, 3)}
                         </span>
                         <span className={`text-[8px] font-semibold px-1.5 py-0.5 rounded-full ${
-                          isDeposit ? 'text-[#ef4444] bg-[rgba(255,59,59,0.1)] border border-[#1e1e1e]' :
-                          isWithdraw ? 'text-[#10b981] bg-[rgba(0,192,118,0.1)] border border-[#1e1e1e]' :
-                          isExToEx ? 'text-[#5a9aee] bg-[#111] border border-[#1e1e1e]' :
-                          isKnown ? 'text-[#f5a623] bg-[rgba(245,166,35,0.1)] border border-[#1e1e1e]' :
-                          'text-[#555] bg-[#111] border border-[#1e1e1e]'
+                          isDeposit ? 'text-[#dc2626] bg-[rgba(255,59,59,0.1)] border border-[#e2e5ea]' :
+                          isWithdraw ? 'text-[#0d9f6e] bg-[rgba(0,192,118,0.1)] border border-[#e2e5ea]' :
+                          isExToEx ? 'text-[#1a6bdb] bg-[#f4f5f7] border border-[#e2e5ea]' :
+                          isKnown ? 'text-[#d97706] bg-[rgba(245,166,35,0.1)] border border-[#e2e5ea]' :
+                          'text-[#8b91a0] bg-[#f4f5f7] border border-[#e2e5ea]'
                         }`}>
                           {isDeposit ? 'Deposit' : isWithdraw ? 'Withdraw' : isExToEx ? 'Exchange' : isKnown ? 'Whale' : w.type}
                         </span>
@@ -1186,7 +1186,7 @@ export const OnChainView: React.FC = () => {
                         <span className="text-[13px] font-bold tabular-nums font-mono" style={{ color: alertColor }}>{formatNum(w.amountUsd)}</span>
                         <button
                           onClick={() => addAlertRule('coin', w.symbol, w.symbol, isSol ? 'solana' : 'all')}
-                          className="text-[#555] hover:text-[#888] transition-colors"
+                          className="text-[#8b91a0] hover:text-[#4a4f5c] transition-colors"
                           title={`Watch ${w.symbol}`}
                         >
                           <Bell className="w-3 h-3" />
@@ -1194,18 +1194,18 @@ export const OnChainView: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-[9px] text-[#555] min-w-0 flex-1 truncate">
-                        <span className={w.fromType === 'exchange' ? 'text-[#f59e0b]' : w.fromLabel ? 'text-[#5a9aee]' : ''}>
+                      <div className="flex items-center gap-1 text-[9px] text-[#8b91a0] min-w-0 flex-1 truncate">
+                        <span className={w.fromType === 'exchange' ? 'text-[#f59e0b]' : w.fromLabel ? 'text-[#1a6bdb]' : ''}>
                           {w.fromLabel || w.from}
                         </span>
-                        <span className="text-[#333] mx-1">→</span>
-                        <span className={w.toType === 'exchange' ? 'text-[#f59e0b]' : w.toLabel ? 'text-[#5a9aee]' : ''}>
+                        <span className="text-[#c8cdd5] mx-1">→</span>
+                        <span className={w.toType === 'exchange' ? 'text-[#f59e0b]' : w.toLabel ? 'text-[#1a6bdb]' : ''}>
                           {w.toLabel || w.to}
                         </span>
                       </div>
                       <div className="flex items-center gap-2 shrink-0">
-                        <span className="text-[9px] text-[#555] font-mono tabular-nums">{w.amount?.toLocaleString()} {w.symbol}</span>
-                        <span className="text-[8px] text-[#555] font-mono tabular-nums">{txTimeAgo}</span>
+                        <span className="text-[9px] text-[#8b91a0] font-mono tabular-nums">{w.amount?.toLocaleString()} {w.symbol}</span>
+                        <span className="text-[8px] text-[#8b91a0] font-mono tabular-nums">{txTimeAgo}</span>
                       </div>
                     </div>
                     {w.hash && (
@@ -1214,7 +1214,7 @@ export const OnChainView: React.FC = () => {
                           href={isSol ? `https://solscan.io/tx/${w.hash}` : `https://etherscan.io/tx/${w.hash}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[8px] font-mono text-[#5a9aee] hover:text-[#888] transition-colors"
+                          className="text-[8px] font-mono text-[#1a6bdb] hover:text-[#4a4f5c] transition-colors"
                         >
                           {w.hashShort || w.hash?.substring(0, 20) + '...'}
                         </a>
@@ -1253,17 +1253,17 @@ export const OnChainView: React.FC = () => {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-[14px] font-bold text-[#fff]">Top Wallets</h3>
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Notable addresses across chains</p>
+            <h3 className="text-[14px] font-bold text-[#0a0a23]">Top Wallets</h3>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] font-medium">Notable addresses across chains</p>
           </div>
           {walletChainTab === 'ethereum' && (
-            <button onClick={fetchTopWallets} disabled={whalesLoading} className="p-2 rounded-[4px] bg-[#111] hover:bg-[#161616] transition-colors border border-[#1e1e1e]">
-              <RefreshCw className={`w-4 h-4 text-[#888] ${whalesLoading ? 'animate-spin' : ''}`} />
+            <button onClick={fetchTopWallets} disabled={whalesLoading} className="p-2 rounded-[4px] bg-[#f4f5f7] hover:bg-[#f4f5f7] transition-colors border border-[#e2e5ea]">
+              <RefreshCw className={`w-4 h-4 text-[#4a4f5c] ${whalesLoading ? 'animate-spin' : ''}`} />
             </button>
           )}
         </div>
 
-        <div className="flex gap-0 border-b border-[#1e1e1e]">
+        <div className="flex gap-0 border-b border-[#e2e5ea]">
           {(['ethereum', 'solana'] as const).map(tab => (
             <button
               key={tab}
@@ -1281,30 +1281,30 @@ export const OnChainView: React.FC = () => {
             {whalesLoading && topWallets.length === 0 ? (
               <div className="flex items-center justify-center py-12">
                 <div className="flex flex-col items-center gap-3">
-                  <div className="w-6 h-6 border-2 border-[#1e1e1e] border-t-[#5a9aee] rounded-full animate-spin"></div>
-                  <p className="text-[#555] text-[11px]">Fetching wallet balances...</p>
+                  <div className="w-6 h-6 border-2 border-[#e2e5ea] border-t-[#5a9aee] rounded-full animate-spin"></div>
+                  <p className="text-[#8b91a0] text-[11px]">Fetching wallet balances...</p>
                 </div>
               </div>
             ) : (
               <div className={`${cardClass} overflow-hidden`}>
                 <table className="w-full">
                   <thead>
-                    <tr className="table-header border-b border-[#1e1e1e]">
-                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">#</th>
-                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Wallet</th>
-                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 hidden sm:table-cell font-medium">Category</th>
-                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">ETH Balance</th>
-                      <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 w-10 font-medium"></th>
+                    <tr className="table-header border-b border-[#e2e5ea]">
+                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">#</th>
+                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Wallet</th>
+                      <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 hidden sm:table-cell font-medium">Category</th>
+                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">ETH Balance</th>
+                      <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 w-10 font-medium"></th>
                     </tr>
                   </thead>
                   <tbody>
                     {topWallets.map((w, i) => (
-                      <tr key={i} className="table-row table-row-stripe border-b border-[#151515] cursor-pointer" onClick={() => { setSearchQuery(w.address); setSubTab('wallet'); }}>
-                        <td className="px-2 py-1.5 text-[11px] text-[#555] tabular-nums font-mono">{i + 1}</td>
+                      <tr key={i} className="table-row table-row-stripe border-b border-[#eef0f4] cursor-pointer" onClick={() => { setSearchQuery(w.address); setSubTab('wallet'); }}>
+                        <td className="px-2 py-1.5 text-[11px] text-[#8b91a0] tabular-nums font-mono">{i + 1}</td>
                         <td className="px-2 py-1.5">
                           <div>
-                            <p className="text-[12px] font-semibold text-[#fff]">{w.label}</p>
-                            <p className="text-[10px] text-[#555] font-mono">{shortAddr(w.address)}</p>
+                            <p className="text-[12px] font-semibold text-[#0a0a23]">{w.label}</p>
+                            <p className="text-[10px] text-[#8b91a0] font-mono">{shortAddr(w.address)}</p>
                           </div>
                         </td>
                         <td className="px-2 py-1.5 hidden sm:table-cell">
@@ -1314,15 +1314,15 @@ export const OnChainView: React.FC = () => {
                         </td>
                         <td className="px-2 py-1.5 text-right">
                           {isContract(w) ? (
-                            <span className="text-[11px] text-[#555] italic">Contract</span>
+                            <span className="text-[11px] text-[#8b91a0] italic">Contract</span>
                           ) : w.ethBalance === 0 ? (
-                            <span className="text-[11px] text-[#555]">N/A</span>
+                            <span className="text-[11px] text-[#8b91a0]">N/A</span>
                           ) : (
-                            <span className="text-[12px] font-bold text-[#5a9aee] tabular-nums font-mono">{w.ethBalance >= 1000 ? formatNum(w.ethBalance, '') : w.ethBalance.toFixed(2)} ETH</span>
+                            <span className="text-[12px] font-bold text-[#1a6bdb] tabular-nums font-mono">{w.ethBalance >= 1000 ? formatNum(w.ethBalance, '') : w.ethBalance.toFixed(2)} ETH</span>
                           )}
                         </td>
                         <td className="px-2 py-1.5 text-center">
-                          <a href={`https://etherscan.io/address/${w.address}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[#555] hover:text-[#888] transition-colors">
+                          <a href={`https://etherscan.io/address/${w.address}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[#8b91a0] hover:text-[#4a4f5c] transition-colors">
                             <ExternalLink className="w-3.5 h-3.5" />
                           </a>
                         </td>
@@ -1339,22 +1339,22 @@ export const OnChainView: React.FC = () => {
           <div className={`${cardClass} overflow-hidden`}>
             <table className="w-full">
               <thead>
-                <tr className="table-header border-b border-[#1e1e1e]">
-                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">#</th>
-                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Wallet</th>
-                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 hidden sm:table-cell font-medium">Category</th>
-                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">SOL Balance</th>
-                  <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 w-10 font-medium"></th>
+                <tr className="table-header border-b border-[#e2e5ea]">
+                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">#</th>
+                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">Wallet</th>
+                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 hidden sm:table-cell font-medium">Category</th>
+                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 font-medium">SOL Balance</th>
+                  <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#8b91a0] px-2 py-1.5 w-10 font-medium"></th>
                 </tr>
               </thead>
               <tbody>
                 {solanaWallets.map((w, i) => (
-                  <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
-                    <td className="px-2 py-1.5 text-[11px] text-[#555] tabular-nums font-mono">{i + 1}</td>
+                  <tr key={i} className="table-row table-row-stripe border-b border-[#eef0f4]">
+                    <td className="px-2 py-1.5 text-[11px] text-[#8b91a0] tabular-nums font-mono">{i + 1}</td>
                     <td className="px-2 py-1.5">
                       <div>
-                        <p className="text-[12px] font-semibold text-[#fff]">{w.label}</p>
-                        <p className="text-[10px] text-[#555] font-mono">{w.address}</p>
+                        <p className="text-[12px] font-semibold text-[#0a0a23]">{w.label}</p>
+                        <p className="text-[10px] text-[#8b91a0] font-mono">{w.address}</p>
                       </div>
                     </td>
                     <td className="px-2 py-1.5 hidden sm:table-cell">
@@ -1363,10 +1363,10 @@ export const OnChainView: React.FC = () => {
                       </span>
                     </td>
                     <td className="px-2 py-1.5 text-right">
-                      <span className="text-[12px] font-bold text-[#888] tabular-nums font-mono">{formatNum(w.solBalance, '')} SOL</span>
+                      <span className="text-[12px] font-bold text-[#4a4f5c] tabular-nums font-mono">{formatNum(w.solBalance, '')} SOL</span>
                     </td>
                     <td className="px-2 py-1.5 text-center">
-                      <a href={`https://solscan.io/account/${w.address}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[#555] hover:text-[#888] transition-colors">
+                      <a href={`https://solscan.io/account/${w.address}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-[#8b91a0] hover:text-[#4a4f5c] transition-colors">
                         <ExternalLink className="w-3.5 h-3.5" />
                       </a>
                     </td>
@@ -1374,8 +1374,8 @@ export const OnChainView: React.FC = () => {
                 ))}
               </tbody>
             </table>
-            <div className="px-4 py-2 border-t border-[#1e1e1e]">
-              <p className="text-[9px] text-[#555]">Solana wallet balances are estimated averages and not live data</p>
+            <div className="px-4 py-2 border-t border-[#e2e5ea]">
+              <p className="text-[9px] text-[#8b91a0]">Solana wallet balances are estimated averages and not live data</p>
             </div>
           </div>
         )}
@@ -1388,24 +1388,24 @@ export const OnChainView: React.FC = () => {
       <div className="card p-3 sm:p-4">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-[#888] font-semibold">On-Chain Intelligence</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#fff] tracking-[-0.02em] mt-1">Whale, Gas & Wallet Command</h2>
+            <p className="text-[10px] uppercase tracking-[0.12em] text-[#4a4f5c] font-semibold">On-Chain Intelligence</p>
+            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#0a0a23] tracking-[-0.02em] mt-1">Whale, Gas & Wallet Command</h2>
           </div>
           <span className="badge badge-accent text-[10px] uppercase tracking-[0.06em]">Realtime Monitor</span>
         </div>
 
         <div className="grid grid-cols-3 gap-2 mt-3">
-          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Alerts</p>
-            <p className="text-[16px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{alertRules.length}</p>
+          <div className="rounded-[4px] border border-[#e2e5ea] bg-[#f8f9fa] px-3 py-2.5">
+            <p className="text-[10px] text-[#4a4f5c] uppercase tracking-[0.06em]">Alerts</p>
+            <p className="text-[16px] font-semibold text-[#0a0a23] font-mono tabular-nums mt-0.5">{alertRules.length}</p>
           </div>
-          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Top Wallets</p>
-            <p className="text-[16px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{topWallets.length}</p>
+          <div className="rounded-[4px] border border-[#e2e5ea] bg-[#f8f9fa] px-3 py-2.5">
+            <p className="text-[10px] text-[#4a4f5c] uppercase tracking-[0.06em]">Top Wallets</p>
+            <p className="text-[16px] font-semibold text-[#0a0a23] font-mono tabular-nums mt-0.5">{topWallets.length}</p>
           </div>
-          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Flow Events</p>
-            <p className="text-[16px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{whaleAlerts.length}</p>
+          <div className="rounded-[4px] border border-[#e2e5ea] bg-[#f8f9fa] px-3 py-2.5">
+            <p className="text-[10px] text-[#4a4f5c] uppercase tracking-[0.06em]">Flow Events</p>
+            <p className="text-[16px] font-semibold text-[#0a0a23] font-mono tabular-nums mt-0.5">{whaleAlerts.length}</p>
           </div>
         </div>
       </div>

@@ -96,11 +96,11 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen font-sans text-[var(--color-text-primary)] relative">
+    <div className="min-h-screen font-sans relative" style={{ color: '#0a0a23' }}>
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <main className="relative z-10 w-full pb-16 md:pt-[48px] md:pb-0 min-h-screen flex flex-col">
-        <div className={`flex-1 ${activeTab !== TabView.ASK ? 'px-3 sm:px-4 lg:px-6 pt-4 pb-6 w-full mx-auto' : ''}`}>
+      <main className="relative z-10 w-full pb-16 md:pt-[56px] md:pb-0 min-h-screen flex flex-col" style={{ background: '#f8f9fa' }}>
+        <div className={`flex-1 ${activeTab !== TabView.ASK ? 'px-4 sm:px-6 lg:px-8 pt-5 pb-8 max-w-[1400px] w-full mx-auto' : ''}`}>
           {renderContent()}
         </div>
       </main>

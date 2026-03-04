@@ -17,22 +17,22 @@ const escapeHtml = (value: string) =>
 const formatMarkdown = (text: string): string => {
   let html = escapeHtml(text);
 
-  html = html.replace(/^### (.+)$/gm, '<h3 class="text-[13px] font-semibold text-white mt-4 mb-1.5">$1</h3>');
-  html = html.replace(/^## (.+)$/gm, '<h2 class="text-[14px] font-semibold text-white mt-5 mb-2">$1</h2>');
-  html = html.replace(/^# (.+)$/gm, '<h1 class="text-[15px] font-semibold text-white mt-5 mb-2">$1</h1>');
+  html = html.replace(/^### (.+)$/gm, '<h3 class="text-[14px] font-semibold mt-4 mb-1.5" style="color:#0a0a23">$1</h3>');
+  html = html.replace(/^## (.+)$/gm, '<h2 class="text-[15px] font-semibold mt-5 mb-2" style="color:#0a0a23">$1</h2>');
+  html = html.replace(/^# (.+)$/gm, '<h1 class="text-[16px] font-semibold mt-5 mb-2" style="color:#0a0a23">$1</h1>');
 
-  html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold text-white">$1</strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="font-semibold" style="color:#0a0a23">$1</strong>');
   html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
-  html = html.replace(/`([^`]+)`/g, '<code class="px-1 py-0.5 text-[11px] font-mono text-[#5a9aee] bg-[#111] border border-[#1e1e1e] rounded-[2px]">$1</code>');
+  html = html.replace(/`([^`]+)`/g, '<code class="px-1.5 py-0.5 text-[12px] font-mono rounded" style="color:#1a6bdb;background:#f0f4f8;border:1px solid #e2e5ea">$1</code>');
 
-  html = html.replace(/^- (.+)$/gm, '<li class="text-[13px] text-[#999] leading-[1.7] pl-1">$1</li>');
+  html = html.replace(/^- (.+)$/gm, '<li class="text-[13px] leading-[1.7] pl-1" style="color:#4a4f5c">$1</li>');
   html = html.replace(/(<li.*<\/li>\n?)+/g, (match) => `<ul class="my-2 space-y-0.5 list-disc list-outside ml-5">${match}</ul>`);
 
-  html = html.replace(/^\d+\. (.+)$/gm, '<li class="text-[13px] text-[#999] leading-[1.7] pl-1">$1</li>');
+  html = html.replace(/^\d+\. (.+)$/gm, '<li class="text-[13px] leading-[1.7] pl-1" style="color:#4a4f5c">$1</li>');
 
-  html = html.replace(/\n\n/g, '</p><p class="text-[13px] text-[#999] leading-[1.7] mb-2">');
+  html = html.replace(/\n\n/g, '</p><p class="text-[13px] leading-[1.7] mb-2" style="color:#4a4f5c">');
   html = html.replace(/\n/g, '<br/>');
-  html = `<p class="text-[13px] text-[#999] leading-[1.7] mb-2">${html}</p>`;
+  html = `<p class="text-[13px] leading-[1.7] mb-2" style="color:#4a4f5c">${html}</p>`;
 
   return html;
 };
@@ -111,27 +111,27 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
 
   if (!isChat) {
     return (
-      <div className="relative flex flex-col" style={{ minHeight: 'calc(100vh - 48px)' }}>
-        <section className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-8">
+      <div className="relative flex flex-col" style={{ minHeight: 'calc(100vh - 56px)', background: '#fff' }}>
+        <section className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-10">
           <div className="max-w-[900px] w-full mx-auto">
-            <div className="flex items-center justify-center gap-3 mb-6">
-              <span className="text-[9px] uppercase tracking-[0.12em] px-2 py-0.5 text-[#555] border border-[#1e1e1e] font-mono rounded-[2px]">
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <span className="text-[10px] uppercase tracking-[0.1em] px-3 py-1 rounded-md font-medium" style={{ color: '#8b91a0', background: '#f4f5f7', border: '1px solid #e2e5ea' }}>
                 AI Research
               </span>
-              <span className="text-[9px] uppercase tracking-[0.12em] px-2 py-0.5 text-[#555] border border-[#1e1e1e] font-mono rounded-[2px]">
+              <span className="text-[10px] uppercase tracking-[0.1em] px-3 py-1 rounded-md font-medium" style={{ color: '#8b91a0', background: '#f4f5f7', border: '1px solid #e2e5ea' }}>
                 Live Markets
               </span>
             </div>
 
-            <h1 className="text-center text-[24px] sm:text-[36px] font-bold tracking-[0.04em] leading-[1.1] text-white max-w-[700px] mx-auto font-mono uppercase">
+            <h1 className="text-center font-heading font-bold leading-[1.1] max-w-[700px] mx-auto" style={{ fontSize: 'clamp(28px, 5vw, 42px)', color: '#0a0a23' }}>
               Market Intelligence
             </h1>
 
-            <p className="text-center text-[12px] text-[#555] leading-relaxed max-w-[520px] mx-auto mt-4 mb-8 font-mono">
+            <p className="text-center text-[14px] leading-relaxed max-w-[520px] mx-auto mt-5 mb-10" style={{ color: '#8b91a0' }}>
               Macro context, technical structure, flow data, and executable insights.
             </p>
 
-            <div className="max-w-[680px] mx-auto mb-8">
+            <div className="max-w-[680px] mx-auto mb-10">
               <div className="relative">
                 <input
                   ref={landingInputRef}
@@ -139,53 +139,56 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Ask about markets, assets, risk, catalysts..."
-                  className="w-full h-[48px] pl-4 pr-14 text-[13px] text-white bg-[#0d0d0d] border border-[#1e1e1e] rounded-[4px] placeholder:text-[#333] focus:border-[#2762bc] transition-colors"
-                  style={{ outline: 'none' }}
+                  className="w-full h-[52px] pl-5 pr-14 text-[14px] bg-white rounded-xl transition-all"
+                  style={{ border: '1px solid #e2e5ea', color: '#0a0a23', outline: 'none', boxShadow: '0 1px 3px rgba(0,0,0,0.06)' }}
+                  onFocus={(e) => { e.currentTarget.style.borderColor = '#1a6bdb'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(26,107,219,0.1)'; }}
+                  onBlur={(e) => { e.currentTarget.style.borderColor = '#e2e5ea'; e.currentTarget.style.boxShadow = '0 1px 3px rgba(0,0,0,0.06)'; }}
                 />
                 <button
                   onClick={() => handleSubmit()}
                   disabled={!input.trim()}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center transition-colors rounded-[3px]"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center transition-colors rounded-lg"
                   style={{
-                    background: input.trim() ? '#2762bc' : '#111',
-                    opacity: input.trim() ? 1 : 0.3,
+                    background: input.trim() ? '#0a0a23' : '#f4f5f7',
+                    opacity: input.trim() ? 1 : 0.5,
                   }}
                 >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={input.trim() ? '#fff' : '#8b91a0'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M12 5l7 7-7 7" />
                   </svg>
                 </button>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 max-w-[780px] mx-auto mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-[780px] mx-auto mb-12">
               {prompts.map((prompt, index) => (
                 <button
                   key={index}
                   onClick={() => handleSubmit(prompt.value)}
-                  className="ask-chip text-left p-3 border border-[#1e1e1e] bg-[#0a0a0a] hover:bg-[#111] hover:border-[#2a2a2a] transition-colors rounded-[3px]"
+                  className="ask-chip text-left p-4 rounded-xl transition-all"
+                  style={{ border: '1px solid #e2e5ea', background: '#fff' }}
                 >
-                  <p className="text-[9px] font-bold text-[#555] uppercase tracking-[0.1em] font-mono">{prompt.title}</p>
-                  <p className="text-[11px] text-[#444] leading-relaxed mt-1">{prompt.value}</p>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.08em]" style={{ color: '#8b91a0' }}>{prompt.title}</p>
+                  <p className="text-[12px] leading-relaxed mt-1.5" style={{ color: '#4a4f5c' }}>{prompt.value}</p>
                 </button>
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-[780px] mx-auto">
-              <div className="border border-[#1e1e1e] bg-[#0a0a0a] p-4 rounded-[3px]">
-                <p className="text-[9px] uppercase tracking-[0.12em] text-[#555] font-mono font-semibold mb-3">Research Layer</p>
-                <ul className="space-y-1.5 text-[12px] text-[#666]">
-                  <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Cross-market context from equities, crypto, and macro.</li>
-                  <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Signal + narrative synthesis in one response.</li>
-                  <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Live ticker context stitched into every answer.</li>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-w-[780px] mx-auto">
+              <div className="p-5 rounded-xl" style={{ background: '#f8f9fa', border: '1px solid #e2e5ea' }}>
+                <p className="text-[10px] uppercase tracking-[0.08em] font-semibold mb-3" style={{ color: '#8b91a0' }}>Research Layer</p>
+                <ul className="space-y-2 text-[13px]" style={{ color: '#4a4f5c' }}>
+                  <li className="flex items-start gap-2"><span style={{ color: '#c8cdd5' }}>--</span>Cross-market context from equities, crypto, and macro.</li>
+                  <li className="flex items-start gap-2"><span style={{ color: '#c8cdd5' }}>--</span>Signal + narrative synthesis in one response.</li>
+                  <li className="flex items-start gap-2"><span style={{ color: '#c8cdd5' }}>--</span>Live ticker context stitched into every answer.</li>
                 </ul>
               </div>
-              <div className="border border-[#1e1e1e] bg-[#0a0a0a] p-4 rounded-[3px]">
-                <p className="text-[9px] uppercase tracking-[0.12em] text-[#555] font-mono font-semibold mb-3">Execution Layer</p>
-                <ul className="space-y-1.5 text-[12px] text-[#666]">
-                  <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Actionable levels, invalidation zones, and risk framing.</li>
-                  <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Scenario-based recommendations instead of generic takes.</li>
-                  <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Instant follow-up prompts for rapid decision loops.</li>
+              <div className="p-5 rounded-xl" style={{ background: '#f8f9fa', border: '1px solid #e2e5ea' }}>
+                <p className="text-[10px] uppercase tracking-[0.08em] font-semibold mb-3" style={{ color: '#8b91a0' }}>Execution Layer</p>
+                <ul className="space-y-2 text-[13px]" style={{ color: '#4a4f5c' }}>
+                  <li className="flex items-start gap-2"><span style={{ color: '#c8cdd5' }}>--</span>Actionable levels, invalidation zones, and risk framing.</li>
+                  <li className="flex items-start gap-2"><span style={{ color: '#c8cdd5' }}>--</span>Scenario-based recommendations instead of generic takes.</li>
+                  <li className="flex items-start gap-2"><span style={{ color: '#c8cdd5' }}>--</span>Instant follow-up prompts for rapid decision loops.</li>
                 </ul>
               </div>
             </div>
@@ -196,28 +199,28 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
   }
 
   return (
-    <div className="relative flex flex-col" style={{ minHeight: 'calc(100vh - 48px)' }}>
-      <div className="flex-1 max-w-[800px] w-full mx-auto px-4 sm:px-6 pt-4 pb-32">
-        <div className="mb-4 inline-flex items-center gap-2">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#00c076]" />
-          <span className="text-[9px] uppercase tracking-[0.1em] text-[#555] font-mono font-semibold">Conversation</span>
+    <div className="relative flex flex-col" style={{ minHeight: 'calc(100vh - 56px)', background: '#fff' }}>
+      <div className="flex-1 max-w-[800px] w-full mx-auto px-4 sm:px-6 pt-6 pb-32">
+        <div className="mb-5 inline-flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full" style={{ background: '#0d9f6e' }} />
+          <span className="text-[11px] uppercase tracking-[0.06em] font-medium" style={{ color: '#8b91a0' }}>Conversation</span>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-5">
           {messages.map((message, idx) => (
             <div key={idx} className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'} slide-up`}>
               {message.role === 'assistant' && (
-                <div className="w-6 h-6 flex items-center justify-center shrink-0 mr-2.5 mt-0.5 text-[10px] font-bold font-mono text-[#555] border border-[#1e1e1e] rounded-[3px] bg-[#0a0a0a]">
+                <div className="w-7 h-7 flex items-center justify-center shrink-0 mr-3 mt-0.5 text-[11px] font-bold font-heading rounded-lg" style={{ color: '#fff', background: '#0a0a23' }}>
                   A
                 </div>
               )}
 
               {message.role === 'user' ? (
-                <div className="px-4 py-3 max-w-[78%] bg-[#111] border border-[#1e1e1e] rounded-[4px]">
-                  <p className="text-[13px] text-white leading-relaxed">{message.content}</p>
+                <div className="px-4 py-3 max-w-[78%] rounded-xl" style={{ background: '#f4f5f7', border: '1px solid #e2e5ea' }}>
+                  <p className="text-[13px] leading-relaxed" style={{ color: '#0a0a23' }}>{message.content}</p>
                 </div>
               ) : (
-                <div className="max-w-[90%] min-w-0 px-4 py-3 bg-[#0a0a0a] border border-[#151515] rounded-[4px]">
+                <div className="max-w-[90%] min-w-0 px-4 py-3 rounded-xl" style={{ background: '#fafbfc', border: '1px solid #eef0f4' }}>
                   <div dangerouslySetInnerHTML={{ __html: formatMarkdown(message.content) }} />
                 </div>
               )}
@@ -226,13 +229,13 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
 
           {loading && (
             <div className="flex justify-start slide-up">
-              <div className="w-6 h-6 flex items-center justify-center shrink-0 mr-2.5 mt-0.5 text-[10px] font-bold font-mono text-[#555] border border-[#1e1e1e] rounded-[3px] bg-[#0a0a0a]">
+              <div className="w-7 h-7 flex items-center justify-center shrink-0 mr-3 mt-0.5 text-[11px] font-bold font-heading rounded-lg" style={{ color: '#fff', background: '#0a0a23' }}>
                 A
               </div>
-              <div className="flex items-center gap-1.5 py-3 pl-1">
-                <span className="w-1 h-1 rounded-full bg-[#333] animate-pulse" />
-                <span className="w-1 h-1 rounded-full bg-[#333] animate-pulse" style={{ animationDelay: '200ms' }} />
-                <span className="w-1 h-1 rounded-full bg-[#333] animate-pulse" style={{ animationDelay: '400ms' }} />
+              <div className="flex items-center gap-2 py-3 pl-1">
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#c8cdd5' }} />
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#c8cdd5', animationDelay: '200ms' }} />
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#c8cdd5', animationDelay: '400ms' }} />
               </div>
             </div>
           )}
@@ -241,8 +244,8 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
         </div>
       </div>
 
-      <div className="fixed bottom-0 left-0 right-0 z-20 md:pb-4 pb-16">
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/95 to-transparent" />
+      <div className="fixed bottom-0 left-0 right-0 z-20 md:pb-5 pb-16">
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, #fff, #fff 60%, transparent)' }} />
         <div className="relative max-w-[800px] mx-auto px-4 sm:px-6">
           <div className="relative">
             <textarea
@@ -252,19 +255,21 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
               onKeyDown={handleKeyDown}
               placeholder="Ask a follow-up..."
               rows={1}
-              className="w-full pl-4 pr-14 py-3 text-[13px] text-white bg-[#0d0d0d] border border-[#1e1e1e] rounded-[4px] resize-none placeholder:text-[#333] focus:border-[#2762bc] transition-colors"
-              style={{ outline: 'none' }}
+              className="w-full pl-4 pr-14 py-3.5 text-[14px] bg-white rounded-xl resize-none transition-all"
+              style={{ border: '1px solid #e2e5ea', color: '#0a0a23', outline: 'none', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}
+              onFocus={(e) => { e.currentTarget.style.borderColor = '#1a6bdb'; e.currentTarget.style.boxShadow = '0 0 0 3px rgba(26,107,219,0.1)'; }}
+              onBlur={(e) => { e.currentTarget.style.borderColor = '#e2e5ea'; e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.06)'; }}
             />
             <button
               onClick={() => handleSubmit()}
               disabled={!input.trim() || loading}
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center transition-colors rounded-[3px]"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center transition-colors rounded-lg"
               style={{
-                background: input.trim() ? '#2762bc' : '#111',
-                opacity: input.trim() ? 1 : 0.3,
+                background: input.trim() ? '#0a0a23' : '#f4f5f7',
+                opacity: input.trim() ? 1 : 0.5,
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={input.trim() ? '#fff' : '#8b91a0'} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </button>

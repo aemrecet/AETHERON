@@ -150,7 +150,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
         strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-        stroke={isActive ? '#5a9aee' : '#555'}
+        stroke={isActive ? '#1a6bdb' : '#8b91a0'}
         style={{ opacity: isActive ? 1 : 0.5 }}
       >
         {isActive && isAsc ? <polyline points="18 15 12 9 6 15" /> : <polyline points="6 9 12 15 18 9" />}
@@ -163,68 +163,68 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
       <div className="card p-3 sm:p-4">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-[#555] font-semibold font-mono">{activeMarket} Market Matrix</p>
-            <h2 className="text-[15px] sm:text-[17px] font-bold text-[#fff] tracking-[-0.01em] mt-1 font-mono uppercase">{activeMarket} Overview</h2>
+            <p className="text-[10px] uppercase tracking-[0.12em] text-[#8b91a0] font-semibold font-heading">{activeMarket} Market Matrix</p>
+            <h2 className="text-[15px] sm:text-[17px] font-bold text-[#0a0a23] tracking-[-0.01em] mt-1 font-heading uppercase">{activeMarket} Overview</h2>
           </div>
           <span className="badge badge-accent text-[10px] uppercase tracking-[0.06em]">Live Universe</span>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-3">
-          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Assets</p>
-            <p className="text-[17px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{marketSummary.assetCount}</p>
+          <div className="rounded-lg border border-[#e2e5ea] bg-[#fff] px-3 py-2.5">
+            <p className="text-[10px] text-[#8b91a0] uppercase tracking-[0.08em] font-mono">Assets</p>
+            <p className="text-[17px] font-semibold text-[#0a0a23] font-mono tabular-nums mt-0.5">{marketSummary.assetCount}</p>
           </div>
-          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Total Cap</p>
-            <p className="text-[17px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{formatCompactCurrency(marketSummary.totalMarketCap)}</p>
+          <div className="rounded-lg border border-[#e2e5ea] bg-[#fff] px-3 py-2.5">
+            <p className="text-[10px] text-[#8b91a0] uppercase tracking-[0.08em] font-mono">Total Cap</p>
+            <p className="text-[17px] font-semibold text-[#0a0a23] font-mono tabular-nums mt-0.5">{formatCompactCurrency(marketSummary.totalMarketCap)}</p>
           </div>
-          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Breadth</p>
-            <p className="text-[15px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{marketSummary.advancers}/{marketSummary.decliners}</p>
+          <div className="rounded-lg border border-[#e2e5ea] bg-[#fff] px-3 py-2.5">
+            <p className="text-[10px] text-[#8b91a0] uppercase tracking-[0.08em] font-mono">Breadth</p>
+            <p className="text-[15px] font-semibold text-[#0a0a23] font-mono tabular-nums mt-0.5">{marketSummary.advancers}/{marketSummary.decliners}</p>
           </div>
-          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Avg Move</p>
-            <p className={`text-[17px] font-semibold font-mono tabular-nums mt-0.5 ${marketSummary.avgChange >= 0 ? 'text-[#00c076]' : 'text-[#ff3b3b]'}`}>
+          <div className="rounded-lg border border-[#e2e5ea] bg-[#fff] px-3 py-2.5">
+            <p className="text-[10px] text-[#8b91a0] uppercase tracking-[0.08em] font-mono">Avg Move</p>
+            <p className={`text-[17px] font-semibold font-mono tabular-nums mt-0.5 ${marketSummary.avgChange >= 0 ? 'text-[#0d9f6e]' : 'text-[#dc2626]'}`}>
               {marketSummary.avgChange >= 0 ? '+' : ''}{marketSummary.avgChange.toFixed(2)}%
             </p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-2">
-          <div className="rounded-[4px] border border-[#151515] bg-[#0a0a0a] px-3 py-2">
-            <p className="text-[9px] uppercase tracking-[0.07em] text-[#555]">Top Gainer</p>
+          <div className="rounded-lg border border-[#eef0f4] bg-[#fff] px-3 py-2">
+            <p className="text-[9px] uppercase tracking-[0.07em] text-[#8b91a0]">Top Gainer</p>
             {marketSummary.topGainer ? (
-              <p className="text-[12px] mt-1 text-[#fff]">
+              <p className="text-[12px] mt-1 text-[#0a0a23]">
                 <span className="font-semibold">{marketSummary.topGainer.symbol}</span>
-                <span className="font-mono ml-2 text-[#00c076]">+{marketSummary.topGainer.changePercent.toFixed(2)}%</span>
+                <span className="font-mono ml-2 text-[#0d9f6e]">+{marketSummary.topGainer.changePercent.toFixed(2)}%</span>
               </p>
             ) : (
-              <p className="text-[12px] mt-1 text-[#555]">No data</p>
+              <p className="text-[12px] mt-1 text-[#8b91a0]">No data</p>
             )}
           </div>
-          <div className="rounded-[4px] border border-[#151515] bg-[#0a0a0a] px-3 py-2">
-            <p className="text-[9px] uppercase tracking-[0.07em] text-[#555]">Top Loser</p>
+          <div className="rounded-lg border border-[#eef0f4] bg-[#fff] px-3 py-2">
+            <p className="text-[9px] uppercase tracking-[0.07em] text-[#8b91a0]">Top Loser</p>
             {marketSummary.topLoser ? (
-              <p className="text-[12px] mt-1 text-[#fff]">
+              <p className="text-[12px] mt-1 text-[#0a0a23]">
                 <span className="font-semibold">{marketSummary.topLoser.symbol}</span>
-                <span className="font-mono ml-2 text-[#ff3b3b]">{marketSummary.topLoser.changePercent.toFixed(2)}%</span>
+                <span className="font-mono ml-2 text-[#dc2626]">{marketSummary.topLoser.changePercent.toFixed(2)}%</span>
               </p>
             ) : (
-              <p className="text-[12px] mt-1 text-[#555]">No data</p>
+              <p className="text-[12px] mt-1 text-[#8b91a0]">No data</p>
             )}
           </div>
         </div>
 
-        <div className="mt-2 rounded-[4px] border border-[#151515] bg-[#0a0a0a] px-3 py-2.5">
+        <div className="mt-2 rounded-lg border border-[#eef0f4] bg-[#fff] px-3 py-2.5">
           <div className="flex items-center justify-between mb-1.5">
-            <p className="text-[9px] uppercase tracking-[0.07em] text-[#555]">Breadth Pulse</p>
-            <span className={`text-[11px] font-mono tabular-nums font-semibold ${breadthPct >= 50 ? 'text-[#00c076]' : 'text-[#f5a623]'}`}>
+            <p className="text-[9px] uppercase tracking-[0.07em] text-[#8b91a0]">Breadth Pulse</p>
+            <span className={`text-[11px] font-mono tabular-nums font-semibold ${breadthPct >= 50 ? 'text-[#0d9f6e]' : 'text-[#d97706]'}`}>
               {breadthPct.toFixed(0)}% advancing
             </span>
           </div>
-          <div className="h-2 rounded-full bg-[#1a1a1a] overflow-hidden">
+          <div className="h-2 rounded-full bg-[#eef0f4] overflow-hidden">
             <div
-              className={`h-full transition-all duration-700 ${breadthPct >= 50 ? 'bg-[#00c076]' : 'bg-[#ffb066]'}`}
+              className={`h-full transition-all duration-700 ${breadthPct >= 50 ? 'bg-[#0d9f6e]' : 'bg-[#ffb066]'}`}
               style={{ width: `${Math.max(0, Math.min(100, breadthPct))}%` }}
             />
           </div>
@@ -240,7 +240,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
               height="13"
               viewBox="0 0 24 24"
               fill="none"
-              stroke="#555"
+              stroke="#8b91a0"
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -324,11 +324,11 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
                       <td className="py-2 px-3">
                         <div className="flex items-center gap-2.5">
                           {stock.logo ? (
-                            <div className="w-7 h-7 rounded-[3px] flex items-center justify-center overflow-hidden shrink-0" style={{ background: '#111', border: '1px solid #1e1e1e' }}>
+                            <div className="w-7 h-7 rounded-lg flex items-center justify-center overflow-hidden shrink-0" style={{ background: '#f4f5f7', border: '1px solid #e2e5ea' }}>
                               <img src={stock.logo} alt={stock.symbol} className="w-full h-full object-contain" />
                             </div>
                           ) : (
-                            <div className="w-7 h-7 rounded-[3px] flex items-center justify-center font-semibold text-[9px] font-mono shrink-0" style={{ background: '#111', border: '1px solid #1e1e1e', color: '#555' }}>
+                            <div className="w-7 h-7 rounded-lg flex items-center justify-center font-semibold text-[9px] font-mono shrink-0" style={{ background: '#f4f5f7', border: '1px solid #e2e5ea', color: '#8b91a0' }}>
                               {stock.symbol.substring(0, 2)}
                             </div>
                           )}
@@ -353,7 +353,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
                         {stock.volume}
                       </td>
                       <td className="py-2 px-3 text-right">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#555" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-0.5">
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#8b91a0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition-transform group-hover:translate-x-0.5">
                           <polyline points="9 18 15 12 9 6" />
                         </svg>
                       </td>
@@ -374,11 +374,11 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
                   className="flex items-center gap-2.5 py-2 px-2 cursor-pointer row-hover rounded-lg"
                 >
                   {stock.logo ? (
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden p-0.5 shrink-0" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--color-border-subtle)' }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden p-0.5 shrink-0" style={{ background: 'rgba(0,0,0,0.03)', border: '1px solid var(--color-border-subtle)' }}>
                       <img src={stock.logo} alt={stock.symbol} className="w-full h-full object-contain" />
                     </div>
                   ) : (
-                    <div className="w-8 h-8 rounded-[3px] flex items-center justify-center font-semibold text-[9px] font-mono shrink-0" style={{ background: '#111', border: '1px solid #1e1e1e', color: '#555' }}>
+                    <div className="w-8 h-8 rounded-lg flex items-center justify-center font-semibold text-[9px] font-mono shrink-0" style={{ background: '#f4f5f7', border: '1px solid #e2e5ea', color: '#8b91a0' }}>
                       {stock.symbol.substring(0, 2)}
                     </div>
                   )}
@@ -390,7 +390,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
                     <div className="text-[11px] font-mono tabular-nums font-semibold" style={{ color: 'var(--color-text-primary)' }}>
                       ${stock.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
-                    <div className={`text-[10px] font-mono font-semibold tabular-nums ${isPositive ? 'text-[#00c076]' : 'text-[#ff3b3b]'}`}>
+                    <div className={`text-[10px] font-mono font-semibold tabular-nums ${isPositive ? 'text-[#0d9f6e]' : 'text-[#dc2626]'}`}>
                       {isPositive ? '+' : ''}{stock.changePercent.toFixed(2)}%
                     </div>
                   </div>

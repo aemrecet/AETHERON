@@ -18,13 +18,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
 
   return (
     <>
-      <header className="hidden md:flex items-center w-full fixed top-0 left-0 right-0 z-50 h-[48px] bg-black border-b border-[#1e1e1e]">
-        <div className="w-full px-4 lg:px-6 flex items-center">
+      <header className="hidden md:flex items-center w-full fixed top-0 left-0 right-0 z-50 h-[56px] bg-white border-b border-[#e2e5ea]" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+        <div className="w-full px-5 lg:px-8 flex items-center">
           <button
-            className="flex items-center cursor-pointer shrink-0 select-none mr-8"
+            className="flex items-center cursor-pointer shrink-0 select-none mr-10"
             onClick={() => setActiveTab(TabView.ASK)}
           >
-            <span className="text-[14px] font-bold tracking-[0.2em] uppercase text-white font-mono">AETHRON</span>
+            <span className="text-[15px] font-bold tracking-[0.15em] uppercase font-heading" style={{ color: '#0a0a23' }}>AETHRON</span>
           </button>
 
           <nav className="flex items-center gap-0">
@@ -36,12 +36,12 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className="h-[48px] px-4 text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors relative font-mono"
-                  style={{ color: isActive ? '#fff' : '#555' }}
+                  className="h-[56px] px-5 text-[12px] font-semibold tracking-[0.04em] transition-colors relative"
+                  style={{ color: isActive ? '#0a0a23' : '#8b91a0' }}
                 >
                   {item.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-4 right-4 h-[2px] bg-white" />
+                    <span className="absolute bottom-0 left-5 right-5 h-[2px]" style={{ background: '#0a0a23' }} />
                   )}
                 </button>
               );
@@ -50,14 +50,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
 
           <div className="flex-1" />
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#00c076]" />
-              <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-mono font-medium">Live</span>
+              <span className="w-2 h-2 rounded-full" style={{ background: '#0d9f6e' }} />
+              <span className="text-[11px] tracking-[0.04em] font-medium" style={{ color: '#8b91a0' }}>Live</span>
             </div>
 
             <button
-              className="h-7 px-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-white bg-[#2762bc] hover:bg-[#3578d8] transition-colors rounded-[2px] font-mono"
+              className="h-8 px-4 text-[11px] font-semibold tracking-[0.04em] text-white rounded-md transition-colors"
+              style={{ background: '#0a0a23' }}
+              onMouseEnter={(e) => e.currentTarget.style.background = '#1a1a3e'}
+              onMouseLeave={(e) => e.currentTarget.style.background = '#0a0a23'}
               onClick={() => setActiveTab(TabView.ASK)}
             >
               Upgrade
@@ -66,7 +69,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
         </div>
       </header>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-black border-t border-[#1e1e1e]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#e2e5ea]" style={{ boxShadow: '0 -1px 3px rgba(0,0,0,0.04)' }}>
         <div className="flex items-stretch justify-around">
           {menuItems.map((item) => {
             const isActive = activeTab === item.id;
@@ -74,10 +77,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className="flex flex-col items-center justify-center flex-1 py-2.5 relative transition-colors"
+                className="flex flex-col items-center justify-center flex-1 py-3 relative transition-colors"
               >
-                <span className="text-[10px] font-semibold uppercase tracking-[0.08em] font-mono" style={{ color: isActive ? '#fff' : '#555' }}>{item.label}</span>
-                {isActive && <span className="absolute top-0 left-3 right-3 h-[2px] bg-white" />}
+                <span className="text-[10px] font-semibold tracking-[0.04em]" style={{ color: isActive ? '#0a0a23' : '#8b91a0' }}>{item.label}</span>
+                {isActive && <span className="absolute top-0 left-4 right-4 h-[2px]" style={{ background: '#0a0a23' }} />}
               </button>
             );
           })}

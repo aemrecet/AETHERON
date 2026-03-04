@@ -1,13 +1,12 @@
 import React, { useState, useMemo } from 'react';
 import { Stock } from '../types';
-import { MemeCoinsView } from './MemeCoinsView';
 
 interface MarketsViewProps {
   stocks: Stock[];
   onStockSelect?: (stock: Stock) => void;
 }
 
-type MarketType = 'NASDAQ' | 'BIST' | 'CRYPTO' | 'MEME';
+type MarketType = 'NASDAQ' | 'BIST' | 'CRYPTO';
 type SortKey = 'price' | 'changePercent' | 'marketCap' | 'volume' | null;
 type SortDirection = 'asc' | 'desc';
 
@@ -232,8 +231,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
       </div>
 
       <div className="card p-2.5 sm:p-3">
-        {activeMarket !== 'MEME' && (
-          <div className="relative mb-2.5">
+        <div className="relative mb-2.5">
             <svg
               className="absolute left-3 top-1/2 -translate-y-1/2"
               width="13"
@@ -256,10 +254,9 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
               className="w-full h-10 pl-10 pr-3 text-[12px] input-field focus-ring"
             />
           </div>
-        )}
 
         <div className="flex gap-1 overflow-x-auto scrollbar-hide pb-0.5">
-          {(['NASDAQ', 'BIST', 'CRYPTO', 'MEME'] as MarketType[]).map((tab) => (
+          {(['NASDAQ', 'BIST', 'CRYPTO'] as MarketType[]).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveMarket(tab)}
@@ -271,10 +268,7 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
         </div>
       </div>
 
-      {activeMarket === 'MEME' ? (
-        <MemeCoinsView />
-      ) : (
-        <div className="flex-1">
+      <div className="flex-1">
           <div className="hidden md:block card overflow-hidden p-0">
             <table className="w-full text-left">
               <thead>
@@ -405,7 +399,6 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
             </div>
           )}
         </div>
-      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ const API_BASE = '';
 export const askGemini = async (prompt: string, context: string, conversationHistory?: { role: string; content: string }[]): Promise<string> => {
   try {
     const messages = conversationHistory || [{ role: 'user', content: prompt }];
-    
+
     const response = await fetch(`${API_BASE}/api/ai/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -19,39 +19,6 @@ export const askGemini = async (prompt: string, context: string, conversationHis
   } catch (error) {
     console.error("AI Chat Error:", error);
     return "Sorry, I'm having trouble connecting to the AI engine right now. Please try again.";
-  }
-};
-
-export const fetchMarketIntelligence = async () => {
-  try {
-    const response = await fetch(`${API_BASE}/api/market-intelligence`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error("Market Intelligence Error:", error);
-    return { topGainers: [], topLosers: [], sectors: [], whaleActivity: [], aiPicks: [] };
-  }
-};
-
-export const fetchMemeCoins = async (chain: string = 'solana') => {
-  try {
-    const response = await fetch(`${API_BASE}/api/memecoins/${chain}`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error("Meme Coins Error:", error);
-    return [];
-  }
-};
-
-export const fetchInsiderTrades = async () => {
-  try {
-    const response = await fetch(`${API_BASE}/api/insider-trades`);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error("Insider Trades Error:", error);
-    return [];
   }
 };
 

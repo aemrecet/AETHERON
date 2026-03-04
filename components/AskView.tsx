@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Stock } from '../types';
 import { askGemini } from '../services/geminiService';
+import { AnimatedBackground } from './AnimatedBackground';
 
 interface AskViewProps {
   stocks: Stock[];
@@ -111,8 +112,9 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
 
   if (!isChat) {
     return (
-      <div className="relative flex flex-col" style={{ minHeight: 'calc(100vh - 56px)', background: '#fff' }}>
-        <section className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-10">
+      <div className="relative flex flex-col" style={{ minHeight: 'calc(100vh - 56px)', background: '#f8f9fb', overflow: 'hidden' }}>
+        <AnimatedBackground />
+        <section className="relative z-10 flex-1 flex flex-col justify-center px-4 sm:px-6 py-10">
           <div className="max-w-[900px] w-full mx-auto">
             <div className="flex items-center justify-center gap-3 mb-8">
               <span className="text-[10px] uppercase tracking-[0.1em] px-3 py-1 rounded-md font-medium" style={{ color: '#8b91a0', background: '#f4f5f7', border: '1px solid #e2e5ea' }}>

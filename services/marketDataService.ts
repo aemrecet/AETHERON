@@ -62,7 +62,7 @@ const SNAPSHOT_NASDAQ: Stock[] = [
     data: generateIntradayCurve(x.p, x.p*1.05, x.p*0.95)
 }));
 
-const fetchWithTimeout = async (url: string, timeoutMs = 15000): Promise<Response> => {
+const fetchWithTimeout = async (url: string, timeoutMs = 60000): Promise<Response> => {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeoutMs);
     try {
@@ -72,10 +72,10 @@ const fetchWithTimeout = async (url: string, timeoutMs = 15000): Promise<Respons
     }
 };
 
-const fetchEndpoint = async <T>(endpoint: string, fallback: T): Promise<T> => {
+const fetchEndpoint = async <T>(endpoint: string, fallback: T, timeoutMs = 60000): Promise<T> => {
     try {
         console.log(`[Fetching] ${endpoint}...`);
-        const res = await fetchWithTimeout(`/api/${endpoint}`, 20000);
+        const res = await fetchWithTimeout(`/api/${endpoint}`, timeoutMs);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
         if (Array.isArray(data) && data.length > 0) {
@@ -95,10 +95,10 @@ export const fetchNews = async (): Promise<NewsItem[]> => {
 
 export const fetchAllMarketData = async () => {
     const [crypto, nasdaq, bist, news] = await Promise.all([
-        fetchEndpoint<Stock[]>('crypto', SNAPSHOT_CRYPTO),
-        fetchEndpoint<Stock[]>('nasdaq', SNAPSHOT_NASDAQ),
-        fetchEndpoint<Stock[]>('bist', SNAPSHOT_BIST),
-        fetchEndpoint<NewsItem[]>('news', []),
+        fetchEndpoint<Stock[]>('crypto', SNAPSHOT_CRYPTO, 90000),
+        fetchEndpoint<Stock[]>('nasdaq', SNAPSHOT_NASDAQ, 120000),
+        fetchEndpoint<Stock[]>('bist', SNAPSHOT_BIST, 120000),
+        fetchEndpoint<NewsItem[]>('news', [], 30000),
     ]);
 
     const allRaw = [...crypto, ...nasdaq, ...bist];

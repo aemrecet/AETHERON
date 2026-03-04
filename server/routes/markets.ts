@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import yahooFinance from 'yahoo-finance2';
 import { getApiKey } from '../apiKeys.js';
+import { NASDAQ_SYMBOLS } from '../data/nasdaqSymbols.js';
+import { BIST_SYMBOLS } from '../data/bistSymbols.js';
 
 const router = Router();
 
@@ -27,139 +29,90 @@ const generateIntradayCurve = (current: number, high: number, low: number) => {
 
 router.get('/crypto', async (req, res) => {
   try {
-    const page = parseInt(req.query.page as string) || 1;
-    const perPage = Math.min(parseInt(req.query.per_page as string) || 100, 250);
     const CG_KEY = await getApiKey('COINGECKO');
+    const requestedPage = parseInt(req.query.page as string) || 0;
+    const perPage = Math.min(parseInt(req.query.per_page as string) || 250, 250);
 
-    const url = new URL('https://api.coingecko.com/api/v3/coins/markets');
-    url.searchParams.set('vs_currency', 'usd');
-    url.searchParams.set('order', 'market_cap_desc');
-    url.searchParams.set('per_page', String(perPage));
-    url.searchParams.set('page', String(page));
-    url.searchParams.set('sparkline', 'true');
-    url.searchParams.set('price_change_percentage', '24h,7d');
-    if (CG_KEY) url.searchParams.set('x_cg_demo_api_key', CG_KEY);
+    if (requestedPage > 0) {
+      const url = new URL('https://api.coingecko.com/api/v3/coins/markets');
+      url.searchParams.set('vs_currency', 'usd');
+      url.searchParams.set('order', 'market_cap_desc');
+      url.searchParams.set('per_page', String(perPage));
+      url.searchParams.set('page', String(requestedPage));
+      url.searchParams.set('sparkline', 'true');
+      url.searchParams.set('price_change_percentage', '24h,7d');
+      if (CG_KEY) url.searchParams.set('x_cg_demo_api_key', CG_KEY);
+      const cgRes = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
+      if (!cgRes.ok) throw new Error(`CoinGecko ${cgRes.status}`);
+      const coins = await cgRes.json();
+      return res.json(mapCoins(coins));
+    }
 
-    const cgRes = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
-    if (!cgRes.ok) throw new Error(`CoinGecko ${cgRes.status}`);
-    const coins = await cgRes.json();
+    const pages = [1, 2, 3, 4];
+    const results = await Promise.allSettled(
+      pages.map(async (page) => {
+        const url = new URL('https://api.coingecko.com/api/v3/coins/markets');
+        url.searchParams.set('vs_currency', 'usd');
+        url.searchParams.set('order', 'market_cap_desc');
+        url.searchParams.set('per_page', '250');
+        url.searchParams.set('page', String(page));
+        url.searchParams.set('sparkline', 'true');
+        url.searchParams.set('price_change_percentage', '24h,7d');
+        if (CG_KEY) url.searchParams.set('x_cg_demo_api_key', CG_KEY);
+        const cgRes = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
+        if (!cgRes.ok) throw new Error(`CoinGecko page ${page}: ${cgRes.status}`);
+        return cgRes.json();
+      })
+    );
 
-    const stocks = (coins || []).map((c: any) => {
-      const price = c.current_price || 0;
-      const high = c.high_24h || price * 1.02;
-      const low = c.low_24h || price * 0.98;
-      return {
-        symbol: c.symbol?.toUpperCase() || '',
-        name: c.name || '',
-        price,
-        change: c.price_change_24h || 0,
-        changePercent: c.price_change_percentage_24h || 0,
-        changePercent7d: c.price_change_percentage_7d_in_currency || 0,
-        volume: c.total_volume ? `$${(c.total_volume / 1e9).toFixed(1)}B` : '-',
-        volumeRaw: c.total_volume || 0,
-        marketCap: c.market_cap ? `$${(c.market_cap / 1e9).toFixed(0)}B` : '-',
-        marketCapRaw: c.market_cap || 0,
-        sector: 'Crypto',
-        market: 'CRYPTO',
-        dayHigh: high,
-        dayLow: low,
-        logo: c.image || `https://assets.coincap.io/assets/icons/${(c.symbol || '').toLowerCase()}@2x.png`,
-        sparkline: c.sparkline_in_7d?.price || [],
-        rank: c.market_cap_rank || 0,
-        ath: c.ath || 0,
-        athChangePercentage: c.ath_change_percentage || 0,
-        circulatingSupply: c.circulating_supply || 0,
-        totalSupply: c.total_supply || 0,
-        data: generateIntradayCurve(price, high, low),
-      };
+    const allCoins: any[] = [];
+    results.forEach((r) => {
+      if (r.status === 'fulfilled' && Array.isArray(r.value)) allCoins.push(...r.value);
     });
 
-    res.json(stocks);
+    res.json(mapCoins(allCoins));
   } catch (err) {
     console.error('[crypto]', err);
     res.json([]);
   }
 });
 
-const NASDAQ_SYMBOLS = [
-  { yahoo: 'AAPL', name: 'Apple' },
-  { yahoo: 'MSFT', name: 'Microsoft' },
-  { yahoo: 'NVDA', name: 'NVIDIA' },
-  { yahoo: 'GOOGL', name: 'Alphabet' },
-  { yahoo: 'AMZN', name: 'Amazon' },
-  { yahoo: 'META', name: 'Meta' },
-  { yahoo: 'TSLA', name: 'Tesla' },
-  { yahoo: 'AVGO', name: 'Broadcom' },
-  { yahoo: 'COST', name: 'Costco' },
-  { yahoo: 'NFLX', name: 'Netflix' },
-  { yahoo: 'AMD', name: 'AMD' },
-  { yahoo: 'ADBE', name: 'Adobe' },
-  { yahoo: 'CRM', name: 'Salesforce' },
-  { yahoo: 'INTC', name: 'Intel' },
-  { yahoo: 'QCOM', name: 'Qualcomm' },
-  { yahoo: 'TXN', name: 'Texas Instruments' },
-  { yahoo: 'AMAT', name: 'Applied Materials' },
-  { yahoo: 'PANW', name: 'Palo Alto Networks' },
-  { yahoo: 'MU', name: 'Micron' },
-  { yahoo: 'LRCX', name: 'Lam Research' },
-  { yahoo: 'ISRG', name: 'Intuitive Surgical' },
-  { yahoo: 'BKNG', name: 'Booking Holdings' },
-  { yahoo: 'KLAC', name: 'KLA Corporation' },
-  { yahoo: 'SNPS', name: 'Synopsys' },
-  { yahoo: 'CDNS', name: 'Cadence Design' },
-  { yahoo: 'MRVL', name: 'Marvell Technology' },
-  { yahoo: 'PYPL', name: 'PayPal' },
-  { yahoo: 'ABNB', name: 'Airbnb' },
-  { yahoo: 'COIN', name: 'Coinbase' },
-  { yahoo: 'PLTR', name: 'Palantir' },
-  { yahoo: 'SMCI', name: 'Super Micro' },
-  { yahoo: 'ARM', name: 'ARM Holdings' },
-  { yahoo: 'UBER', name: 'Uber' },
-  { yahoo: 'SQ', name: 'Block' },
-  { yahoo: 'SHOP', name: 'Shopify' },
-  { yahoo: 'SNOW', name: 'Snowflake' },
-  { yahoo: 'DDOG', name: 'Datadog' },
-  { yahoo: 'NET', name: 'Cloudflare' },
-  { yahoo: 'CRWD', name: 'CrowdStrike' },
-  { yahoo: 'ZS', name: 'Zscaler' },
-];
+function mapCoins(coins: any[]) {
+  return (coins || []).map((c: any) => {
+    const price = c.current_price || 0;
+    const high = c.high_24h || price * 1.02;
+    const low = c.low_24h || price * 0.98;
+    return {
+      symbol: c.symbol?.toUpperCase() || '',
+      name: c.name || '',
+      price,
+      change: c.price_change_24h || 0,
+      changePercent: c.price_change_percentage_24h || 0,
+      changePercent7d: c.price_change_percentage_7d_in_currency || 0,
+      volume: c.total_volume ? `$${(c.total_volume / 1e9).toFixed(1)}B` : '-',
+      volumeRaw: c.total_volume || 0,
+      marketCap: c.market_cap ? `$${(c.market_cap / 1e9).toFixed(0)}B` : '-',
+      marketCapRaw: c.market_cap || 0,
+      sector: 'Crypto',
+      market: 'CRYPTO',
+      dayHigh: high,
+      dayLow: low,
+      logo: c.image || `https://assets.coincap.io/assets/icons/${(c.symbol || '').toLowerCase()}@2x.png`,
+      sparkline: c.sparkline_in_7d?.price || [],
+      rank: c.market_cap_rank || 0,
+      ath: c.ath || 0,
+      athChangePercentage: c.ath_change_percentage || 0,
+      circulatingSupply: c.circulating_supply || 0,
+      totalSupply: c.total_supply || 0,
+      data: generateIntradayCurve(price, high, low),
+    };
+  });
+}
 
-const BIST_SYMBOLS = [
-  { yahoo: 'THYAO.IS', symbol: 'THYAO', name: 'Turk Hava Yollari' },
-  { yahoo: 'GARAN.IS', symbol: 'GARAN', name: 'Garanti BBVA' },
-  { yahoo: 'ASELS.IS', symbol: 'ASELS', name: 'Aselsan' },
-  { yahoo: 'AKBNK.IS', symbol: 'AKBNK', name: 'Akbank' },
-  { yahoo: 'KCHOL.IS', symbol: 'KCHOL', name: 'Koc Holding' },
-  { yahoo: 'SAHOL.IS', symbol: 'SAHOL', name: 'Sabanci Holding' },
-  { yahoo: 'EREGL.IS', symbol: 'EREGL', name: 'Eregli Demir Celik' },
-  { yahoo: 'SISE.IS', symbol: 'SISE', name: 'Turkiye Sise' },
-  { yahoo: 'TUPRS.IS', symbol: 'TUPRS', name: 'Tupras' },
-  { yahoo: 'YKBNK.IS', symbol: 'YKBNK', name: 'Yapi Kredi' },
-  { yahoo: 'PGSUS.IS', symbol: 'PGSUS', name: 'Pegasus' },
-  { yahoo: 'BIMAS.IS', symbol: 'BIMAS', name: 'BIM Magazalar' },
-  { yahoo: 'FROTO.IS', symbol: 'FROTO', name: 'Ford Otosan' },
-  { yahoo: 'TOASO.IS', symbol: 'TOASO', name: 'Tofas Oto' },
-  { yahoo: 'SASA.IS', symbol: 'SASA', name: 'SASA Polyester' },
-  { yahoo: 'TCELL.IS', symbol: 'TCELL', name: 'Turkcell' },
-  { yahoo: 'TAVHL.IS', symbol: 'TAVHL', name: 'TAV Havalimanlari' },
-  { yahoo: 'EKGYO.IS', symbol: 'EKGYO', name: 'Emlak Konut GYO' },
-  { yahoo: 'HALKB.IS', symbol: 'HALKB', name: 'Halkbank' },
-  { yahoo: 'VAKBN.IS', symbol: 'VAKBN', name: 'Vakifbank' },
-  { yahoo: 'ISCTR.IS', symbol: 'ISCTR', name: 'Is Bankasi C' },
-  { yahoo: 'KOZAL.IS', symbol: 'KOZAL', name: 'Koza Altin' },
-  { yahoo: 'KOZAA.IS', symbol: 'KOZAA', name: 'Koza Anadolu Metal' },
-  { yahoo: 'PETKM.IS', symbol: 'PETKM', name: 'Petkim' },
-  { yahoo: 'ARCLK.IS', symbol: 'ARCLK', name: 'Arcelik' },
-  { yahoo: 'VESTL.IS', symbol: 'VESTL', name: 'Vestel Elektronik' },
-  { yahoo: 'MGROS.IS', symbol: 'MGROS', name: 'Migros' },
-  { yahoo: 'TTKOM.IS', symbol: 'TTKOM', name: 'Turk Telekom' },
-  { yahoo: 'ENKAI.IS', symbol: 'ENKAI', name: 'Enka Insaat' },
-  { yahoo: 'DOHOL.IS', symbol: 'DOHOL', name: 'Dogan Holding' },
-];
 
 async function fetchQuotes(symbols: string[]) {
   const results: any[] = [];
-  const batchSize = 5;
+  const batchSize = 20;
   for (let i = 0; i < symbols.length; i += batchSize) {
     const batch = symbols.slice(i, i + batchSize);
     const promises = batch.map(async (sym) => {
@@ -175,11 +128,12 @@ async function fetchQuotes(symbols: string[]) {
   return results;
 }
 
+const nasdaqLookup = new Map(NASDAQ_SYMBOLS.map((s) => [s.yahoo, s.name]));
+
 router.get('/nasdaq', async (_req, res) => {
   try {
     const quotes = await fetchQuotes(NASDAQ_SYMBOLS.map((s) => s.yahoo));
-    const stocks = quotes.map((q) => {
-      const meta = NASDAQ_SYMBOLS.find((s) => s.yahoo === q.symbol);
+    const stocks = quotes.map((q: any) => {
       const price = q.regularMarketPrice || 0;
       const change = q.regularMarketChange || 0;
       const changePct = q.regularMarketChangePercent || 0;
@@ -187,7 +141,7 @@ router.get('/nasdaq', async (_req, res) => {
       const low = q.regularMarketDayLow || price * 0.98;
       return {
         symbol: q.symbol,
-        name: meta?.name || q.shortName || '',
+        name: nasdaqLookup.get(q.symbol) || q.shortName || '',
         price,
         change,
         changePercent: changePct,
@@ -208,11 +162,13 @@ router.get('/nasdaq', async (_req, res) => {
   }
 });
 
+const bistLookup = new Map(BIST_SYMBOLS.map((s) => [s.yahoo, { symbol: s.symbol, name: s.name }]));
+
 router.get('/bist', async (_req, res) => {
   try {
     const quotes = await fetchQuotes(BIST_SYMBOLS.map((s) => s.yahoo));
-    const stocks = quotes.map((q) => {
-      const meta = BIST_SYMBOLS.find((s) => s.yahoo === q.symbol);
+    const stocks = quotes.map((q: any) => {
+      const meta = bistLookup.get(q.symbol);
       const price = q.regularMarketPrice || 0;
       const change = q.regularMarketChange || 0;
       const changePct = q.regularMarketChangePercent || 0;

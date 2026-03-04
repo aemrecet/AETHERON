@@ -113,8 +113,8 @@ const Sparkline: React.FC<{ data: number[]; color?: string; width?: number; heig
 const LoadingSpinner: React.FC<{ text?: string }> = ({ text = 'Loading...' }) => (
   <div className="flex items-center justify-center py-12">
     <div className="flex flex-col items-center gap-3">
-      <div className="w-6 h-6 border-2 border-[#ffffff0f] border-t-blue-600 rounded-full animate-spin"></div>
-      <p className="text-[#555962] text-[11px]">{text}</p>
+      <div className="w-6 h-6 border-2 border-[#1e1e1e] border-t-blue-600 rounded-full animate-spin"></div>
+      <p className="text-[#555] text-[11px]">{text}</p>
     </div>
   </div>
 );
@@ -173,21 +173,21 @@ const OverviewTab: React.FC = () => {
         <div className={`${cardClass} p-3`}>
           <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Market Cap</span>
-              <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatNum(marketStats.totalMarketCap)}</span>
+              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Market Cap</span>
+              <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(marketStats.totalMarketCap)}</span>
               <PctChange value={marketStats.marketCapChange24h} className="text-[11px] font-semibold" />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">24H Vol</span>
-              <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatNum(marketStats.totalVolume24h)}</span>
+              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">24H Vol</span>
+              <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(marketStats.totalVolume24h)}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">BTC Dom</span>
-              <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{btcDom.toFixed(1)}%</span>
+              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">BTC Dom</span>
+              <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{btcDom.toFixed(1)}%</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Active</span>
-              <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{(marketStats.activeCryptos || 0).toLocaleString()}</span>
+              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Active</span>
+              <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(marketStats.activeCryptos || 0).toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -195,55 +195,55 @@ const OverviewTab: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">Fear & Greed Index</p>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Fear & Greed Index</p>
           {fearGreed?.current ? (
             <>
               <FearGreedGauge value={fearGreed.current.value} label={fearGreed.current.label} />
               {fearGreed.history && fearGreed.history.length > 1 && (
                 <div className="mt-3">
-                  <p className="text-[9px] text-[#555962] mb-1">30-Day Trend</p>
+                  <p className="text-[9px] text-[#555] mb-1">30-Day Trend</p>
                   <Sparkline data={fearGreed.history.map((h: any) => h.value)} />
                 </div>
               )}
             </>
           ) : (
-            <p className="text-[#555962] text-xs">No data</p>
+            <p className="text-[#555] text-xs">No data</p>
           )}
         </div>
 
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">BTC Dominance Breakdown</p>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">BTC Dominance Breakdown</p>
           <div className="space-y-2">
-            <div className="w-full h-5 rounded-full overflow-hidden flex bg-[#22232b]">
-              <div className="h-full bg-[#2d2810]" style={{ width: `${btcDom}%` }}></div>
-              <div className="h-full bg-[#1a2540]" style={{ width: `${ethDom}%` }}></div>
-              <div className="h-full bg-[#2a2b33]" style={{ width: `${otherDom}%` }}></div>
+            <div className="w-full h-5 rounded-full overflow-hidden flex bg-[#111]">
+              <div className="h-full bg-[#111]" style={{ width: `${btcDom}%` }}></div>
+              <div className="h-full bg-[#111]" style={{ width: `${ethDom}%` }}></div>
+              <div className="h-full bg-[#1a1a1a]" style={{ width: `${otherDom}%` }}></div>
             </div>
             <div className="flex items-center gap-3 text-[11px]">
               <div className="flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#2d2810]"></div>
-                <span className="text-[#868c98]">BTC</span>
-                <span className="text-[#e4e8ee] font-mono font-bold tabular-nums">{btcDom.toFixed(1)}%</span>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#111]"></div>
+                <span className="text-[#888]">BTC</span>
+                <span className="text-[#fff] font-mono font-bold tabular-nums">{btcDom.toFixed(1)}%</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#1a2540]"></div>
-                <span className="text-[#868c98]">ETH</span>
-                <span className="text-[#e4e8ee] font-mono font-bold tabular-nums">{ethDom.toFixed(1)}%</span>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#111]"></div>
+                <span className="text-[#888]">ETH</span>
+                <span className="text-[#fff] font-mono font-bold tabular-nums">{ethDom.toFixed(1)}%</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-2.5 h-2.5 rounded-full bg-[#2a2b33]"></div>
-                <span className="text-[#868c98]">Others</span>
-                <span className="text-[#e4e8ee] font-mono font-bold tabular-nums">{otherDom.toFixed(1)}%</span>
+                <div className="w-2.5 h-2.5 rounded-full bg-[#1a1a1a]"></div>
+                <span className="text-[#888]">Others</span>
+                <span className="text-[#fff] font-mono font-bold tabular-nums">{otherDom.toFixed(1)}%</span>
               </div>
             </div>
           </div>
         </div>
 
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">Altcoin Season Index</p>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Altcoin Season Index</p>
           <div className="flex flex-col items-center">
             <div className="relative w-full max-w-[180px] mb-3">
-              <div className="w-full h-3 rounded-full bg-[#22232b] overflow-hidden">
+              <div className="w-full h-3 rounded-full bg-[#111] overflow-hidden">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{
@@ -255,14 +255,14 @@ const OverviewTab: React.FC = () => {
                 ></div>
               </div>
               <div className="flex justify-between mt-1.5">
-                <span className="text-[9px] text-[#555962]">Bitcoin Season</span>
-                <span className="text-[9px] text-[#555962]">Altcoin Season</span>
+                <span className="text-[9px] text-[#555]">Bitcoin Season</span>
+                <span className="text-[9px] text-[#555]">Altcoin Season</span>
               </div>
             </div>
-            <p className={`text-[22px] font-mono font-bold tabular-nums ${isBitcoinSeason ? 'text-[#f59e0b]' : 'text-[#4c8bf5]'}`}>
+            <p className={`text-[22px] font-mono font-bold tabular-nums ${isBitcoinSeason ? 'text-[#f59e0b]' : 'text-[#2762bc]'}`}>
               {altSeasonIndex}
             </p>
-            <p className="text-[11px] text-[#868c98] mt-1">
+            <p className="text-[11px] text-[#888] mt-1">
               {isBitcoinSeason ? `Bitcoin dominance at ${btcDom.toFixed(1)}%` : `Altcoins hold ${(100 - btcDom).toFixed(1)}% of market`}
             </p>
           </div>
@@ -271,15 +271,15 @@ const OverviewTab: React.FC = () => {
 
       {dominanceBreakdown.length > 0 && (
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">Market Cap Dominance</p>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Market Cap Dominance</p>
           <div className="space-y-2.5">
             {dominanceBreakdown.slice(0, 10).map((item: any, i: number) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-[11px] text-[#868c98] w-10 shrink-0 font-semibold">{item.symbol}</span>
-                <div className="flex-1 h-4 rounded-full bg-[#22232b] overflow-hidden">
-                  <div className="h-full rounded-full bg-[#1a2540] transition-all duration-500" style={{ width: `${Math.min(item.percentage, 100)}%` }}></div>
+                <span className="text-[11px] text-[#888] w-10 shrink-0 font-semibold">{item.symbol}</span>
+                <div className="flex-1 h-4 rounded-full bg-[#111] overflow-hidden">
+                  <div className="h-full rounded-full bg-[#111] transition-all duration-500" style={{ width: `${Math.min(item.percentage, 100)}%` }}></div>
                 </div>
-                <span className="text-[11px] text-[#e4e8ee] font-mono font-bold tabular-nums w-14 text-right">{item.percentage.toFixed(1)}%</span>
+                <span className="text-[11px] text-[#fff] font-mono font-bold tabular-nums w-14 text-right">{item.percentage.toFixed(1)}%</span>
               </div>
             ))}
           </div>
@@ -289,26 +289,26 @@ const OverviewTab: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
         <div className={`lg:col-span-1 ${cardClass} p-3`}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Trending Coins</p>
-            <span className="text-[9px] text-[#555962]">24H</span>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Trending Coins</p>
+            <span className="text-[9px] text-[#555]">24H</span>
           </div>
           <div className="space-y-0.5">
             {(trending.coins || []).map((coin: any, i: number) => (
-              <div key={coin.id || i} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-[#1c1d24] transition-colors cursor-pointer">
+              <div key={coin.id || i} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-[#1a1a1a] transition-colors cursor-pointer">
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                  <span className="text-[11px] text-[#555962] font-mono w-5 shrink-0 text-right">{i + 1}</span>
+                  <span className="text-[11px] text-[#555] font-mono w-5 shrink-0 text-right">{i + 1}</span>
                   {coin.logo ? (
                     <img src={coin.logo} alt="" className="w-6 h-6 rounded-full shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                   ) : (
-                    <div className="w-6 h-6 rounded-full bg-[#22232b] shrink-0"></div>
+                    <div className="w-6 h-6 rounded-full bg-[#111] shrink-0"></div>
                   )}
                   <div className="min-w-0">
-                    <span className="text-[12px] font-semibold text-[#e4e8ee]">{coin.name}</span>
-                    <span className="text-[9px] text-[#555962] ml-1.5">{coin.symbol}</span>
+                    <span className="text-[12px] font-semibold text-[#fff]">{coin.name}</span>
+                    <span className="text-[9px] text-[#555] ml-1.5">{coin.symbol}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  {coin.price != null && <span className="text-[11px] text-[#868c98] tabular-nums font-mono">{formatPrice(coin.price)}</span>}
+                  {coin.price != null && <span className="text-[11px] text-[#888] tabular-nums font-mono">{formatPrice(coin.price)}</span>}
                   {coin.priceChange24h != null && <PctChange value={coin.priceChange24h} className="text-[11px] font-bold" />}
                 </div>
               </div>
@@ -316,12 +316,12 @@ const OverviewTab: React.FC = () => {
           </div>
 
           {trending.categories?.length > 0 && (
-            <div className="mt-5 pt-4 border-t border-[#ffffff0f]">
-              <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">Trending Categories</p>
+            <div className="mt-5 pt-4 border-t border-[#1e1e1e]">
+              <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Trending Categories</p>
               <div className="space-y-2">
                 {trending.categories.map((cat: any, i: number) => (
-                  <div key={i} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#1c1d24] transition-colors">
-                    <span className="text-[12px] text-[#e4e8ee]">{cat.name}</span>
+                  <div key={i} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#1a1a1a] transition-colors">
+                    <span className="text-[12px] text-[#fff]">{cat.name}</span>
                     {cat.marketCapChange24h != null && <PctChange value={cat.marketCapChange24h} className="text-[10px] font-bold" />}
                   </div>
                 ))}
@@ -331,7 +331,7 @@ const OverviewTab: React.FC = () => {
         </div>
 
         <div className="lg:col-span-2">
-          <div className="flex items-center gap-0 mb-3 overflow-x-auto border-b border-[#ffffff0f]">
+          <div className="flex items-center gap-0 mb-3 overflow-x-auto border-b border-[#1e1e1e]">
             {filters.map(f => (
               <button
                 key={f}
@@ -346,7 +346,7 @@ const OverviewTab: React.FC = () => {
           <div className="space-y-2">
             {filteredFeed.length === 0 ? (
               <div className={`${cardClass} p-6 text-center`}>
-                <p className="text-[#555962] text-sm">No items in this category yet</p>
+                <p className="text-[#555] text-sm">No items in this category yet</p>
               </div>
             ) : (
               filteredFeed.map((item: any, i: number) => (
@@ -355,7 +355,7 @@ const OverviewTab: React.FC = () => {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`${cardClass} p-3 block hover:bg-[#1c1d24] transition-all cursor-pointer group`}
+                  className={`${cardClass} p-3 block hover:bg-[#1a1a1a] transition-all cursor-pointer group`}
                 >
                   <div className="flex items-start gap-3">
                     {item.image && (
@@ -369,26 +369,26 @@ const OverviewTab: React.FC = () => {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
-                          item.category === 'BTC Tracker' ? 'text-[#b79d25] bg-[#2d2810]' :
-                          item.category === 'Funding' ? 'text-[#10b981] bg-[#0f2d1f]' :
-                          item.category === 'X Highlight' ? 'text-[#6da0f7] bg-[#1a2540]' :
-                          item.category === 'Regulation' ? 'text-[#ef4444] bg-[#2d1520]' :
+                          item.category === 'BTC Tracker' ? 'text-[#b79d25] bg-[#111]' :
+                          item.category === 'Funding' ? 'text-[#10b981] bg-[#0a1a0f]' :
+                          item.category === 'X Highlight' ? 'text-[#3578d8] bg-[#111]' :
+                          item.category === 'Regulation' ? 'text-[#ef4444] bg-[#1a0a0a]' :
                           item.category === 'Project' ? 'text-[#7c5cbf] bg-[#1f1538]' :
-                          item.category === 'Token' ? 'text-[#6da0f7] bg-[#1a2540]' :
-                          'text-[#555962] bg-[#1c1d24]'
+                          item.category === 'Token' ? 'text-[#3578d8] bg-[#111]' :
+                          'text-[#555] bg-[#111]'
                         }`}>{item.category}</span>
                         <span className={`text-[9px] font-semibold ${
                           item.sentiment === 'Bullish' ? 'text-[#10b981]' :
-                          item.sentiment === 'Bearish' ? 'text-[#ef4444]' : 'text-[#555962]'
+                          item.sentiment === 'Bearish' ? 'text-[#ef4444]' : 'text-[#555]'
                         }`}>{item.sentiment}</span>
-                        <span className="text-[9px] text-[#555962] ml-auto">{item.relativeTime}</span>
+                        <span className="text-[9px] text-[#555] ml-auto">{item.relativeTime}</span>
                       </div>
-                      <h3 className="text-[14px] font-semibold text-[#e4e8ee] leading-snug mb-1.5 group-hover:text-[#4c8bf5] transition-colors">{item.title}</h3>
+                      <h3 className="text-[14px] font-semibold text-[#fff] leading-snug mb-1.5 group-hover:text-[#2762bc] transition-colors">{item.title}</h3>
                       {item.summary && (
-                        <p className="text-[11px] text-[#868c98] leading-relaxed line-clamp-2">{item.summary}</p>
+                        <p className="text-[11px] text-[#888] leading-relaxed line-clamp-2">{item.summary}</p>
                       )}
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-[10px] text-[#555962]">{item.source}</span>
+                        <span className="text-[10px] text-[#555]">{item.source}</span>
                       </div>
                     </div>
                   </div>
@@ -420,9 +420,9 @@ const SpotTab: React.FC = () => {
   const topExchange = exchanges[0]?.name || 'N/A';
 
   const getTrustColor = (score: number) => {
-    if (score >= 10) return 'bg-[#0f2d1f]';
-    if (score >= 7) return 'bg-[#2d2810]';
-    return 'bg-[#2d1520]';
+    if (score >= 10) return 'bg-[#0a1a0f]';
+    if (score >= 7) return 'bg-[#111]';
+    return 'bg-[#1a0a0a]';
   };
 
   return (
@@ -430,61 +430,61 @@ const SpotTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Spot Vol (24H)</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatBtc(stats.totalVolume24hBtc || 0)}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Spot Vol (24H)</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(stats.totalVolume24hBtc || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Exchanges</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{exchanges.length}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Exchanges</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{exchanges.length}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Top</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee]">{topExchange}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top</span>
+            <span className="text-[14px] font-bold text-[#fff]">{topExchange}</span>
           </div>
         </div>
       </div>
 
       <div className={`${cardClass} overflow-hidden`}>
-        <div className="p-3 border-b border-[#ffffff0f]">
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Top Exchanges by Volume</p>
+        <div className="p-3 border-b border-[#1e1e1e]">
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top Exchanges by Volume</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="table-header border-b border-[#ffffff0f]">
-                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">#</th>
-                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Exchange</th>
-                <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Trust</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">24H Volume (BTC)</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Country</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Est.</th>
+              <tr className="table-header border-b border-[#1e1e1e]">
+                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">#</th>
+                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Exchange</th>
+                <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Trust</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">24H Volume (BTC)</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Country</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Est.</th>
               </tr>
             </thead>
             <tbody>
               {exchanges.map((ex: any, i: number) => (
-                <tr key={i} className="table-row table-row-stripe border-b border-[#ffffff0a]">
-                  <td className="px-2 py-1.5 text-[12px] text-[#868c98] font-mono tabular-nums">{ex.rank || i + 1}</td>
+                <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
+                  <td className="px-2 py-1.5 text-[12px] text-[#888] font-mono tabular-nums">{ex.rank || i + 1}</td>
                   <td className="px-2 py-1.5">
                     <div className="flex items-center gap-2">
                       {ex.image ? (
                         <img src={ex.image} alt="" className="w-5 h-5 rounded-full shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                       ) : (
-                        <div className="w-5 h-5 rounded-full bg-[#22232b] shrink-0"></div>
+                        <div className="w-5 h-5 rounded-full bg-[#111] shrink-0"></div>
                       )}
-                      <span className="text-[12px] font-semibold text-[#e4e8ee]">{ex.name}</span>
+                      <span className="text-[12px] font-semibold text-[#fff]">{ex.name}</span>
                     </div>
                   </td>
                   <td className="px-2 py-1.5 text-center">
                     <div className="flex items-center justify-center gap-1">
                       <div className={`w-2 h-2 rounded-full ${getTrustColor(ex.trustScore || 0)}`}></div>
-                      <span className="text-[11px] text-[#868c98] font-mono tabular-nums">{ex.trustScore || '-'}</span>
+                      <span className="text-[11px] text-[#888] font-mono tabular-nums">{ex.trustScore || '-'}</span>
                     </div>
                   </td>
-                  <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatBtc(ex.volume24hBtc || 0)}</td>
+                  <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(ex.volume24hBtc || 0)}</td>
                   <td className="px-2 py-1.5 text-right hidden md:table-cell">
-                    <span className="text-[10px] text-[#868c98] bg-[#1c1d24] px-2 py-0.5 rounded-full">{ex.country || '--'}</span>
+                    <span className="text-[10px] text-[#888] bg-[#111] px-2 py-0.5 rounded-full">{ex.country || '--'}</span>
                   </td>
-                  <td className="px-2 py-1.5 text-right text-[11px] text-[#868c98] font-mono tabular-nums hidden md:table-cell">{ex.year || '--'}</td>
+                  <td className="px-2 py-1.5 text-right text-[11px] text-[#888] font-mono tabular-nums hidden md:table-cell">{ex.year || '--'}</td>
                 </tr>
               ))}
             </tbody>
@@ -517,56 +517,56 @@ const DerivativesTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Open Interest</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatBtc(stats.totalOpenInterestBtc || 0)}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Open Interest</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(stats.totalOpenInterestBtc || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">24H Vol</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatBtc(stats.totalVolume24hBtc || 0)}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">24H Vol</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(stats.totalVolume24hBtc || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Perps</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{(stats.totalPerpetualPairs || 0).toLocaleString()}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Perps</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(stats.totalPerpetualPairs || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Futures</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{(stats.totalFuturesPairs || 0).toLocaleString()}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Futures</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(stats.totalFuturesPairs || 0).toLocaleString()}</span>
           </div>
         </div>
       </div>
 
       <div className={`${cardClass} overflow-hidden`}>
-        <div className="p-3 border-b border-[#ffffff0f]">
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Top Derivatives Exchanges</p>
+        <div className="p-3 border-b border-[#1e1e1e]">
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top Derivatives Exchanges</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="table-header border-b border-[#ffffff0f]">
-                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Exchange</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Open Interest (BTC)</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">24H Vol (BTC)</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Perpetuals</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Futures</th>
+              <tr className="table-header border-b border-[#1e1e1e]">
+                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Exchange</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Open Interest (BTC)</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">24H Vol (BTC)</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Perpetuals</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Futures</th>
               </tr>
             </thead>
             <tbody>
               {exchanges.map((ex: any, i: number) => (
-                <tr key={i} className="table-row table-row-stripe border-b border-[#ffffff0a]">
+                <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
                   <td className="px-2 py-1.5">
                     <div className="flex items-center gap-2">
                       {ex.image ? (
                         <img src={ex.image} alt="" className="w-5 h-5 rounded-full shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                       ) : (
-                        <div className="w-5 h-5 rounded-full bg-[#22232b] shrink-0"></div>
+                        <div className="w-5 h-5 rounded-full bg-[#111] shrink-0"></div>
                       )}
-                      <span className="text-[12px] font-semibold text-[#e4e8ee]">{ex.name}</span>
+                      <span className="text-[12px] font-semibold text-[#fff]">{ex.name}</span>
                     </div>
                   </td>
-                  <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatBtc(ex.openInterestBtc || 0)}</td>
-                  <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatBtc(ex.tradeVolume24hBtc || 0)}</td>
-                  <td className="px-2 py-1.5 text-right text-[11px] text-[#868c98] font-mono tabular-nums hidden md:table-cell">{ex.perpetuals || 0}</td>
-                  <td className="px-2 py-1.5 text-right text-[11px] text-[#868c98] font-mono tabular-nums hidden md:table-cell">{ex.futures || 0}</td>
+                  <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(ex.openInterestBtc || 0)}</td>
+                  <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(ex.tradeVolume24hBtc || 0)}</td>
+                  <td className="px-2 py-1.5 text-right text-[11px] text-[#888] font-mono tabular-nums hidden md:table-cell">{ex.perpetuals || 0}</td>
+                  <td className="px-2 py-1.5 text-right text-[11px] text-[#888] font-mono tabular-nums hidden md:table-cell">{ex.futures || 0}</td>
                 </tr>
               ))}
             </tbody>
@@ -576,36 +576,36 @@ const DerivativesTab: React.FC = () => {
 
       {tickers.length > 0 && (
         <div className={`${cardClass} overflow-hidden`}>
-          <div className="p-3 border-b border-[#ffffff0f]">
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Top Tickers</p>
+          <div className="p-3 border-b border-[#1e1e1e]">
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top Tickers</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="table-header border-b border-[#ffffff0f]">
-                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Market</th>
-                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Symbol</th>
-                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Price</th>
-                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Funding Rate</th>
-                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Open Interest</th>
-                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">24H Volume</th>
+                <tr className="table-header border-b border-[#1e1e1e]">
+                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Market</th>
+                  <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Symbol</th>
+                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Price</th>
+                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Funding Rate</th>
+                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Open Interest</th>
+                  <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">24H Volume</th>
                 </tr>
               </thead>
               <tbody>
                 {tickers.slice(0, 20).map((t: any, i: number) => {
                   const fr = typeof t.fundingRate === 'number' ? t.fundingRate : parseFloat(t.fundingRate) || 0;
                   return (
-                    <tr key={i} className="table-row table-row-stripe border-b border-[#ffffff0a]">
-                      <td className="px-2 py-1.5 text-[12px] text-[#868c98]">{t.market}</td>
-                      <td className="px-2 py-1.5 text-[12px] font-semibold text-[#e4e8ee]">{t.symbol}</td>
-                      <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#e4e8ee] tabular-nums font-mono">{formatPrice(t.price)}</td>
+                    <tr key={i} className="table-row table-row-stripe border-b border-[#151515]">
+                      <td className="px-2 py-1.5 text-[12px] text-[#888]">{t.market}</td>
+                      <td className="px-2 py-1.5 text-[12px] font-semibold text-[#fff]">{t.symbol}</td>
+                      <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#fff] tabular-nums font-mono">{formatPrice(t.price)}</td>
                       <td className="px-2 py-1.5 text-right">
                         <span className={`text-[11px] font-bold tabular-nums font-mono ${fr >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                           {fr >= 0 ? '+' : ''}{(fr * 100).toFixed(4)}%
                         </span>
                       </td>
-                      <td className="px-2 py-1.5 text-right text-[11px] text-[#868c98] tabular-nums hidden md:table-cell font-mono">{formatNum(t.openInterest || 0)}</td>
-                      <td className="px-2 py-1.5 text-right text-[11px] text-[#868c98] tabular-nums hidden md:table-cell font-mono">{formatNum(t.volume24h || 0)}</td>
+                      <td className="px-2 py-1.5 text-right text-[11px] text-[#888] tabular-nums hidden md:table-cell font-mono">{formatNum(t.openInterest || 0)}</td>
+                      <td className="px-2 py-1.5 text-right text-[11px] text-[#888] tabular-nums hidden md:table-cell font-mono">{formatNum(t.volume24h || 0)}</td>
                     </tr>
                   );
                 })}
@@ -643,37 +643,37 @@ const BtcTreasuriesTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">BTC Held</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{(stats.totalBtcHeld || 0).toLocaleString()}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">BTC Held</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(stats.totalBtcHeld || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Value</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatNum(stats.totalValue || 0)}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Value</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(stats.totalValue || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">% Supply</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">% Supply</span>
             <span className="text-[14px] font-bold text-[#f59e0b] font-mono tabular-nums">{(stats.percentOfSupply || supplyPct).toFixed(2)}%</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">BTC Price</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">BTC Price</span>
             <span className="text-[14px] font-bold text-[#f59e0b] font-mono tabular-nums">{formatPrice(stats.btcPrice || 0)}</span>
-            <span className="text-[9px] text-[#555962]">{stats.companiesCount || treasuries.length} cos</span>
+            <span className="text-[9px] text-[#555]">{stats.companiesCount || treasuries.length} cos</span>
           </div>
         </div>
       </div>
 
       {countries.length > 0 && (
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">Countries Breakdown</p>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Countries Breakdown</p>
           <div className="space-y-2.5">
             {countries.slice(0, 8).map((c: any, i: number) => (
               <div key={i} className="flex items-center gap-3">
-                <span className="text-[10px] text-[#868c98] bg-[#1c1d24] px-2 py-0.5 rounded-full w-8 text-center shrink-0">{c.country}</span>
-                <div className="flex-1 h-4 rounded-full bg-[#22232b] overflow-hidden">
-                  <div className="h-full rounded-full bg-[#1a2540] transition-all duration-500" style={{ width: `${(c.percentage / maxCountryPct) * 100}%` }}></div>
+                <span className="text-[10px] text-[#888] bg-[#111] px-2 py-0.5 rounded-full w-8 text-center shrink-0">{c.country}</span>
+                <div className="flex-1 h-4 rounded-full bg-[#111] overflow-hidden">
+                  <div className="h-full rounded-full bg-[#111] transition-all duration-500" style={{ width: `${(c.percentage / maxCountryPct) * 100}%` }}></div>
                 </div>
-                <span className="text-[11px] text-[#e4e8ee] font-mono font-bold tabular-nums w-16 text-right">{(c.btcHeld || 0).toLocaleString()}</span>
-                <span className="text-[10px] text-[#868c98] font-mono tabular-nums w-12 text-right">{c.percentage.toFixed(1)}%</span>
+                <span className="text-[11px] text-[#fff] font-mono font-bold tabular-nums w-16 text-right">{(c.btcHeld || 0).toLocaleString()}</span>
+                <span className="text-[10px] text-[#888] font-mono tabular-nums w-12 text-right">{c.percentage.toFixed(1)}%</span>
               </div>
             ))}
           </div>
@@ -681,22 +681,22 @@ const BtcTreasuriesTab: React.FC = () => {
       )}
 
       <div className={`${cardClass} overflow-hidden`}>
-        <div className="p-3 border-b border-[#ffffff0f]">
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Bitcoin Holdings</p>
+        <div className="p-3 border-b border-[#1e1e1e]">
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Bitcoin Holdings</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="table-header border-b border-[#ffffff0f]">
-                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">#</th>
-                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Company</th>
-                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Ticker</th>
-                <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Country</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">BTC Held</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden sm:table-cell">Avg Cost</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden md:table-cell">Value</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden lg:table-cell">P/L</th>
-                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">% of Total</th>
+              <tr className="table-header border-b border-[#1e1e1e]">
+                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">#</th>
+                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Company</th>
+                <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Ticker</th>
+                <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Country</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">BTC Held</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden sm:table-cell">Avg Cost</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden md:table-cell">Value</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden lg:table-cell">P/L</th>
+                <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">% of Total</th>
               </tr>
             </thead>
             <tbody>
@@ -705,38 +705,38 @@ const BtcTreasuriesTab: React.FC = () => {
                 const btcPrice = stats.btcPrice || 68900;
                 const plPct = t.avgPrice > 0 ? ((btcPrice - t.avgPrice) / t.avgPrice) * 100 : 0;
                 return (
-                  <tr key={i} className={`table-row table-row-stripe border-b border-[#ffffff0a] ${isTop3 ? 'bg-[#2d2810]/30' : ''}`}>
-                    <td className="px-2 py-1.5 text-[12px] text-[#868c98] font-mono tabular-nums">{t.rank || i + 1}</td>
+                  <tr key={i} className={`table-row table-row-stripe border-b border-[#151515] ${isTop3 ? 'bg-[#111]/30' : ''}`}>
+                    <td className="px-2 py-1.5 text-[12px] text-[#888] font-mono tabular-nums">{t.rank || i + 1}</td>
                     <td className="px-2 py-1.5">
                       <div className="flex items-center gap-2">
                         {t.logo ? (
                           <img src={t.logo} alt="" className="w-5 h-5 rounded-full shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                         ) : (
-                          <div className="w-5 h-5 rounded-full bg-[#22232b] flex items-center justify-center shrink-0"><span className="text-[8px] text-[#555962] font-bold">{(t.ticker || '?')[0]}</span></div>
+                          <div className="w-5 h-5 rounded-full bg-[#111] flex items-center justify-center shrink-0"><span className="text-[8px] text-[#555] font-bold">{(t.ticker || '?')[0]}</span></div>
                         )}
-                        <span className={`text-[12px] font-semibold ${isTop3 ? 'text-[#b79d25]' : 'text-[#e4e8ee]'}`}>{t.name}</span>
+                        <span className={`text-[12px] font-semibold ${isTop3 ? 'text-[#b79d25]' : 'text-[#fff]'}`}>{t.name}</span>
                       </div>
                     </td>
-                    <td className="px-2 py-1.5 text-[11px] text-[#868c98] hidden md:table-cell">{t.ticker || '--'}</td>
+                    <td className="px-2 py-1.5 text-[11px] text-[#888] hidden md:table-cell">{t.ticker || '--'}</td>
                     <td className="px-2 py-1.5 text-center hidden md:table-cell">
-                      <span className="text-[10px] text-[#868c98] bg-[#1c1d24] px-2 py-0.5 rounded-full">{t.country || '--'}</span>
+                      <span className="text-[10px] text-[#888] bg-[#111] px-2 py-0.5 rounded-full">{t.country || '--'}</span>
                     </td>
-                    <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#e4e8ee] font-mono tabular-nums">{(t.btcHeld || 0).toLocaleString()}</td>
-                    <td className="px-2 py-1.5 text-right text-[11px] text-[#868c98] tabular-nums hidden sm:table-cell font-mono">{t.avgPrice > 0 ? formatPrice(t.avgPrice) : '--'}</td>
-                    <td className="px-2 py-1.5 text-right text-[11px] text-[#868c98] tabular-nums hidden md:table-cell font-mono">{formatNum(t.value || 0)}</td>
+                    <td className="px-2 py-1.5 text-right text-[12px] font-bold text-[#fff] font-mono tabular-nums">{(t.btcHeld || 0).toLocaleString()}</td>
+                    <td className="px-2 py-1.5 text-right text-[11px] text-[#888] tabular-nums hidden sm:table-cell font-mono">{t.avgPrice > 0 ? formatPrice(t.avgPrice) : '--'}</td>
+                    <td className="px-2 py-1.5 text-right text-[11px] text-[#888] tabular-nums hidden md:table-cell font-mono">{formatNum(t.value || 0)}</td>
                     <td className="px-2 py-1.5 text-right hidden lg:table-cell">
                       {t.avgPrice > 0 ? (
                         <span className={`text-[11px] font-bold tabular-nums font-mono ${plPct >= 0 ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                           {plPct >= 0 ? '+' : ''}{plPct.toFixed(1)}%
                         </span>
-                      ) : <span className="text-[10px] text-[#555962]">--</span>}
+                      ) : <span className="text-[10px] text-[#555]">--</span>}
                     </td>
                     <td className="px-2 py-1.5 text-right">
                       <div className="flex items-center gap-2 justify-end">
-                        <div className="w-16 h-1.5 rounded-full bg-[#22232b] overflow-hidden">
-                          <div className="h-full rounded-full bg-[#1a2540]" style={{ width: `${Math.min((t.percentOfTotal || 0), 100)}%` }}></div>
+                        <div className="w-16 h-1.5 rounded-full bg-[#111] overflow-hidden">
+                          <div className="h-full rounded-full bg-[#111]" style={{ width: `${Math.min((t.percentOfTotal || 0), 100)}%` }}></div>
                         </div>
-                        <span className="text-[10px] text-[#868c98] font-mono tabular-nums w-12 text-right">{(t.percentOfTotal || 0).toFixed(1)}%</span>
+                        <span className="text-[10px] text-[#888] font-mono tabular-nums w-12 text-right">{(t.percentOfTotal || 0).toFixed(1)}%</span>
                       </div>
                     </td>
                   </tr>
@@ -773,41 +773,41 @@ const CryptocurrenciesTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Active Cryptos</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{(marketStats?.activeCryptos || 0).toLocaleString()}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Active Cryptos</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(marketStats?.activeCryptos || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Exchanges</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{(marketStats?.activeExchanges || 0).toLocaleString()}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Exchanges</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(marketStats?.activeExchanges || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium">Market Cap</span>
-            <span className="text-[14px] font-bold text-[#e4e8ee] font-mono tabular-nums">{formatNum(marketStats?.totalMarketCap || 0)}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Market Cap</span>
+            <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(marketStats?.totalMarketCap || 0)}</span>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">Trending Coins</p>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Trending Coins</p>
           <div className="space-y-0.5">
             {(trending.coins || []).slice(0, 15).map((coin: any, i: number) => (
-              <div key={coin.id || i} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-[#1c1d24] transition-colors cursor-pointer">
+              <div key={coin.id || i} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-[#1a1a1a] transition-colors cursor-pointer">
                 <div className="flex items-center gap-2.5 min-w-0 flex-1">
-                  <span className="text-[11px] text-[#555962] font-mono w-5 shrink-0 text-right">{i + 1}</span>
+                  <span className="text-[11px] text-[#555] font-mono w-5 shrink-0 text-right">{i + 1}</span>
                   {coin.logo ? (
                     <img src={coin.logo} alt="" className="w-6 h-6 rounded-full shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                   ) : (
-                    <div className="w-6 h-6 rounded-full bg-[#22232b] shrink-0"></div>
+                    <div className="w-6 h-6 rounded-full bg-[#111] shrink-0"></div>
                   )}
                   <div className="min-w-0">
-                    <span className="text-[13px] font-semibold text-[#e4e8ee]">{coin.name}</span>
-                    <span className="text-[10px] text-[#555962] ml-1.5">{coin.symbol}</span>
+                    <span className="text-[13px] font-semibold text-[#fff]">{coin.name}</span>
+                    <span className="text-[10px] text-[#555] ml-1.5">{coin.symbol}</span>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 shrink-0">
-                  {coin.price != null && <span className="text-[11px] text-[#868c98] tabular-nums font-mono">{formatPrice(coin.price)}</span>}
-                  {coin.marketCap != null && <span className="text-[10px] text-[#555962] tabular-nums hidden sm:block font-mono">{formatNum(coin.marketCap)}</span>}
+                  {coin.price != null && <span className="text-[11px] text-[#888] tabular-nums font-mono">{formatPrice(coin.price)}</span>}
+                  {coin.marketCap != null && <span className="text-[10px] text-[#555] tabular-nums hidden sm:block font-mono">{formatNum(coin.marketCap)}</span>}
                   {coin.priceChange24h != null && <PctChange value={coin.priceChange24h} className="text-[11px] font-bold" />}
                 </div>
               </div>
@@ -816,19 +816,19 @@ const CryptocurrenciesTab: React.FC = () => {
         </div>
 
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-3">Trending Categories</p>
+          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Trending Categories</p>
           <div className="space-y-2">
             {(trending.categories || []).map((cat: any, i: number) => (
               <div key={i} className={`${innerCardClass} p-3 flex items-center justify-between`}>
                 <div className="flex items-center gap-2.5">
-                  <span className="text-[11px] text-[#555962] font-mono w-5 shrink-0 text-right">{i + 1}</span>
-                  <span className="text-[13px] font-semibold text-[#e4e8ee]">{cat.name}</span>
+                  <span className="text-[11px] text-[#555] font-mono w-5 shrink-0 text-right">{i + 1}</span>
+                  <span className="text-[13px] font-semibold text-[#fff]">{cat.name}</span>
                 </div>
                 {cat.marketCapChange24h != null && <PctChange value={cat.marketCapChange24h} className="text-[12px] font-bold" />}
               </div>
             ))}
             {(!trending.categories || trending.categories.length === 0) && (
-              <p className="text-[#555962] text-xs text-center py-8">No trending categories available</p>
+              <p className="text-[#555] text-xs text-center py-8">No trending categories available</p>
             )}
           </div>
         </div>
@@ -880,15 +880,15 @@ export const CryptoPulseView: React.FC = () => {
       <div className="card p-3 sm:p-4">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-[#88a8cf] font-semibold">Crypto Pulse</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#eaf2ff] tracking-[-0.02em] mt-1">Market Structure & Liquidity Radar</h2>
+            <p className="text-[10px] uppercase tracking-[0.12em] text-[#888] font-semibold">Crypto Pulse</p>
+            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#fff] tracking-[-0.02em] mt-1">Market Structure & Liquidity Radar</h2>
           </div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#22c990] opacity-60"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#22c990]"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00c076] opacity-60"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00c076]"></span>
             </span>
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#9cb4d4] font-medium">Live {lastUpdate.toLocaleTimeString()}</span>
+            <span className="text-[10px] uppercase tracking-[0.06em] text-[#888] font-medium">Live {lastUpdate.toLocaleTimeString()}</span>
           </div>
         </div>
       </div>

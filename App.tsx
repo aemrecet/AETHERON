@@ -99,8 +99,8 @@ const App: React.FC = () => {
     <div className="min-h-screen font-sans text-[var(--color-text-primary)] relative">
       <Sidebar activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <main className="relative z-10 w-full pb-20 md:pt-[60px] md:pb-0 min-h-screen flex flex-col">
-        <div className={`flex-1 ${activeTab !== TabView.ASK ? 'px-3 sm:px-4 lg:px-8 pt-5 pb-8 max-w-[1680px] w-full mx-auto' : ''}`}>
+      <main className="relative z-10 w-full pb-16 md:pt-[48px] md:pb-0 min-h-screen flex flex-col">
+        <div className={`flex-1 ${activeTab !== TabView.ASK ? 'px-3 sm:px-4 lg:px-6 pt-4 pb-6 w-full mx-auto' : ''}`}>
           {renderContent()}
         </div>
       </main>

@@ -24,6 +24,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
             className="flex items-center cursor-pointer shrink-0 select-none mr-10"
             onClick={() => setActiveTab(TabView.ASK)}
           >
+            <img src="/46dd9de9-9ecd-4a05-8d29-d4c66ca0e6a5.png" alt="Aethron" className="w-6 h-6 mr-2" />
             <span className="text-[15px] font-bold tracking-[0.15em] uppercase font-heading" style={{ color: '#0a0a23' }}>AETHRON</span>
           </button>
 

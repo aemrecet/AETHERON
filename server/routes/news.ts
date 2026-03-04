@@ -1,10 +1,8 @@
 import { Router } from 'express';
 import yahooFinance from 'yahoo-finance2';
+import { getApiKey } from '../apiKeys.js';
 
 const router = Router();
-
-const FINNHUB_KEY = process.env.FINNHUB_API_KEY || '';
-const CG_KEY = process.env.COINGECKO_API_KEY || '';
 
 function assignSentiment(title: string): 'Bullish' | 'Bearish' | 'Neutral' {
   const lower = title.toLowerCase();
@@ -42,6 +40,8 @@ function getRelativeTime(timestamp: number): string {
 
 router.get('/news', async (_req, res) => {
   try {
+    const FINNHUB_KEY = await getApiKey('FINNHUB');
+    const CG_KEY = await getApiKey('COINGECKO');
     const allNews: any[] = [];
     const seen = new Set<string>();
 
@@ -170,6 +170,7 @@ router.get('/news', async (_req, res) => {
 
 router.get('/economic-calendar', async (_req, res) => {
   try {
+    const FINNHUB_KEY = await getApiKey('FINNHUB');
     const now = new Date();
     const from = new Date(now);
     from.setDate(from.getDate() - 7);

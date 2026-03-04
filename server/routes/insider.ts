@@ -1,12 +1,12 @@
 import { Router } from 'express';
+import { getApiKey } from '../apiKeys.js';
 
 const router = Router();
 
-const QQ_KEY = process.env.QUIVERQUANT_API_KEY || '';
-
 const qqFetch = async (path: string) => {
+  const qqKey = await getApiKey('QUIVERQUANT');
   const res = await fetch(`https://api.quiverquant.com/beta${path}`, {
-    headers: { Authorization: `Bearer ${QQ_KEY}`, Accept: 'application/json' },
+    headers: { Authorization: `Bearer ${qqKey}`, Accept: 'application/json' },
   });
   if (!res.ok) throw new Error(`QQ ${res.status}`);
   return res.json();

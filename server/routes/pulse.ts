@@ -1,24 +1,24 @@
 import { Router } from 'express';
+import { getApiKey } from '../apiKeys.js';
 
 const router = Router();
 
-const CMC_KEY = process.env.COINMARKETCAP_API_KEY || '';
-const CG_KEY = process.env.COINGECKO_API_KEY || '';
-
 const cmcFetch = async (path: string, params: Record<string, string> = {}) => {
+  const cmcKey = await getApiKey('COINMARKETCAP');
   const url = new URL(`https://pro-api.coinmarketcap.com${path}`);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
   const res = await fetch(url.toString(), {
-    headers: { 'X-CMC_PRO_API_KEY': CMC_KEY, Accept: 'application/json' },
+    headers: { 'X-CMC_PRO_API_KEY': cmcKey, Accept: 'application/json' },
   });
   if (!res.ok) throw new Error(`CMC ${res.status}`);
   return res.json();
 };
 
 const cgFetch = async (path: string, params: Record<string, string> = {}) => {
+  const cgKey = await getApiKey('COINGECKO');
   const url = new URL(`https://api.coingecko.com/api/v3${path}`);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
-  if (CG_KEY) url.searchParams.set('x_cg_demo_api_key', CG_KEY);
+  if (cgKey) url.searchParams.set('x_cg_demo_api_key', cgKey);
   const res = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
   if (!res.ok) throw new Error(`CG ${res.status}`);
   return res.json();

@@ -7,6 +7,7 @@ import pulseRouter from './routes/pulse.js';
 import onchainRouter from './routes/onchain.js';
 import insiderRouter from './routes/insider.js';
 import newsRouter from './routes/news.js';
+import { getApiKey } from './apiKeys.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,7 +28,7 @@ app.use('/api', newsRouter);
 app.post('/api/ai/chat', async (req, res) => {
   try {
     const { messages, marketContext } = req.body;
-    const geminiKey = process.env.GEMINI_API_KEY;
+    const geminiKey = await getApiKey('GEMINI');
 
     if (!geminiKey) {
       return res.json({ reply: 'AI service is not configured. Please add a GEMINI_API_KEY.' });

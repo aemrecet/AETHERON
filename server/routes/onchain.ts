@@ -1,15 +1,13 @@
 import { Router } from 'express';
+import { getApiKey } from '../apiKeys.js';
 
 const router = Router();
 
-const WHALEALERT_KEY = process.env.WHALEALERT_API_KEY || '';
-const ETHERSCAN_KEY = process.env.ETHERSCAN_API_KEY || '';
-const CG_KEY = process.env.COINGECKO_API_KEY || '';
-
 const cgFetch = async (path: string, params: Record<string, string> = {}) => {
+  const cgKey = await getApiKey('COINGECKO');
   const url = new URL(`https://api.coingecko.com/api/v3${path}`);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
-  if (CG_KEY) url.searchParams.set('x_cg_demo_api_key', CG_KEY);
+  if (cgKey) url.searchParams.set('x_cg_demo_api_key', cgKey);
   const res = await fetch(url.toString(), { headers: { Accept: 'application/json' } });
   if (!res.ok) throw new Error(`CG ${res.status}`);
   return res.json();
@@ -42,6 +40,7 @@ router.get('/coin-list', async (_req, res) => {
 
 router.get('/gas', async (_req, res) => {
   try {
+    const ETHERSCAN_KEY = await getApiKey('ETHERSCAN');
     const ethGasRes = await fetch(
       `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${ETHERSCAN_KEY}`
     );
@@ -73,6 +72,7 @@ router.get('/gas', async (_req, res) => {
 
 router.get('/top-wallets', async (_req, res) => {
   try {
+    const ETHERSCAN_KEY = await getApiKey('ETHERSCAN');
     const ethRes = await fetch(
       `https://api.etherscan.io/api?module=account&action=balancemulti&address=0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2,0xBE0eB53F46cd790Cd13851d5EFf43D12404d33E8,0xDA9dfA130Df4dE4673b89022EE50ff26f6EA73Cf,0x40B38765696e3d5d8d9d834D8AaD4bB6e418E489,0x8103683202aa8DA10536036EDef04CDd865C225E&tag=latest&apikey=${ETHERSCAN_KEY}`
     );
@@ -112,6 +112,7 @@ router.get('/top-wallets', async (_req, res) => {
 
 router.get('/whale-alerts', async (req, res) => {
   try {
+    const WHALEALERT_KEY = await getApiKey('WHALEALERT');
     const minValue = parseInt(req.query.minValue as string) || 500000;
     const now = Math.floor(Date.now() / 1000);
     const start = now - 3600;
@@ -156,6 +157,7 @@ router.get('/wallet/:address', async (req, res) => {
       return res.json({ error: 'Invalid address' });
     }
 
+    const ETHERSCAN_KEY = await getApiKey('ETHERSCAN');
     const [balRes, txRes, tokenRes] = await Promise.allSettled([
       fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),
       fetch(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=20&sort=desc&apikey=${ETHERSCAN_KEY}`).then(r => r.json()),

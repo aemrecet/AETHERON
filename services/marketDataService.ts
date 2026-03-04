@@ -1,4 +1,5 @@
 import { Stock, NewsItem } from '../types';
+import { SNAPSHOT_NASDAQ_DATA, SNAPSHOT_BIST_DATA, SNAPSHOT_CRYPTO_DATA } from './snapshotData';
 
 const generateIntradayCurve = (current: number, high: number, low: number) => {
     const points = 48;
@@ -21,13 +22,7 @@ const generateIntradayCurve = (current: number, high: number, low: number) => {
     return data;
 };
 
-const SNAPSHOT_CRYPTO: Stock[] = [
-    { s: 'BTC', n: 'Bitcoin', p: 67450, c: 2.5 }, { s: 'ETH', n: 'Ethereum', p: 3450, c: 1.2 },
-    { s: 'SOL', n: 'Solana', p: 145.20, c: 5.4 }, { s: 'BNB', n: 'Binance Coin', p: 590, c: -0.5 },
-    { s: 'XRP', n: 'Ripple', p: 0.62, c: 1.1 }, { s: 'ADA', n: 'Cardano', p: 0.45, c: -2.1 },
-    { s: 'AVAX', n: 'Avalanche', p: 45.20, c: 3.4 }, { s: 'DOGE', n: 'Dogecoin', p: 0.16, c: 8.5 },
-    { s: 'DOT', n: 'Polkadot', p: 7.20, c: -1.2 }, { s: 'LINK', n: 'Chainlink', p: 18.50, c: 2.2 },
-].map(x => ({
+const SNAPSHOT_CRYPTO: Stock[] = SNAPSHOT_CRYPTO_DATA.map(x => ({
     symbol: x.s, name: x.n, price: x.p, change: (x.p * x.c)/100, changePercent: x.c,
     volume: '$24.5B', marketCap: '$1.2T', sector: 'Crypto', market: 'CRYPTO' as const,
     dayHigh: x.p * 1.05, dayLow: x.p * 0.95,
@@ -35,28 +30,17 @@ const SNAPSHOT_CRYPTO: Stock[] = [
     data: generateIntradayCurve(x.p, x.p*1.05, x.p*0.95)
 }));
 
-const SNAPSHOT_BIST: Stock[] = [
-    { s: 'THYAO', n: 'Türk Hava Yolları', p: 305, c: 1.2 },
-    { s: 'GARAN', n: 'Garanti BBVA', p: 84, c: 0.5 },
-    { s: 'ASELS', n: 'Aselsan', p: 62, c: -0.8 },
-    { s: 'AKBNK', n: 'Akbank', p: 42, c: 1.5 },
-    { s: 'KCHOL', n: 'Koç Holding', p: 212, c: 0.2 },
-].map(x => ({
+const SNAPSHOT_BIST: Stock[] = SNAPSHOT_BIST_DATA.map(x => ({
     symbol: x.s, name: x.n, price: x.p, change: (x.p * x.c)/100, changePercent: x.c,
-    volume: '2.5B ₺', marketCap: '400B ₺', sector: 'BIST', market: 'BIST' as const,
+    volume: '2.5B TRY', marketCap: '400B TRY', sector: 'BIST', market: 'BIST' as const,
     dayHigh: x.p * 1.02, dayLow: x.p * 0.98,
     logo: `https://ui-avatars.com/api/?name=${x.s}&background=random&color=fff&size=128&rounded=true`,
     data: generateIntradayCurve(x.p, x.p*1.02, x.p*0.98)
 }));
 
-const SNAPSHOT_NASDAQ: Stock[] = [
-    { s: 'AAPL', n: 'Apple', p: 185, c: 0.8 }, { s: 'MSFT', n: 'Microsoft', p: 420, c: 0.5 },
-    { s: 'NVDA', n: 'NVIDIA', p: 890, c: 1.4 }, { s: 'GOOGL', n: 'Alphabet', p: 175, c: -0.3 },
-    { s: 'AMZN', n: 'Amazon', p: 180, c: 0.6 }, { s: 'META', n: 'Meta', p: 485, c: 0.7 },
-    { s: 'TSLA', n: 'Tesla', p: 175, c: -1.4 },
-].map(x => ({
+const SNAPSHOT_NASDAQ: Stock[] = SNAPSHOT_NASDAQ_DATA.map(x => ({
     symbol: x.s, name: x.n, price: x.p, change: (x.p * x.c)/100, changePercent: x.c,
-    volume: '50M', marketCap: '2T', sector: 'US Market', market: 'NASDAQ' as const,
+    volume: '50M', marketCap: '$2T', sector: 'US Market', market: 'NASDAQ' as const,
     dayHigh: x.p * 1.05, dayLow: x.p * 0.95,
     logo: `https://assets.parqet.com/logos/symbol/${x.s}?format=png`,
     data: generateIntradayCurve(x.p, x.p*1.05, x.p*0.95)

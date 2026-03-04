@@ -6,6 +6,19 @@ import { BIST_SYMBOLS } from '../data/bistSymbols.js';
 
 const router = Router();
 
+const cache = new Map<string, { data: any; timestamp: number }>();
+const CACHE_TTL = 5 * 60 * 1000;
+
+function getCached(key: string) {
+  const entry = cache.get(key);
+  if (entry && Date.now() - entry.timestamp < CACHE_TTL) return entry.data;
+  return null;
+}
+
+function setCache(key: string, data: any) {
+  cache.set(key, { data, timestamp: Date.now() });
+}
+
 const generateIntradayCurve = (current: number, high: number, low: number) => {
   const points = 48;
   const data: { time: string; value: number }[] = [];
@@ -70,10 +83,13 @@ router.get('/crypto', async (req, res) => {
       if (r.status === 'fulfilled' && Array.isArray(r.value)) allCoins.push(...r.value);
     });
 
-    res.json(mapCoins(allCoins));
+    const mapped = mapCoins(allCoins);
+    if (mapped.length > 0) setCache('crypto', mapped);
+    res.json(mapped);
   } catch (err) {
     console.error('[crypto]', err);
-    res.json([]);
+    const cached = getCached('crypto');
+    res.json(cached || []);
   }
 });
 
@@ -112,18 +128,27 @@ function mapCoins(coins: any[]) {
 
 async function fetchQuotes(symbols: string[]) {
   const results: any[] = [];
-  const batchSize = 20;
+  const batchSize = 100;
   for (let i = 0; i < symbols.length; i += batchSize) {
     const batch = symbols.slice(i, i + batchSize);
-    const promises = batch.map(async (sym) => {
-      try {
-        const quote = await yahooFinance.quote(sym);
-        if (quote) return quote;
-      } catch {}
-      return null;
-    });
-    const batchResults = await Promise.all(promises);
-    results.push(...batchResults.filter(Boolean));
+    try {
+      const quotes = await yahooFinance.quote(batch);
+      if (Array.isArray(quotes)) {
+        results.push(...quotes.filter(Boolean));
+      } else if (quotes) {
+        results.push(quotes);
+      }
+    } catch (err) {
+      console.warn(`[fetchQuotes] batch ${i}-${i + batchSize} failed, trying individually`);
+      const fallbackPromises = batch.map(async (sym) => {
+        try {
+          const q = await yahooFinance.quote(sym);
+          return q || null;
+        } catch { return null; }
+      });
+      const fallbackResults = await Promise.all(fallbackPromises);
+      results.push(...fallbackResults.filter(Boolean));
+    }
   }
   return results;
 }
@@ -132,7 +157,12 @@ const nasdaqLookup = new Map(NASDAQ_SYMBOLS.map((s) => [s.yahoo, s.name]));
 
 router.get('/nasdaq', async (_req, res) => {
   try {
+    const cached = getCached('nasdaq');
+    if (cached) return res.json(cached);
+
+    console.log(`[nasdaq] Fetching ${NASDAQ_SYMBOLS.length} symbols...`);
     const quotes = await fetchQuotes(NASDAQ_SYMBOLS.map((s) => s.yahoo));
+    console.log(`[nasdaq] Got ${quotes.length} quotes`);
     const stocks = quotes.map((q: any) => {
       const price = q.regularMarketPrice || 0;
       const change = q.regularMarketChange || 0;
@@ -155,10 +185,12 @@ router.get('/nasdaq', async (_req, res) => {
         data: generateIntradayCurve(price, high, low),
       };
     });
+    if (stocks.length > 0) setCache('nasdaq', stocks);
     res.json(stocks);
   } catch (err) {
     console.error('[nasdaq]', err);
-    res.json([]);
+    const cached = getCached('nasdaq');
+    res.json(cached || []);
   }
 });
 
@@ -166,7 +198,12 @@ const bistLookup = new Map(BIST_SYMBOLS.map((s) => [s.yahoo, { symbol: s.symbol,
 
 router.get('/bist', async (_req, res) => {
   try {
+    const cached = getCached('bist');
+    if (cached) return res.json(cached);
+
+    console.log(`[bist] Fetching ${BIST_SYMBOLS.length} symbols...`);
     const quotes = await fetchQuotes(BIST_SYMBOLS.map((s) => s.yahoo));
+    console.log(`[bist] Got ${quotes.length} quotes`);
     const stocks = quotes.map((q: any) => {
       const meta = bistLookup.get(q.symbol);
       const price = q.regularMarketPrice || 0;
@@ -189,10 +226,12 @@ router.get('/bist', async (_req, res) => {
         data: generateIntradayCurve(price, high, low),
       };
     });
+    if (stocks.length > 0) setCache('bist', stocks);
     res.json(stocks);
   } catch (err) {
     console.error('[bist]', err);
-    res.json([]);
+    const cached = getCached('bist');
+    res.json(cached || []);
   }
 });
 

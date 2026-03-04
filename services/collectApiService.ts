@@ -4,20 +4,19 @@ interface CollectApiResponse {
   result: any[];
 }
 
-const API_KEY = 'IR6Q4cNK774hV9weBIrh9hGkWKtZDdUY';
 const BASE_URL = 'https://api.collectapi.com/economy';
 
-const headers = {
+const getHeaders = () => ({
   'content-type': 'application/json',
-  'authorization': `apikey ${API_KEY}`
-};
+  'authorization': `apikey ${process.env.MASSIVE_API_KEY || ''}`
+});
 
 export const fetchRealMarketData = async () => {
   const updates: Record<string, { price: number; change: number; changePercent: number; dayHigh: number; dayLow: number }> = {};
 
   try {
     // 1. Fetch Crypto Data
-    const cryptoResponse = await fetch(`${BASE_URL}/cripto`, { headers });
+    const cryptoResponse = await fetch(`${BASE_URL}/cripto`, { headers: getHeaders() });
     const cryptoData: CollectApiResponse = await cryptoResponse.json();
     
     if (cryptoData.success) {
@@ -39,7 +38,7 @@ export const fetchRealMarketData = async () => {
 
     // 2. Fetch BIST Data
     // We use the 'hisseSenedi' endpoint which returns live BIST data
-    const bistResponse = await fetch(`${BASE_URL}/hisseSenedi`, { headers });
+    const bistResponse = await fetch(`${BASE_URL}/hisseSenedi`, { headers: getHeaders() });
     const bistData: CollectApiResponse = await bistResponse.json();
 
     if (bistData.success) {

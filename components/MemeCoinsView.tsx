@@ -78,7 +78,7 @@ const CHAIN_TABS: { key: ChainTab; label: string }[] = [
 const MiniChart: React.FC<{ coin: MemeCoin }> = ({ coin }) => {
   const chartUrl = `https://dexscreener.com/${coin.chain}/${coin.pairAddress}?embed=1&theme=dark&trades=0&info=0`;
   return (
-    <div className="w-full h-[300px] rounded-lg overflow-hidden bg-[#1c1d24] border border-[#ffffff0f]">
+    <div className="w-full h-[300px] rounded-lg overflow-hidden bg-[#111] border border-[#1e1e1e]">
       <iframe
         src={chartUrl}
         className="w-full h-full border-0"
@@ -160,10 +160,10 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
   };
 
   const renderSortIcon = (key: SortKey) => {
-    if (sortConfig.key !== key) return <ArrowUpDown className="w-3 h-3 text-[#555962] opacity-50" />;
+    if (sortConfig.key !== key) return <ArrowUpDown className="w-3 h-3 text-[#555] opacity-50" />;
     return sortConfig.dir === 'asc'
-      ? <ArrowUp className="w-3 h-3 text-[#4c8bf5]" />
-      : <ArrowDown className="w-3 h-3 text-[#4c8bf5]" />;
+      ? <ArrowUp className="w-3 h-3 text-[#5a9aee]" />
+      : <ArrowDown className="w-3 h-3 text-[#5a9aee]" />;
   };
 
   const totalCoins = filteredCoins.length;
@@ -174,13 +174,13 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
     <div className="space-y-4 view-animate">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold text-[#e4e8ee]">Meme Coins</h2>
-          <p className="text-[12px] text-[#868c98] mt-0.5">Live from DexScreener</p>
+          <h2 className="text-2xl font-semibold text-[#fff]">Meme Coins</h2>
+          <p className="text-[12px] text-[#888] mt-0.5">Live from DexScreener</p>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></div>
-            <span className="text-[10px] text-[#555962]">Live</span>
+            <span className="text-[10px] text-[#555]">Live</span>
           </div>
         </div>
       </div>
@@ -203,36 +203,36 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
       <div className="card p-3">
         <div className="grid grid-cols-3 gap-3">
           <div className="text-center">
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Tokens</p>
-            <p className="text-[15px] font-semibold text-[#e4e8ee] tabular-nums font-mono">{totalCoins.toLocaleString()}</p>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Tokens</p>
+            <p className="text-[15px] font-semibold text-[#fff] tabular-nums font-mono">{totalCoins.toLocaleString()}</p>
           </div>
           <div className="text-center">
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">24h Volume</p>
-            <p className="text-[15px] font-semibold text-[#4c8bf5] tabular-nums font-mono">{formatNum(totalVolume)}</p>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">24h Volume</p>
+            <p className="text-[15px] font-semibold text-[#5a9aee] tabular-nums font-mono">{formatNum(totalVolume)}</p>
           </div>
           <div className="text-center">
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Avg 24h Change</p>
+            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Avg 24h Change</p>
             <PctBadge value={avgChange} className="text-[15px] font-semibold" />
           </div>
         </div>
       </div>
 
       <div className="relative">
-        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#555962]" />
+        <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#555]" />
         <input
           type="text"
           placeholder={`Search ${activeChain === 'new' ? 'new' : activeChain} meme coins...`}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-[#16171c] border border-[#ffffff0f] rounded-lg pl-11 pr-4 py-2 text-xs text-[#e4e8ee] focus:outline-none focus:ring-2 focus:ring-[#4c8bf5]/20 transition-colors placeholder-[#555962]"
+          className="w-full bg-[#0d0d0d] border border-[#1e1e1e] rounded-lg pl-11 pr-4 py-2 text-xs text-[#fff] focus:outline-none focus:ring-2 focus:ring-[#5a9aee]/20 transition-colors placeholder-[#555]"
         />
       </div>
 
       {loading[activeChain] ? (
         <div className="flex items-center justify-center py-16">
           <div className="flex flex-col items-center gap-3">
-            <div className="w-6 h-6 border-2 border-[#2a2b33] border-t-[#4c8bf5] rounded-full animate-spin"></div>
-            <p className="text-[#555962] text-[11px]">Loading {activeChain === 'new' ? 'new tokens' : `${activeChain} meme coins`}...</p>
+            <div className="w-6 h-6 border-2 border-[#161616] border-t-[#5a9aee] rounded-full animate-spin"></div>
+            <p className="text-[#555] text-[11px]">Loading {activeChain === 'new' ? 'new tokens' : `${activeChain} meme coins`}...</p>
           </div>
         </div>
       ) : (
@@ -242,33 +242,33 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
               <table className="w-full">
                 <thead>
                   <tr className="table-header" style={{ background: '#111217' }}>
-                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium w-8">#</th>
-                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium">Token</th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium cursor-pointer select-none" onClick={() => handleSort('price')}>
+                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium w-8">#</th>
+                    <th className="text-left text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium">Token</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium cursor-pointer select-none" onClick={() => handleSort('price')}>
                       <div className="flex items-center justify-end gap-1">Price {renderSortIcon('price')}</div>
                     </th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium cursor-pointer select-none hidden sm:table-cell" onClick={() => handleSort('priceChange1h')}>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium cursor-pointer select-none hidden sm:table-cell" onClick={() => handleSort('priceChange1h')}>
                       <div className="flex items-center justify-end gap-1">1H {renderSortIcon('priceChange1h')}</div>
                     </th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium cursor-pointer select-none" onClick={() => handleSort('priceChange24h')}>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium cursor-pointer select-none" onClick={() => handleSort('priceChange24h')}>
                       <div className="flex items-center justify-end gap-1">24H {renderSortIcon('priceChange24h')}</div>
                     </th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium cursor-pointer select-none" onClick={() => handleSort('volume24h')}>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium cursor-pointer select-none" onClick={() => handleSort('volume24h')}>
                       <div className="flex items-center justify-end gap-1">Volume {renderSortIcon('volume24h')}</div>
                     </th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium cursor-pointer select-none hidden md:table-cell" onClick={() => handleSort('liquidity')}>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium cursor-pointer select-none hidden md:table-cell" onClick={() => handleSort('liquidity')}>
                       <div className="flex items-center justify-end gap-1">Liq {renderSortIcon('liquidity')}</div>
                     </th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium cursor-pointer select-none hidden md:table-cell" onClick={() => handleSort('marketCap')}>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium cursor-pointer select-none hidden md:table-cell" onClick={() => handleSort('marketCap')}>
                       <div className="flex items-center justify-end gap-1">MCap {renderSortIcon('marketCap')}</div>
                     </th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium hidden lg:table-cell">Txns</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium hidden lg:table-cell">Txns</th>
                     {activeChain === 'new' && (
-                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium cursor-pointer select-none hidden lg:table-cell" onClick={() => handleSort('pairCreatedAt')}>
+                      <th className="text-right text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium cursor-pointer select-none hidden lg:table-cell" onClick={() => handleSort('pairCreatedAt')}>
                         <div className="flex items-center justify-end gap-1">Age {renderSortIcon('pairCreatedAt')}</div>
                       </th>
                     )}
-                    <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555962] px-2 py-1.5 font-medium w-8">Dex</th>
+                    <th className="text-center text-[10px] uppercase tracking-[0.06em] text-[#555] px-2 py-1.5 font-medium w-8">Dex</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -280,41 +280,41 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
                           className="table-row table-row-stripe cursor-pointer"
                           onClick={() => setExpandedCoin(isExpanded ? null : `${coin.chain}-${coin.address}`)}
                         >
-                          <td className="px-2 py-1.5 text-[11px] text-[#555962] tabular-nums font-mono">{i + 1}</td>
+                          <td className="px-2 py-1.5 text-[11px] text-[#555] tabular-nums font-mono">{i + 1}</td>
                           <td className="px-2 py-1.5">
                             <div className="flex items-center gap-2">
                               {coin.logo ? (
                                 <img src={coin.logo} alt="" className="w-6 h-6 rounded-full shrink-0" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
                               ) : (
-                                <div className="w-6 h-6 rounded-full bg-[#22232b] border border-[#ffffff0f] flex items-center justify-center shrink-0">
-                                  <span className="text-[8px] text-[#555962] font-semibold">{(coin.symbol || '?').slice(0, 2)}</span>
+                                <div className="w-6 h-6 rounded-full bg-[#161616] border border-[#1e1e1e] flex items-center justify-center shrink-0">
+                                  <span className="text-[8px] text-[#555] font-semibold">{(coin.symbol || '?').slice(0, 2)}</span>
                                 </div>
                               )}
                               <div className="min-w-0">
-                                <div className="text-[12px] font-semibold text-[#e4e8ee] truncate max-w-[120px]">{coin.symbol}</div>
-                                <div className="text-[10px] text-[#555962] truncate max-w-[120px]">{coin.name}</div>
+                                <div className="text-[12px] font-semibold text-[#fff] truncate max-w-[120px]">{coin.symbol}</div>
+                                <div className="text-[10px] text-[#555] truncate max-w-[120px]">{coin.name}</div>
                               </div>
                             </div>
                           </td>
-                          <td className="px-2 py-1.5 text-right text-[11px] font-semibold text-[#e4e8ee] tabular-nums font-mono">{formatPrice(coin.price)}</td>
+                          <td className="px-2 py-1.5 text-right text-[11px] font-semibold text-[#fff] tabular-nums font-mono">{formatPrice(coin.price)}</td>
                           <td className="px-2 py-1.5 text-right hidden sm:table-cell">
                             <PctBadge value={coin.priceChange1h} className="text-[10px]" />
                           </td>
                           <td className="px-2 py-1.5 text-right">
                             <PctBadge value={coin.priceChange24h} className="text-[10px]" />
                           </td>
-                          <td className="px-2 py-1.5 text-right text-[10px] text-[#868c98] tabular-nums font-mono font-semibold">{formatNum(coin.volume24h)}</td>
-                          <td className="px-2 py-1.5 text-right text-[10px] text-[#868c98] tabular-nums font-mono hidden md:table-cell">{formatNum(coin.liquidity)}</td>
-                          <td className="px-2 py-1.5 text-right text-[10px] text-[#868c98] tabular-nums font-mono hidden md:table-cell">{formatNum(coin.marketCap)}</td>
+                          <td className="px-2 py-1.5 text-right text-[10px] text-[#888] tabular-nums font-mono font-semibold">{formatNum(coin.volume24h)}</td>
+                          <td className="px-2 py-1.5 text-right text-[10px] text-[#888] tabular-nums font-mono hidden md:table-cell">{formatNum(coin.liquidity)}</td>
+                          <td className="px-2 py-1.5 text-right text-[10px] text-[#888] tabular-nums font-mono hidden md:table-cell">{formatNum(coin.marketCap)}</td>
                           <td className="px-2 py-1.5 text-right hidden lg:table-cell">
                             <div className="flex items-center justify-end gap-1">
                               <span className="text-[10px] text-[#10b981] tabular-nums font-mono">{coin.buys24h || 0}</span>
-                              <span className="text-[8px] text-[#3a3b45]">/</span>
+                              <span className="text-[8px] text-[#333]">/</span>
                               <span className="text-[10px] text-[#ef4444] tabular-nums font-mono">{coin.sells24h || 0}</span>
                             </div>
                           </td>
                           {activeChain === 'new' && (
-                            <td className="px-2 py-1.5 text-right text-[10px] text-[#555962] hidden lg:table-cell">
+                            <td className="px-2 py-1.5 text-right text-[10px] text-[#555] hidden lg:table-cell">
                               <div className="flex items-center justify-end gap-1">
                                 <Clock className="w-3 h-3" />
                                 {timeAgo(coin.pairCreatedAt)}
@@ -322,31 +322,31 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
                             </td>
                           )}
                           <td className="px-2 py-1.5 text-center">
-                            <span className="text-[9px] text-[#555962] bg-[#1c1d24] border border-[#ffffff0f] px-1.5 py-0.5 rounded-md">{(coin.dex || '').slice(0, 6)}</span>
+                            <span className="text-[9px] text-[#555] bg-[#111] border border-[#1e1e1e] px-1.5 py-0.5 rounded-md">{(coin.dex || '').slice(0, 6)}</span>
                           </td>
                         </tr>
                         {isExpanded && (
                           <tr>
-                            <td colSpan={11} className="px-2 py-2 bg-[#1c1d24]">
+                            <td colSpan={11} className="px-2 py-2 bg-[#111]">
                               <div className="space-y-2">
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                  <div className="bg-[#16171c] border border-[#ffffff0f] rounded-lg p-2 shadow-sm">
-                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">5m Change</p>
+                                  <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-lg p-2 shadow-sm">
+                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">5m Change</p>
                                     <PctBadge value={coin.priceChange5m} className="text-[12px] font-semibold font-mono" />
                                   </div>
-                                  <div className="bg-[#16171c] border border-[#ffffff0f] rounded-lg p-2 shadow-sm">
-                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">6h Change</p>
+                                  <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-lg p-2 shadow-sm">
+                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">6h Change</p>
                                     <PctBadge value={coin.priceChange6h} className="text-[12px] font-semibold font-mono" />
                                   </div>
-                                  <div className="bg-[#16171c] border border-[#ffffff0f] rounded-lg p-2 shadow-sm">
-                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">FDV</p>
-                                    <p className="text-[12px] font-semibold text-[#e4e8ee] tabular-nums font-mono">{formatNum(coin.fdv)}</p>
+                                  <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-lg p-2 shadow-sm">
+                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">FDV</p>
+                                    <p className="text-[12px] font-semibold text-[#fff] tabular-nums font-mono">{formatNum(coin.fdv)}</p>
                                   </div>
-                                  <div className="bg-[#16171c] border border-[#ffffff0f] rounded-lg p-2 shadow-sm">
-                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">1h Txns</p>
+                                  <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded-lg p-2 shadow-sm">
+                                    <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">1h Txns</p>
                                     <div className="flex items-center gap-1">
                                       <span className="text-[12px] font-semibold text-[#10b981] tabular-nums font-mono">{coin.buys1h || 0}</span>
-                                      <span className="text-[10px] text-[#3a3b45]">/</span>
+                                      <span className="text-[10px] text-[#333]">/</span>
                                       <span className="text-[12px] font-semibold text-[#ef4444] tabular-nums font-mono">{coin.sells1h || 0}</span>
                                     </div>
                                   </div>
@@ -354,13 +354,13 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
                                 <MiniChart coin={coin} />
                                 <div className="flex items-center justify-between">
                                   <div className="flex items-center gap-2">
-                                    <span className="text-[9px] text-[#555962]">{coin.dex}</span>
-                                    <span className="text-[9px] text-[#3a3b45]">|</span>
-                                    <span className="text-[9px] text-[#555962]">{coin.chain}</span>
+                                    <span className="text-[9px] text-[#555]">{coin.dex}</span>
+                                    <span className="text-[9px] text-[#333]">|</span>
+                                    <span className="text-[9px] text-[#555]">{coin.chain}</span>
                                     {coin.pairCreatedAt > 0 && (
                                       <>
-                                        <span className="text-[9px] text-[#3a3b45]">|</span>
-                                        <span className="text-[9px] text-[#555962]">{timeAgo(coin.pairCreatedAt)}</span>
+                                        <span className="text-[9px] text-[#333]">|</span>
+                                        <span className="text-[9px] text-[#555]">{timeAgo(coin.pairCreatedAt)}</span>
                                       </>
                                     )}
                                   </div>
@@ -368,7 +368,7 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
                                     href={coin.url || `https://dexscreener.com/${coin.chain}/${coin.pairAddress}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center gap-1.5 text-[11px] text-[#4c8bf5] hover:text-[#6da0f7] transition-colors"
+                                    className="flex items-center gap-1.5 text-[11px] text-[#5a9aee] hover:text-[#5a9aee] transition-colors"
                                     onClick={(e) => e.stopPropagation()}
                                   >
                                     <ExternalLink className="w-3 h-3" />
@@ -390,7 +390,7 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
           {paginatedCoins.length < filteredCoins.length && (
             <button
               onClick={() => setPage(p => p + 1)}
-              className="w-full py-3 bg-[#16171c] hover:bg-[#1c1d24] border border-[#ffffff0f] rounded-lg text-[12px] font-medium text-[#868c98] hover:text-[#e4e8ee] transition-all shadow-sm"
+              className="w-full py-3 bg-[#0d0d0d] hover:bg-[#111] border border-[#1e1e1e] rounded-lg text-[12px] font-medium text-[#888] hover:text-[#fff] transition-all shadow-sm"
             >
               Load More ({paginatedCoins.length} / {filteredCoins.length})
             </button>
@@ -399,14 +399,14 @@ export const MemeCoinsView: React.FC<MemeCoinsViewProps> = ({ onBack }) => {
           {errors[activeChain] && (
             <div className="text-center py-12">
               <p className="text-[#ef4444] text-sm">{errors[activeChain]}</p>
-              <button onClick={() => { setLoaded(prev => { const n = new Set(prev); n.delete(activeChain); return n; }); fetchChain(activeChain); }} className="mt-3 px-4 py-2 bg-[#16171c] hover:bg-[#1c1d24] border border-[#ffffff0f] rounded-lg text-[11px] text-[#868c98] transition-colors shadow-sm">Retry</button>
+              <button onClick={() => { setLoaded(prev => { const n = new Set(prev); n.delete(activeChain); return n; }); fetchChain(activeChain); }} className="mt-3 px-4 py-2 bg-[#0d0d0d] hover:bg-[#111] border border-[#1e1e1e] rounded-lg text-[11px] text-[#888] transition-colors shadow-sm">Retry</button>
             </div>
           )}
 
           {filteredCoins.length === 0 && !loading[activeChain] && !errors[activeChain] && (
             <div className="text-center py-16">
-              <p className="text-[#555962] text-sm">No meme coins found</p>
-              <p className="text-[#555962] text-xs mt-1">Try a different search or chain</p>
+              <p className="text-[#555] text-sm">No meme coins found</p>
+              <p className="text-[#555] text-xs mt-1">Try a different search or chain</p>
             </div>
           )}
         </>

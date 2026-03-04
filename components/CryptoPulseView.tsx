@@ -84,9 +84,9 @@ const FearGreedGauge: React.FC<{ value: number; label: string }> = ({ value, lab
         />
         <line x1={cx} y1={cy} x2={nx} y2={ny} stroke={color} strokeWidth="2.5" strokeLinecap="round" />
         <circle cx={cx} cy={cy} r="4" fill={color} />
-        <text x={cx - r} y={cy + 14} textAnchor="start" fill="#555962" fontSize="9" fontFamily="IBM Plex Mono, monospace">0</text>
-        <text x={cx + r} y={cy + 14} textAnchor="end" fill="#555962" fontSize="9" fontFamily="IBM Plex Mono, monospace">100</text>
-        <text x={cx} y={cy + 24} textAnchor="middle" fill="#e4e8ee" fontSize="26" fontWeight="bold" fontFamily="IBM Plex Mono, monospace">{v}</text>
+        <text x={cx - r} y={cy + 14} textAnchor="start" fill="#555" fontSize="9" fontFamily="IBM Plex Mono, monospace">0</text>
+        <text x={cx + r} y={cy + 14} textAnchor="end" fill="#555" fontSize="9" fontFamily="IBM Plex Mono, monospace">100</text>
+        <text x={cx} y={cy + 24} textAnchor="middle" fill="#fff" fontSize="26" fontWeight="bold" fontFamily="IBM Plex Mono, monospace">{v}</text>
         <text x={cx} y={cy + 40} textAnchor="middle" fill={color} fontSize="11" fontWeight="600" fontFamily="Inter, sans-serif">{label}</text>
       </svg>
     </div>
@@ -173,20 +173,20 @@ const OverviewTab: React.FC = () => {
         <div className={`${cardClass} p-3`}>
           <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Market Cap</span>
+              <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Market Cap</span>
               <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(marketStats.totalMarketCap)}</span>
               <PctChange value={marketStats.marketCapChange24h} className="text-[11px] font-semibold" />
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">24H Vol</span>
+              <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">24H Vol</span>
               <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(marketStats.totalVolume24h)}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">BTC Dom</span>
+              <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">BTC Dom</span>
               <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{btcDom.toFixed(1)}%</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Active</span>
+              <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Active</span>
               <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(marketStats.activeCryptos || 0).toLocaleString()}</span>
             </div>
           </div>
@@ -195,7 +195,7 @@ const OverviewTab: React.FC = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Fear & Greed Index</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">Fear & Greed Index</p>
           {fearGreed?.current ? (
             <>
               <FearGreedGauge value={fearGreed.current.value} label={fearGreed.current.label} />
@@ -212,7 +212,7 @@ const OverviewTab: React.FC = () => {
         </div>
 
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">BTC Dominance Breakdown</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">BTC Dominance Breakdown</p>
           <div className="space-y-2">
             <div className="w-full h-5 rounded-full overflow-hidden flex bg-[#111]">
               <div className="h-full bg-[#111]" style={{ width: `${btcDom}%` }}></div>
@@ -240,7 +240,7 @@ const OverviewTab: React.FC = () => {
         </div>
 
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Altcoin Season Index</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">Altcoin Season Index</p>
           <div className="flex flex-col items-center">
             <div className="relative w-full max-w-[180px] mb-3">
               <div className="w-full h-3 rounded-full bg-[#111] overflow-hidden">
@@ -271,7 +271,7 @@ const OverviewTab: React.FC = () => {
 
       {dominanceBreakdown.length > 0 && (
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Market Cap Dominance</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">Market Cap Dominance</p>
           <div className="space-y-2.5">
             {dominanceBreakdown.slice(0, 10).map((item: any, i: number) => (
               <div key={i} className="flex items-center gap-3">
@@ -289,7 +289,7 @@ const OverviewTab: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
         <div className={`lg:col-span-1 ${cardClass} p-3`}>
           <div className="flex items-center justify-between mb-3">
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Trending Coins</p>
+            <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Trending Coins</p>
             <span className="text-[9px] text-[#555]">24H</span>
           </div>
           <div className="space-y-0.5">
@@ -317,7 +317,7 @@ const OverviewTab: React.FC = () => {
 
           {trending.categories?.length > 0 && (
             <div className="mt-5 pt-4 border-t border-[#1e1e1e]">
-              <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Trending Categories</p>
+              <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">Trending Categories</p>
               <div className="space-y-2">
                 {trending.categories.map((cat: any, i: number) => (
                   <div key={i} className="flex items-center justify-between py-1.5 px-2 rounded-lg hover:bg-[#1a1a1a] transition-colors">
@@ -369,11 +369,11 @@ const OverviewTab: React.FC = () => {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-2 mb-1.5">
                         <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full ${
-                          item.category === 'BTC Tracker' ? 'text-[#b79d25] bg-[#111]' :
+                          item.category === 'BTC Tracker' ? 'text-[#f5a623] bg-[#111]' :
                           item.category === 'Funding' ? 'text-[#10b981] bg-[#0a1a0f]' :
                           item.category === 'X Highlight' ? 'text-[#3578d8] bg-[#111]' :
                           item.category === 'Regulation' ? 'text-[#ef4444] bg-[#1a0a0a]' :
-                          item.category === 'Project' ? 'text-[#7c5cbf] bg-[#1f1538]' :
+                          item.category === 'Project' ? 'text-[#888] bg-[#111]' :
                           item.category === 'Token' ? 'text-[#3578d8] bg-[#111]' :
                           'text-[#555] bg-[#111]'
                         }`}>{item.category}</span>
@@ -430,15 +430,15 @@ const SpotTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Spot Vol (24H)</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Spot Vol (24H)</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(stats.totalVolume24hBtc || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Exchanges</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Exchanges</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{exchanges.length}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Top</span>
             <span className="text-[14px] font-bold text-[#fff]">{topExchange}</span>
           </div>
         </div>
@@ -446,7 +446,7 @@ const SpotTab: React.FC = () => {
 
       <div className={`${cardClass} overflow-hidden`}>
         <div className="p-3 border-b border-[#1e1e1e]">
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top Exchanges by Volume</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Top Exchanges by Volume</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -517,19 +517,19 @@ const DerivativesTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Open Interest</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Open Interest</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(stats.totalOpenInterestBtc || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">24H Vol</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">24H Vol</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatBtc(stats.totalVolume24hBtc || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Perps</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Perps</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(stats.totalPerpetualPairs || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Futures</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Futures</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(stats.totalFuturesPairs || 0).toLocaleString()}</span>
           </div>
         </div>
@@ -537,7 +537,7 @@ const DerivativesTab: React.FC = () => {
 
       <div className={`${cardClass} overflow-hidden`}>
         <div className="p-3 border-b border-[#1e1e1e]">
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top Derivatives Exchanges</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Top Derivatives Exchanges</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -577,7 +577,7 @@ const DerivativesTab: React.FC = () => {
       {tickers.length > 0 && (
         <div className={`${cardClass} overflow-hidden`}>
           <div className="p-3 border-b border-[#1e1e1e]">
-            <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Top Tickers</p>
+            <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Top Tickers</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full">
@@ -643,19 +643,19 @@ const BtcTreasuriesTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">BTC Held</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">BTC Held</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(stats.totalBtcHeld || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Value</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Value</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(stats.totalValue || 0)}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">% Supply</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">% Supply</span>
             <span className="text-[14px] font-bold text-[#f59e0b] font-mono tabular-nums">{(stats.percentOfSupply || supplyPct).toFixed(2)}%</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">BTC Price</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">BTC Price</span>
             <span className="text-[14px] font-bold text-[#f59e0b] font-mono tabular-nums">{formatPrice(stats.btcPrice || 0)}</span>
             <span className="text-[9px] text-[#555]">{stats.companiesCount || treasuries.length} cos</span>
           </div>
@@ -664,7 +664,7 @@ const BtcTreasuriesTab: React.FC = () => {
 
       {countries.length > 0 && (
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Countries Breakdown</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">Countries Breakdown</p>
           <div className="space-y-2.5">
             {countries.slice(0, 8).map((c: any, i: number) => (
               <div key={i} className="flex items-center gap-3">
@@ -682,7 +682,7 @@ const BtcTreasuriesTab: React.FC = () => {
 
       <div className={`${cardClass} overflow-hidden`}>
         <div className="p-3 border-b border-[#1e1e1e]">
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Bitcoin Holdings</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Bitcoin Holdings</p>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -714,7 +714,7 @@ const BtcTreasuriesTab: React.FC = () => {
                         ) : (
                           <div className="w-5 h-5 rounded-full bg-[#111] flex items-center justify-center shrink-0"><span className="text-[8px] text-[#555] font-bold">{(t.ticker || '?')[0]}</span></div>
                         )}
-                        <span className={`text-[12px] font-semibold ${isTop3 ? 'text-[#b79d25]' : 'text-[#fff]'}`}>{t.name}</span>
+                        <span className={`text-[12px] font-semibold ${isTop3 ? 'text-[#f5a623]' : 'text-[#fff]'}`}>{t.name}</span>
                       </div>
                     </td>
                     <td className="px-2 py-1.5 text-[11px] text-[#888] hidden md:table-cell">{t.ticker || '--'}</td>
@@ -773,15 +773,15 @@ const CryptocurrenciesTab: React.FC = () => {
       <div className={`${cardClass} p-3`}>
         <div className="flex items-center justify-between flex-wrap gap-x-6 gap-y-1">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Active Cryptos</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Active Cryptos</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(marketStats?.activeCryptos || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Exchanges</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Exchanges</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{(marketStats?.activeExchanges || 0).toLocaleString()}</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium">Market Cap</span>
+            <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono">Market Cap</span>
             <span className="text-[14px] font-bold text-[#fff] font-mono tabular-nums">{formatNum(marketStats?.totalMarketCap || 0)}</span>
           </div>
         </div>
@@ -789,7 +789,7 @@ const CryptocurrenciesTab: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Trending Coins</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">Trending Coins</p>
           <div className="space-y-0.5">
             {(trending.coins || []).slice(0, 15).map((coin: any, i: number) => (
               <div key={coin.id || i} className="flex items-center justify-between py-2 px-2 rounded-lg hover:bg-[#1a1a1a] transition-colors cursor-pointer">
@@ -816,7 +816,7 @@ const CryptocurrenciesTab: React.FC = () => {
         </div>
 
         <div className={`${cardClass} p-3`}>
-          <p className="text-[10px] uppercase tracking-[0.06em] text-[#555] font-medium mb-3">Trending Categories</p>
+          <p className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-medium font-mono mb-3">Trending Categories</p>
           <div className="space-y-2">
             {(trending.categories || []).map((cat: any, i: number) => (
               <div key={i} className={`${innerCardClass} p-3 flex items-center justify-between`}>
@@ -880,8 +880,8 @@ export const CryptoPulseView: React.FC = () => {
       <div className="card p-3 sm:p-4">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-[#888] font-semibold">Crypto Pulse</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#fff] tracking-[-0.02em] mt-1">Market Structure & Liquidity Radar</h2>
+            <p className="text-[10px] uppercase tracking-[0.12em] text-[#555] font-semibold font-mono">Crypto Pulse</p>
+            <h2 className="text-[15px] sm:text-[17px] font-bold text-[#fff] tracking-[-0.01em] mt-1 font-mono uppercase">Market Structure</h2>
           </div>
           <div className="flex items-center gap-2">
             <span className="relative flex h-2 w-2">

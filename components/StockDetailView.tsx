@@ -105,7 +105,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
   const StatRow = ({ label, value, valueColor }: { label: string; value: string; valueColor?: string }) => (
     <div className="flex justify-between items-center py-1.5" style={{ borderBottom: '1px solid var(--color-border-subtle)' }}>
       <span className="text-[11px]" style={{ color: 'var(--color-text-secondary)' }}>{label}</span>
-      <span className={`text-[11px] font-semibold tabular-nums font-mono ${valueColor || ''}`} style={!valueColor ? { color: '#e4e8ee' } : {}}>{value}</span>
+      <span className={`text-[11px] font-semibold tabular-nums font-mono ${valueColor || ''}`} style={!valueColor ? { color: '#fff' } : {}}>{value}</span>
     </div>
   );
 
@@ -133,8 +133,8 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
       <div className="flex items-center gap-3 mb-3">
         <button
           onClick={onBack}
-          className="flex items-center gap-1.5 text-[11px] font-medium card-interactive px-2.5 py-1.5 rounded-lg"
-          style={{ color: '#7db8ff', border: '1px solid var(--color-border-subtle)', background: 'rgba(89, 129, 191, 0.14)' }}
+          className="flex items-center gap-1.5 text-[11px] font-medium card-interactive px-2.5 py-1.5 rounded-[4px]"
+          style={{ color: '#5a9aee', border: '1px solid #1e1e1e', background: '#111' }}
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           Back
@@ -142,7 +142,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
       </div>
 
       <div className="card p-3 mb-2">
-      <p className="text-[10px] uppercase tracking-[0.1em] text-[#88a8cf] font-semibold mb-2">Asset Intelligence</p>
+      <p className="text-[10px] uppercase tracking-[0.1em] text-[#888] font-semibold mb-2">Asset Intelligence</p>
       <div className="flex items-center gap-3">
         {stock.logo && (
           <img src={stock.logo} alt={stock.symbol} className="w-10 h-10 object-contain shrink-0" />
@@ -150,7 +150,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
             <span className="text-[18px] font-bold text-white">{stock.symbol}</span>
-            <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded font-medium" style={{ color: '#4c8bf5', background: 'rgba(76,139,245,0.1)' }}>{stock.market}</span>
+            <span className="text-[9px] uppercase tracking-wider px-1.5 py-0.5 rounded font-medium" style={{ color: '#5a9aee', background: 'rgba(76,139,245,0.1)' }}>{stock.market}</span>
             {detail?.industry && <span className="text-[9px] px-1.5 py-0.5 rounded" style={{ color: 'var(--color-text-secondary)', background: 'rgba(89, 129, 191, 0.16)' }}>{detail.industry}</span>}
           </div>
           <p className="text-[11px]" style={{ color: 'var(--color-text-secondary)' }}>{stock.name}</p>
@@ -172,7 +172,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
             <StockChart data={chartData} color={color} range={activeRange} />
           </div>
           <div className="flex items-center justify-between px-3 py-2" style={{ borderTop: '1px solid var(--color-border)' }}>
-            <span className="text-[10px] font-medium px-2.5 py-1 rounded" style={{ background: 'rgba(76,139,245,0.12)', color: '#4c8bf5' }}>1M</span>
+            <span className="text-[10px] font-medium px-2.5 py-1 rounded" style={{ background: 'rgba(76,139,245,0.12)', color: '#5a9aee' }}>1M</span>
             <button
               onClick={handleInlineAnalyze}
               disabled={analysisLoading}
@@ -190,23 +190,23 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
         <div className="hidden lg:block w-[320px] shrink-0">
           <div className="card p-2.5 h-full flex flex-col">
             <div className="flex items-center gap-2 mb-2 pb-2" style={{ borderBottom: '1px solid var(--color-border)' }}>
-              <Newspaper className="w-3.5 h-3.5 text-[#4c8bf5]" />
-              <span className="text-[10px] uppercase tracking-[0.06em] font-medium text-[#868c98]">Related News</span>
-              <span className="text-[9px] font-mono text-[#555962] ml-auto">{relatedNews.length}</span>
+              <Newspaper className="w-3.5 h-3.5 text-[#5a9aee]" />
+              <span className="text-[10px] uppercase tracking-[0.06em] font-medium text-[#888]">Related News</span>
+              <span className="text-[9px] font-mono text-[#555] ml-auto">{relatedNews.length}</span>
             </div>
             <div className="flex-1 overflow-y-auto space-y-1 pr-0.5">
               {relatedNews.map((item, i) => (
                 <a href={item.url} target="_blank" rel="noopener noreferrer" key={i} className="block card-interactive rounded p-2">
-                  <p className="text-[11px] text-[#e4e8ee] leading-snug mb-1 line-clamp-2">{item.title}</p>
+                  <p className="text-[11px] text-[#fff] leading-snug mb-1 line-clamp-2">{item.title}</p>
                   <div className="flex items-center gap-2">
-                    <span className="text-[9px] text-[#555962] truncate">{item.source}</span>
-                    <span className="text-[9px] text-[#555962]">{item.time}</span>
-                    <ExternalLink className="w-2.5 h-2.5 text-[#555962] ml-auto shrink-0" />
+                    <span className="text-[9px] text-[#555] truncate">{item.source}</span>
+                    <span className="text-[9px] text-[#555]">{item.time}</span>
+                    <ExternalLink className="w-2.5 h-2.5 text-[#555] ml-auto shrink-0" />
                   </div>
                 </a>
               ))}
               {relatedNews.length === 0 && (
-                <p className="text-[11px] text-[#555962] text-center py-4">No related news</p>
+                <p className="text-[11px] text-[#555] text-center py-4">No related news</p>
               )}
             </div>
           </div>
@@ -214,9 +214,9 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
       </div>
 
       {(analysisLoading || analysisText) && (
-        <div className="rounded-md overflow-hidden mb-3" style={{ background: 'linear-gradient(180deg, rgba(16, 25, 40, 0.88), rgba(9, 15, 24, 0.96))', border: '1px solid var(--color-border)' }}>
+        <div className="rounded-md overflow-hidden mb-3" style={{ background: '#0a0a0a', border: '1px solid var(--color-border)' }}>
           <div className="px-3 py-2 flex items-center gap-2" style={{ borderBottom: '1px solid var(--color-border)' }}>
-            <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #4c8bf5 0%, #6366f1 100%)' }}>
+            <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: '#2762bc' }}>
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                 <path d="M2 17l10 5 10-5" />
@@ -229,11 +229,11 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
           <div className="px-4 py-3">
             {analysisLoading ? (
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 border-2 border-[#2a2b33] border-t-[#4c8bf5] rounded-full animate-spin"></div>
+                <div className="w-4 h-4 border-2 border-[#161616] border-t-[#5a9aee] rounded-full animate-spin"></div>
                 <span className="text-[11px]" style={{ color: 'var(--color-text-secondary)' }}>Analyzing {stock.symbol}...</span>
               </div>
             ) : (
-              <div className="text-[12px] leading-relaxed whitespace-pre-wrap" style={{ color: '#c4c9d4' }}>
+              <div className="text-[12px] leading-relaxed whitespace-pre-wrap" style={{ color: '#888' }}>
                 {analysisText.split('\n').map((line, i) => {
                   if (line.startsWith('**') && line.endsWith('**')) {
                     return <p key={i} className="font-semibold text-white mt-2 mb-1">{line.replace(/\*\*/g, '')}</p>;
@@ -258,37 +258,37 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {detail?.description && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="About" icon={<Building2 className="w-4 h-4 text-[#555962]" />} />
+          <SectionHeader title="About" icon={<Building2 className="w-4 h-4 text-[#555]" />} />
           <p className={`text-[12px] leading-relaxed ${!descExpanded ? 'line-clamp-4' : ''}`} style={{ color: 'var(--color-text-secondary)' }}>
             {detail.description.replace(/<[^>]*>/g, '')}
           </p>
           {detail.description.length > 300 && (
-            <button onClick={() => setDescExpanded(!descExpanded)} className="text-[11px] text-[#4c8bf5] font-medium mt-2 hover:underline">
+            <button onClick={() => setDescExpanded(!descExpanded)} className="text-[11px] text-[#5a9aee] font-medium mt-2 hover:underline">
               {descExpanded ? 'Show Less' : 'Read More'}
             </button>
           )}
           {(detail.sector || detail.website || detail.employees) && (
-            <div className="flex flex-wrap gap-3 mt-3 pt-3 border-t border-[#ffffff0f]">
+            <div className="flex flex-wrap gap-3 mt-3 pt-3 border-t border-[#1e1e1e]">
               {detail.sector && (
                 <div className="text-[11px]">
-                  <span className="text-[#555962]">Sector </span>
+                  <span className="text-[#555]">Sector </span>
                   <span className="text-white font-medium">{detail.sector}</span>
                 </div>
               )}
               {detail.country && (
                 <div className="text-[11px]">
-                  <span className="text-[#555962]">HQ </span>
+                  <span className="text-[#555]">HQ </span>
                   <span className="text-white font-medium">{detail.city ? `${detail.city}, ` : ''}{detail.country}</span>
                 </div>
               )}
               {detail.employees && (
                 <div className="text-[11px]">
-                  <span className="text-[#555962]">Employees </span>
+                  <span className="text-[#555]">Employees </span>
                   <span className="text-white font-medium">{detail.employees.toLocaleString()}</span>
                 </div>
               )}
               {detail.website && (
-                <a href={detail.website} target="_blank" rel="noopener noreferrer" className="text-[11px] text-[#4c8bf5] hover:underline flex items-center gap-1">
+                <a href={detail.website} target="_blank" rel="noopener noreferrer" className="text-[11px] text-[#5a9aee] hover:underline flex items-center gap-1">
                   <Globe className="w-3 h-3" /> Website
                 </a>
               )}
@@ -296,9 +296,9 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
           )}
 
           {isCrypto && detail?.categories?.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[#ffffff0f]">
+            <div className="flex flex-wrap gap-1.5 mt-3 pt-3 border-t border-[#1e1e1e]">
               {detail.categories.filter(Boolean).slice(0, 6).map((cat: string, i: number) => (
-                <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-[#1c1d24] text-[#868c98]">{cat}</span>
+                <span key={i} className="text-[10px] px-2 py-0.5 rounded-md bg-[#111] text-[#888]">{cat}</span>
               ))}
             </div>
           )}
@@ -307,7 +307,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-3">
         <div className={`${cardClass} p-2.5`}>
-          <SectionHeader title={isCrypto ? "Market Data" : "Price & Volume"} icon={<BarChart3 className="w-3.5 h-3.5 text-[#6da0f7]" />} />
+          <SectionHeader title={isCrypto ? "Market Data" : "Price & Volume"} icon={<BarChart3 className="w-3.5 h-3.5 text-[#5a9aee]" />} />
           <StatRow label="Market Cap" value={detail?.marketCap ? formatBigNum(detail.marketCap) : stock.marketCap} />
           <StatRow label="Volume (24h)" value={isCrypto ? (detail?.totalVolume ? formatBigNum(detail.totalVolume) : stock.volume) : stock.volume} />
           {!isCrypto && <StatRow label="Avg Volume" value={detail?.averageVolume ? formatSupply(detail.averageVolume) : '---'} />}
@@ -332,7 +332,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
         <div className={`${cardClass} p-2.5`}>
           {isCrypto ? (
             <>
-              <SectionHeader title="Supply & Valuation" icon={<Activity className="w-3.5 h-3.5 text-[#7c5cbf]" />} />
+              <SectionHeader title="Supply & Valuation" icon={<Activity className="w-3.5 h-3.5 text-[#888]" />} />
               <StatRow label="Circulating Supply" value={formatSupply(detail?.circulatingSupply)} />
               <StatRow label="Total Supply" value={formatSupply(detail?.totalSupply)} />
               <StatRow label="Max Supply" value={detail?.maxSupply ? formatSupply(detail.maxSupply) : 'Unlimited'} />
@@ -345,7 +345,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
             </>
           ) : (
             <>
-              <SectionHeader title="Fundamentals" icon={<Activity className="w-4 h-4 text-[#7c5cbf]" />} />
+              <SectionHeader title="Fundamentals" icon={<Activity className="w-4 h-4 text-[#888]" />} />
               {detail?.trailingPE && <StatRow label="P/E (TTM)" value={detail.trailingPE.toFixed(2)} />}
               {detail?.forwardPE && <StatRow label="P/E (Forward)" value={detail.forwardPE.toFixed(2)} />}
               {detail?.priceToBook && <StatRow label="P/B Ratio" value={detail.priceToBook.toFixed(2)} />}
@@ -364,7 +364,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {!isCrypto && detail && (detail.totalRevenue || detail.profitMargins) && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="Financials" icon={<TrendingUp className="w-4 h-4 text-[#6da0f7]" />} />
+          <SectionHeader title="Financials" icon={<TrendingUp className="w-4 h-4 text-[#5a9aee]" />} />
           <div className="grid grid-cols-2 gap-x-6">
             {detail.totalRevenue && <StatRow label="Total Revenue" value={formatBigNum(detail.totalRevenue)} />}
             {detail.ebitda && <StatRow label="EBITDA" value={formatBigNum(detail.ebitda)} />}
@@ -386,26 +386,26 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {!isCrypto && detail?.recommendationTrend?.length > 0 && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="Analyst Ratings" icon={<Users className="w-4 h-4 text-[#6da0f7]" />} />
+          <SectionHeader title="Analyst Ratings" icon={<Users className="w-4 h-4 text-[#5a9aee]" />} />
           {detail.recommendationKey && (
             <div className="flex items-center gap-2 mb-3">
               <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded ${
-                detail.recommendationKey === 'buy' || detail.recommendationKey === 'strong_buy' ? 'bg-[#0f2d1f] text-[#10b981]' :
-                detail.recommendationKey === 'sell' || detail.recommendationKey === 'strong_sell' ? 'bg-[#2d1520] text-[#ef4444]' :
-                'bg-[#2d2810] text-[#f59e0b]'
+                detail.recommendationKey === 'buy' || detail.recommendationKey === 'strong_buy' ? 'bg-[rgba(0,192,118,0.1)] text-[#10b981]' :
+                detail.recommendationKey === 'sell' || detail.recommendationKey === 'strong_sell' ? 'bg-[rgba(255,59,59,0.1)] text-[#ef4444]' :
+                'bg-[rgba(245,166,35,0.1)] text-[#f59e0b]'
               }`}>{detail.recommendationKey.replace('_', ' ').toUpperCase()}</span>
               {detail.numberOfAnalystOpinions > 0 && (
-                <span className="text-[11px] text-[#555962]">{detail.numberOfAnalystOpinions} analysts</span>
+                <span className="text-[11px] text-[#555]">{detail.numberOfAnalystOpinions} analysts</span>
               )}
             </div>
           )}
 
           {detail.targetMeanPrice && (
             <div className="mb-3">
-              <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-2">Price Target Range</p>
+              <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-2">Price Target Range</p>
               <div className="flex items-center gap-3">
                 <span className="text-[11px] text-[#ef4444] font-mono">${detail.targetLowPrice?.toFixed(2) || '---'}</span>
-                <div className="flex-1 h-1.5 bg-[#22232b] rounded-full relative overflow-hidden">
+                <div className="flex-1 h-1.5 bg-[#161616] rounded-full relative overflow-hidden">
                   {detail.targetLowPrice && detail.targetHighPrice && stock.price && (() => {
                     const range = detail.targetHighPrice - detail.targetLowPrice;
                     const pos = range > 0 ? Math.min(100, Math.max(0, ((stock.price - detail.targetLowPrice) / range) * 100)) : 50;
@@ -419,7 +419,7 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
                 </div>
                 <span className="text-[11px] text-[#10b981] font-mono">${detail.targetHighPrice?.toFixed(2) || '---'}</span>
               </div>
-              <p className="text-[11px] text-[#868c98] mt-1.5 text-center">Mean: <span className="text-white font-semibold font-mono tabular-nums">${detail.targetMeanPrice.toFixed(2)}</span></p>
+              <p className="text-[11px] text-[#888] mt-1.5 text-center">Mean: <span className="text-white font-semibold font-mono tabular-nums">${detail.targetMeanPrice.toFixed(2)}</span></p>
             </div>
           )}
 
@@ -436,10 +436,10 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
               ];
               return items.map((item, i) => (
                 <div key={i} className="text-center">
-                  <div className="h-12 bg-[#1c1d24] rounded flex items-end justify-center pb-1 mb-1 border border-[#ffffff0f]">
+                  <div className="h-12 bg-[#111] rounded flex items-end justify-center pb-1 mb-1 border border-[#1e1e1e]">
                     <div className="w-4 rounded-t" style={{ height: `${Math.max(3, (item.val / total) * 40)}px`, backgroundColor: item.color }}></div>
                   </div>
-                  <p className="text-[9px] text-[#555962]">{item.label}</p>
+                  <p className="text-[9px] text-[#555]">{item.label}</p>
                   <p className="text-[11px] font-bold text-white">{item.val}</p>
                 </div>
               ));
@@ -450,17 +450,17 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {!isCrypto && detail?.earningsHistory?.length > 0 && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="Earnings History" icon={<BarChart3 className="w-4 h-4 text-[#6da0f7]" />} />
+          <SectionHeader title="Earnings History" icon={<BarChart3 className="w-4 h-4 text-[#5a9aee]" />} />
           <div className="grid grid-cols-4 gap-2">
             {detail.earningsHistory.map((q: any, i: number) => {
               const beat = q.actual != null && q.estimate != null ? q.actual > q.estimate : null;
               return (
-                <div key={i} className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                  <p className="text-[9px] text-[#555962] font-mono tabular-nums mb-0.5">{q.date}</p>
+                <div key={i} className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                  <p className="text-[9px] text-[#555] font-mono tabular-nums mb-0.5">{q.date}</p>
                   <p className={`text-[11px] font-bold tabular-nums font-mono ${beat ? 'text-[#10b981]' : beat === false ? 'text-[#ef4444]' : 'text-white'}`}>
                     {q.actual != null ? `$${q.actual.toFixed(2)}` : '---'}
                   </p>
-                  <p className="text-[9px] text-[#555962] mt-0.5 font-mono tabular-nums">Est: {q.estimate != null ? `$${q.estimate.toFixed(2)}` : '---'}</p>
+                  <p className="text-[9px] text-[#555] mt-0.5 font-mono tabular-nums">Est: {q.estimate != null ? `$${q.estimate.toFixed(2)}` : '---'}</p>
                   {beat != null && (
                     <span className={`text-[9px] font-bold ${beat ? 'text-[#10b981]' : 'text-[#ef4444]'}`}>
                       {beat ? 'BEAT' : 'MISS'}
@@ -475,39 +475,39 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {!isCrypto && detail && (detail.heldPercentInsiders != null || detail.topInstitutions?.length > 0) && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="Ownership" icon={<Users className="w-4 h-4 text-[#7c5cbf]" />} />
+          <SectionHeader title="Ownership" icon={<Users className="w-4 h-4 text-[#888]" />} />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
             {detail.heldPercentInsiders != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Insiders</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Insiders</p>
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatPct(detail.heldPercentInsiders)}</p>
               </div>
             )}
             {detail.heldPercentInstitutions != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Institutions</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Institutions</p>
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatPct(detail.heldPercentInstitutions)}</p>
               </div>
             )}
             {detail.floatShares && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Float</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Float</p>
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatSupply(detail.floatShares)}</p>
               </div>
             )}
             {detail.shortPercentOfFloat != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Short %</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Short %</p>
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatPct(detail.shortPercentOfFloat)}</p>
               </div>
             )}
           </div>
           {detail.topInstitutions?.length > 0 && (
             <>
-              <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-2">Top Holders</p>
+              <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-2">Top Holders</p>
               {detail.topInstitutions.slice(0, 5).map((inst: any, i: number) => (
                 <div key={i} className="flex justify-between items-center py-1" style={{ borderBottom: '1px solid var(--color-border-subtle)' }}>
-                  <span className="text-[11px] text-[#868c98] truncate max-w-[60%]">{inst.organization}</span>
+                  <span className="text-[11px] text-[#888] truncate max-w-[60%]">{inst.organization}</span>
                   <span className="text-[11px] text-white font-mono tabular-nums">{formatPct(inst.pctHeld)}</span>
                 </div>
               ))}
@@ -518,21 +518,21 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {isCrypto && detail?.topExchanges?.length > 0 && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="Supported Exchanges" icon={<Building2 className="w-4 h-4 text-[#6da0f7]" />} />
+          <SectionHeader title="Supported Exchanges" icon={<Building2 className="w-4 h-4 text-[#5a9aee]" />} />
           <div className="space-y-1">
             {detail.topExchanges.map((ex: any, i: number) => (
-              <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#ffffff0f]">
+              <div key={i} className="flex items-center justify-between py-1.5 border-b border-[#1e1e1e]">
                 <div className="flex items-center gap-2">
                   <span className="text-[11px] font-semibold text-white">{ex.exchange}</span>
-                  <span className="text-[10px] text-[#555962]">{ex.pair}</span>
+                  <span className="text-[10px] text-[#555]">{ex.pair}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  {ex.volume && <span className="text-[10px] text-[#868c98] tabular-nums font-mono">{formatBigNum(ex.volume)}</span>}
+                  {ex.volume && <span className="text-[10px] text-[#888] tabular-nums font-mono">{formatBigNum(ex.volume)}</span>}
                   {ex.trustScore && (
                     <span className={`w-1.5 h-1.5 rounded-full ${ex.trustScore === 'green' ? 'bg-[#10b981]' : ex.trustScore === 'yellow' ? 'bg-[#f59e0b]' : 'bg-[#ef4444]'}`}></span>
                   )}
                   {ex.tradeUrl && (
-                    <a href={ex.tradeUrl} target="_blank" rel="noopener noreferrer" className="text-[#4c8bf5] hover:underline">
+                    <a href={ex.tradeUrl} target="_blank" rel="noopener noreferrer" className="text-[#5a9aee] hover:underline">
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   )}
@@ -545,29 +545,29 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {isCrypto && detail && (detail.twitterFollowers || detail.redditSubscribers || detail.sentimentUpPercent) && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="Social Traction" icon={<MessageCircle className="w-4 h-4 text-[#7c5cbf]" />} />
+          <SectionHeader title="Social Traction" icon={<MessageCircle className="w-4 h-4 text-[#888]" />} />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-2">
             {detail.twitterFollowers && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Twitter/X</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Twitter/X</p>
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatSupply(detail.twitterFollowers)}</p>
               </div>
             )}
             {detail.redditSubscribers && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Reddit</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Reddit</p>
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatSupply(detail.redditSubscribers)}</p>
               </div>
             )}
             {detail.watchlistUsers && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-0.5">Watchlists</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-0.5">Watchlists</p>
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatSupply(detail.watchlistUsers)}</p>
               </div>
             )}
             {detail.sentimentUpPercent != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555962] font-medium mb-1">Sentiment</p>
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <p className="text-[9px] uppercase tracking-[0.06em] text-[#555] font-medium mb-1">Sentiment</p>
                 <div className="flex items-center justify-center gap-1">
                   <TrendingUp className="w-3 h-3 text-[#10b981]" />
                   <span className="text-[11px] font-bold text-[#10b981] font-mono tabular-nums">{detail.sentimentUpPercent?.toFixed(0)}%</span>
@@ -579,21 +579,21 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
           </div>
 
           {detail.links && (
-            <div className="flex flex-wrap gap-2 pt-2 border-t border-[#ffffff0f]">
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-[#1e1e1e]">
               {detail.links.twitter && (
-                <a href={`https://x.com/${detail.links.twitter}`} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#1c1d24] text-[#4c8bf5] card-interactive border border-[#ffffff0f]">@{detail.links.twitter}</a>
+                <a href={`https://x.com/${detail.links.twitter}`} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#111] text-[#5a9aee] card-interactive border border-[#1e1e1e]">@{detail.links.twitter}</a>
               )}
               {detail.links.reddit && (
-                <a href={detail.links.reddit} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#1c1d24] text-[#f59e0b] card-interactive border border-[#ffffff0f]">Reddit</a>
+                <a href={detail.links.reddit} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#111] text-[#f59e0b] card-interactive border border-[#1e1e1e]">Reddit</a>
               )}
               {detail.links.telegram && (
-                <a href={`https://t.me/${detail.links.telegram}`} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#1c1d24] text-[#6da0f7] card-interactive border border-[#ffffff0f]">Telegram</a>
+                <a href={`https://t.me/${detail.links.telegram}`} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#111] text-[#5a9aee] card-interactive border border-[#1e1e1e]">Telegram</a>
               )}
               {detail.links.github?.length > 0 && (
-                <a href={detail.links.github[0]} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#1c1d24] text-[#868c98] card-interactive border border-[#ffffff0f]">GitHub</a>
+                <a href={detail.links.github[0]} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#111] text-[#888] card-interactive border border-[#1e1e1e]">GitHub</a>
               )}
               {detail.links.homepage?.length > 0 && detail.links.homepage[0] && (
-                <a href={detail.links.homepage[0]} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#1c1d24] text-[#4c8bf5] card-interactive flex items-center gap-1 border border-[#ffffff0f]"><Globe className="w-3 h-3" /> Website</a>
+                <a href={detail.links.homepage[0]} target="_blank" rel="noopener noreferrer" className="text-[10px] px-2 py-1 rounded bg-[#111] text-[#5a9aee] card-interactive flex items-center gap-1 border border-[#1e1e1e]"><Globe className="w-3 h-3" /> Website</a>
               )}
             </div>
           )}
@@ -602,34 +602,34 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {isCrypto && detail && (detail.devStars || detail.devForks || detail.devCommit4Weeks) && (
         <div className={`${cardClass} p-3 mb-3`}>
-          <SectionHeader title="Developer Activity" icon={<GitFork className="w-4 h-4 text-[#868c98]" />} />
+          <SectionHeader title="Developer Activity" icon={<GitFork className="w-4 h-4 text-[#888]" />} />
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             {detail.devStars != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
                 <Star className="w-3.5 h-3.5 text-[#f59e0b] mx-auto mb-0.5" />
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatSupply(detail.devStars)}</p>
-                <p className="text-[9px] text-[#555962]">Stars</p>
+                <p className="text-[9px] text-[#555]">Stars</p>
               </div>
             )}
             {detail.devForks != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <GitFork className="w-3.5 h-3.5 text-[#6da0f7] mx-auto mb-0.5" />
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <GitFork className="w-3.5 h-3.5 text-[#5a9aee] mx-auto mb-0.5" />
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatSupply(detail.devForks)}</p>
-                <p className="text-[9px] text-[#555962]">Forks</p>
+                <p className="text-[9px] text-[#555]">Forks</p>
               </div>
             )}
             {detail.devCommit4Weeks != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
                 <Activity className="w-3.5 h-3.5 text-[#10b981] mx-auto mb-0.5" />
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{detail.devCommit4Weeks}</p>
-                <p className="text-[9px] text-[#555962]">Commits (4w)</p>
+                <p className="text-[9px] text-[#555]">Commits (4w)</p>
               </div>
             )}
             {detail.devPullRequests != null && (
-              <div className="bg-[#1c1d24] rounded p-2 text-center border border-[#ffffff0f]">
-                <MessageCircle className="w-3.5 h-3.5 text-[#6da0f7] mx-auto mb-0.5" />
+              <div className="bg-[#111] rounded p-2 text-center border border-[#1e1e1e]">
+                <MessageCircle className="w-3.5 h-3.5 text-[#5a9aee] mx-auto mb-0.5" />
                 <p className="text-[11px] font-bold text-white tabular-nums font-mono">{formatSupply(detail.devPullRequests)}</p>
-                <p className="text-[9px] text-[#555962]">PRs Merged</p>
+                <p className="text-[9px] text-[#555]">PRs Merged</p>
               </div>
             )}
           </div>
@@ -637,15 +637,15 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
       )}
 
       <div className="lg:hidden mb-3">
-        <SectionHeader title="Related News" icon={<Newspaper className="w-4 h-4 text-[#4c8bf5]" />} />
+        <SectionHeader title="Related News" icon={<Newspaper className="w-4 h-4 text-[#5a9aee]" />} />
         <div className="space-y-1">
           {relatedNews.slice(0, 6).map((item, i) => (
             <a href={item.url} target="_blank" rel="noopener noreferrer" key={i} className="block card-interactive rounded p-2">
-              <p className="text-[11px] text-[#e4e8ee] leading-snug mb-1 line-clamp-2">{item.title}</p>
+              <p className="text-[11px] text-[#fff] leading-snug mb-1 line-clamp-2">{item.title}</p>
               <div className="flex items-center gap-2">
-                <span className="text-[9px] text-[#555962] truncate">{item.source}</span>
-                <span className="text-[9px] text-[#555962]">{item.time}</span>
-                <ExternalLink className="w-2.5 h-2.5 text-[#555962] ml-auto shrink-0" />
+                <span className="text-[9px] text-[#555] truncate">{item.source}</span>
+                <span className="text-[9px] text-[#555]">{item.time}</span>
+                <ExternalLink className="w-2.5 h-2.5 text-[#555] ml-auto shrink-0" />
               </div>
             </a>
           ))}
@@ -654,9 +654,9 @@ export const StockDetailView: React.FC<StockDetailViewProps> = ({ stock, news, o
 
       {loading && (
         <div className="fixed inset-0 pointer-events-none flex items-start justify-center pt-20 z-50">
-          <div className="bg-[#16171c] border border-[#ffffff0f] rounded px-4 py-2 flex items-center gap-2 shadow-lg pointer-events-auto">
-            <div className="w-4 h-4 border-2 border-[#2a2b33] border-t-[#4c8bf5] rounded-full animate-spin"></div>
-            <span className="text-[11px] text-[#868c98]">Loading details...</span>
+          <div className="bg-[#0d0d0d] border border-[#1e1e1e] rounded px-4 py-2 flex items-center gap-2 pointer-events-auto">
+            <div className="w-4 h-4 border-2 border-[#161616] border-t-[#5a9aee] rounded-full animate-spin"></div>
+            <span className="text-[11px] text-[#888]">Loading details...</span>
           </div>
         </div>
       )}

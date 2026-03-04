@@ -199,14 +199,14 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
       <div className="card p-3 sm:p-4">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-[#88a8cf] font-semibold">Signal Desk</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#f4f9ff] tracking-[-0.02em] mt-1">
+            <p className="text-[10px] uppercase tracking-[0.12em] text-[#888] font-semibold">Signal Desk</p>
+            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#fff] tracking-[-0.02em] mt-1">
               {activeTab === 'news' ? 'Market News Intelligence' : 'Economic Calendar Intelligence'}
             </h2>
           </div>
           <button
             onClick={handleManualRefresh}
-            className="h-9 px-3 rounded-xl border border-[#c9e2ff2f] bg-[#ffffff12] hover:bg-[#ffffff1b] transition-colors text-[#c8ddfa] text-[11px] font-medium inline-flex items-center gap-2"
+            className="h-9 px-3 rounded-[4px] border border-[#1e1e1e] bg-[#111] hover:bg-[#1a1a1a] transition-colors text-[#888] text-[11px] font-medium inline-flex items-center gap-2"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${refreshing || calendarLoading ? 'animate-spin' : ''}`} />
             Refresh
@@ -214,28 +214,28 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-3">
-          <div className="rounded-xl border border-[#cde5ff1f] bg-[#ffffff0d] px-3 py-2.5">
-            <p className="text-[10px] text-[#89a5c9] uppercase tracking-[0.06em]">Coverage</p>
-            <p className="text-[16px] font-semibold text-[#f4f9ff] font-mono tabular-nums mt-0.5">
+          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
+            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Coverage</p>
+            <p className="text-[16px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">
               {activeTab === 'news' ? enrichedNews.length : calendarEvents.length}
             </p>
           </div>
 
-          <div className="rounded-xl border border-[#cde5ff1f] bg-[#ffffff0d] px-3 py-2.5">
-            <p className="text-[10px] text-[#89a5c9] uppercase tracking-[0.06em]">Auto Cycle</p>
-            <p className="text-[16px] font-semibold text-[#f4f9ff] font-mono tabular-nums mt-0.5">
+          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
+            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Auto Cycle</p>
+            <p className="text-[16px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">
               {activeTab === 'news' ? formatCountdownStr(countdown) : 'Manual'}
             </p>
           </div>
 
-          <div className="rounded-xl border border-[#cde5ff1f] bg-[#ffffff0d] px-3 py-2.5">
-            <p className="text-[10px] text-[#89a5c9] uppercase tracking-[0.06em]">Bullish Share</p>
-            <p className="text-[16px] font-semibold text-[#0ec28d] font-mono tabular-nums mt-0.5">{bullishRatio}%</p>
+          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
+            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Bullish Share</p>
+            <p className="text-[16px] font-semibold text-[#00c076] font-mono tabular-nums mt-0.5">{bullishRatio}%</p>
           </div>
 
-          <div className="rounded-xl border border-[#cde5ff1f] bg-[#ffffff0d] px-3 py-2.5">
-            <p className="text-[10px] text-[#89a5c9] uppercase tracking-[0.06em]">Focus</p>
-            <p className="text-[13px] font-semibold text-[#f4f9ff] mt-1">
+          <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
+            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Focus</p>
+            <p className="text-[13px] font-semibold text-[#fff] mt-1">
               {activeTab === 'news' ? 'Flows & sentiment' : 'Macro event risk'}
             </p>
           </div>
@@ -251,18 +251,18 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
         <>
           <div className="card p-3 sm:p-3.5 flex items-center gap-3">
             <div className="flex items-center gap-2 text-[10px]">
-              <span className="text-[#0ec28d] font-semibold font-mono tabular-nums">{bullishCount} Bullish</span>
-              <span className="text-[#6b87ac]">·</span>
-              <span className="text-[#ff6b6b] font-semibold font-mono tabular-nums">{bearishCount} Bearish</span>
-              <span className="text-[#6b87ac]">·</span>
+              <span className="text-[#00c076] font-semibold font-mono tabular-nums">{bullishCount} Bullish</span>
+              <span className="text-[#555]">·</span>
+              <span className="text-[#ff3b3b] font-semibold font-mono tabular-nums">{bearishCount} Bearish</span>
+              <span className="text-[#555]">·</span>
               <span className="text-[#9ab0ce] font-mono tabular-nums">{neutralCount} Neutral</span>
             </div>
-            <div className="flex-1 h-2 rounded-full bg-[#ffffff12] overflow-hidden flex">
-              <div className="bg-[#0ec28d] h-full transition-all duration-700" style={{ width: `${(bullishCount / total) * 100}%` }}></div>
-              <div className="bg-[#87a3c8] h-full transition-all duration-700" style={{ width: `${(neutralCount / total) * 100}%` }}></div>
-              <div className="bg-[#ff6b6b] h-full transition-all duration-700" style={{ width: `${(bearishCount / total) * 100}%` }}></div>
+            <div className="flex-1 h-2 rounded-full bg-[#111] overflow-hidden flex">
+              <div className="bg-[#00c076] h-full transition-all duration-700" style={{ width: `${(bullishCount / total) * 100}%` }}></div>
+              <div className="bg-[#555] h-full transition-all duration-700" style={{ width: `${(neutralCount / total) * 100}%` }}></div>
+              <div className="bg-[#ff3b3b] h-full transition-all duration-700" style={{ width: `${(bearishCount / total) * 100}%` }}></div>
             </div>
-            <span className={`text-[10px] font-semibold ${bullishCount > bearishCount ? 'text-[#0ec28d]' : bearishCount > bullishCount ? 'text-[#ff6b6b]' : 'text-[#9ab0ce]'}`}>
+            <span className={`text-[10px] font-semibold ${bullishCount > bearishCount ? 'text-[#00c076]' : bearishCount > bullishCount ? 'text-[#ff3b3b]' : 'text-[#9ab0ce]'}`}>
               {bullishCount > bearishCount ? 'Bullish Tilt' : bearishCount > bullishCount ? 'Bearish Tilt' : 'Balanced'}
             </span>
           </div>
@@ -293,14 +293,14 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   key={idx}
-                  className="card-interactive rounded-xl p-3 flex flex-col gap-2.5 cursor-pointer"
-                  style={{ background: 'linear-gradient(150deg, rgba(255,255,255,0.12), rgba(255,255,255,0.04) 60%)', border: '1px solid var(--color-border)' }}
+                  className="card-interactive rounded-[4px] p-3 flex flex-col gap-2.5 cursor-pointer"
+                  style={{ background: '#0d0d0d', border: '1px solid var(--color-border)' }}
                 >
                   <div className="flex flex-wrap gap-1.5">
                     {tags.map((tag, i) => (
                       <span
                         key={i}
-                        className="text-[9px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full"
+                        className="text-[9px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-[3px]"
                         style={{ color: tag.color, background: tag.bg }}
                       >
                         {tag.label}
@@ -308,12 +308,12 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
                     ))}
                   </div>
 
-                  <p className="text-[12px] font-medium leading-snug text-[#eaf2ff] line-clamp-2 flex-1">{item.title}</p>
+                  <p className="text-[12px] font-medium leading-snug text-[#fff] line-clamp-2 flex-1">{item.title}</p>
 
                   <div className="flex items-center gap-2 flex-wrap">
                     {tokens.length > 0 && (
                       <div className="flex items-center gap-1">
-                        <span className="text-[9px] text-[#6f8ab0]">Tokens</span>
+                        <span className="text-[9px] text-[#555]">Tokens</span>
                         {tokens.map((t, i) => (
                           <div key={i} className="w-2 h-2 rounded-full" style={{ background: t.color }} title={t.name}></div>
                         ))}
@@ -322,19 +322,19 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
 
                     {entities.length > 0 && (
                       <div className="flex items-center gap-1">
-                        <span className="text-[9px] text-[#6f8ab0]">Source:</span>
-                        <span className="text-[9px] text-[#9cb4d4]">{entities[0]}</span>
+                        <span className="text-[9px] text-[#555]">Source:</span>
+                        <span className="text-[9px] text-[#888]">{entities[0]}</span>
                       </div>
                     )}
 
-                    <span className="text-[9px] text-[#6f8ab0] font-mono tabular-nums ml-auto">{item.time}</span>
+                    <span className="text-[9px] text-[#555] font-mono tabular-nums ml-auto">{item.time}</span>
                   </div>
                 </a>
               );
             })}
 
             {enrichedNews.length === 0 && (
-              <div className="col-span-full p-10 card text-center text-[#6f8ab0]">Loading market feeds...</div>
+              <div className="col-span-full p-10 card text-center text-[#555]">Loading market feeds...</div>
             )}
           </div>
         </>
@@ -344,9 +344,9 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
             <div className="card p-3 flex items-center gap-3">
               <AlertTriangle className="w-3.5 h-3.5 text-[#ffb066] shrink-0" />
               <span className="text-[9px] uppercase tracking-[0.08em] text-[#ffb066] font-semibold shrink-0">Next Event</span>
-              <span className="text-[11px] font-semibold text-[#eaf2ff] truncate flex-1">{nextEvent.event}</span>
-              <span className="text-[9px] text-[#6f8ab0] font-mono tabular-nums shrink-0">{formatEventDate(nextEvent.date)}</span>
-              <span className={`text-[11px] font-bold font-mono tabular-nums shrink-0 ${nextEventDays <= 3 ? 'text-[#ff6b6b]' : nextEventDays <= 7 ? 'text-[#ffb066]' : 'text-[#7db8ff]'}`}>
+              <span className="text-[11px] font-semibold text-[#fff] truncate flex-1">{nextEvent.event}</span>
+              <span className="text-[9px] text-[#555] font-mono tabular-nums shrink-0">{formatEventDate(nextEvent.date)}</span>
+              <span className={`text-[11px] font-bold font-mono tabular-nums shrink-0 ${nextEventDays <= 3 ? 'text-[#ff3b3b]' : nextEventDays <= 7 ? 'text-[#ffb066]' : 'text-[#5a9aee]'}`}>
                 {nextEventDays === 0 ? 'TODAY' : `${nextEventDays}d`}
               </span>
             </div>
@@ -370,21 +370,21 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
 
           {calendarLoading ? (
             <div className="flex items-center justify-center py-12">
-              <div className="w-6 h-6 border-2 border-[#ffffff2a] border-t-[#7db8ff] rounded-full animate-spin"></div>
+              <div className="w-6 h-6 border-2 border-[#ffffff2a] border-t-[#5a9aee] rounded-full animate-spin"></div>
             </div>
           ) : filteredCalendarEvents.length === 0 ? (
-            <div className="p-10 card text-center text-[#6f8ab0]">No events found for this filter.</div>
+            <div className="p-10 card text-center text-[#555]">No events found for this filter.</div>
           ) : (
             <div className="card overflow-hidden">
               <table className="w-full">
                 <thead>
                   <tr className="table-header">
-                    <th className="text-left text-[10px] uppercase tracking-[0.07em] text-[#6f8ab0] font-semibold px-2.5 py-2">Date</th>
-                    <th className="text-left text-[10px] uppercase tracking-[0.07em] text-[#6f8ab0] font-semibold px-2.5 py-2">Country</th>
-                    <th className="text-left text-[10px] uppercase tracking-[0.07em] text-[#6f8ab0] font-semibold px-2.5 py-2">Event</th>
-                    <th className="text-center text-[10px] uppercase tracking-[0.07em] text-[#6f8ab0] font-semibold px-2.5 py-2">Impact</th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.07em] text-[#6f8ab0] font-semibold px-2.5 py-2">Value</th>
-                    <th className="text-right text-[10px] uppercase tracking-[0.07em] text-[#6f8ab0] font-semibold px-2.5 py-2">Days</th>
+                    <th className="text-left text-[10px] uppercase tracking-[0.07em] text-[#555] font-semibold px-2.5 py-2">Date</th>
+                    <th className="text-left text-[10px] uppercase tracking-[0.07em] text-[#555] font-semibold px-2.5 py-2">Country</th>
+                    <th className="text-left text-[10px] uppercase tracking-[0.07em] text-[#555] font-semibold px-2.5 py-2">Event</th>
+                    <th className="text-center text-[10px] uppercase tracking-[0.07em] text-[#555] font-semibold px-2.5 py-2">Impact</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.07em] text-[#555] font-semibold px-2.5 py-2">Value</th>
+                    <th className="text-right text-[10px] uppercase tracking-[0.07em] text-[#555] font-semibold px-2.5 py-2">Days</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -394,29 +394,29 @@ export const NewsView: React.FC<NewsViewProps> = ({ news, onRefresh }) => {
                     const isToday = daysUntil === 0;
 
                     return (
-                      <tr key={`${evt.date}-${evt.event}-${idx}`} className={`table-row table-row-stripe border-t border-[#ffffff10] ${isToday ? 'bg-[#ff6b6b14]' : ''}`}>
-                        <td className="px-2.5 py-2 text-[10px] text-[#9cb4d4] font-mono tabular-nums whitespace-nowrap">{formatEventDate(evt.date)}</td>
-                        <td className="px-2.5 py-2 text-[10px] text-[#9cb4d4]">{getCountryFlag(evt.country)}</td>
+                      <tr key={`${evt.date}-${evt.event}-${idx}`} className={`table-row table-row-stripe border-t border-[#ffffff10] ${isToday ? 'bg-[#ff3b3b14]' : ''}`}>
+                        <td className="px-2.5 py-2 text-[10px] text-[#888] font-mono tabular-nums whitespace-nowrap">{formatEventDate(evt.date)}</td>
+                        <td className="px-2.5 py-2 text-[10px] text-[#888]">{getCountryFlag(evt.country)}</td>
                         <td className="px-2.5 py-2">
-                          <span className="text-[11px] font-medium text-[#eaf2ff] truncate block max-w-[320px]">{evt.event}</span>
-                          <span className="text-[9px] text-[#6f8ab0] truncate block max-w-[320px]">{evt.description}</span>
+                          <span className="text-[11px] font-medium text-[#fff] truncate block max-w-[320px]">{evt.event}</span>
+                          <span className="text-[9px] text-[#555] truncate block max-w-[320px]">{evt.description}</span>
                         </td>
                         <td className="px-2.5 py-2 text-center">
-                          <span className="text-[9px] font-bold px-2 py-0.5 rounded-full" style={{ color: impactStyle.color, background: impactStyle.bg }}>
+                          <span className="text-[9px] font-bold px-2 py-0.5 rounded-[3px]" style={{ color: impactStyle.color, background: impactStyle.bg }}>
                             {impactStyle.text}
                           </span>
                         </td>
                         <td className="px-2.5 py-2 text-right text-[10px] font-mono tabular-nums">
                           {evt.actual ? (
-                            <span className="text-[#0ec28d]">{evt.actual}{evt.unit || ''}</span>
+                            <span className="text-[#00c076]">{evt.actual}{evt.unit || ''}</span>
                           ) : evt.estimate ? (
                             <span className="text-[#ffb066]">Est: {evt.estimate}{evt.unit || ''}</span>
                           ) : (
-                            <span className="text-[#6f8ab0]">—</span>
+                            <span className="text-[#555]">—</span>
                           )}
                         </td>
                         <td className="px-2.5 py-2 text-right">
-                          <span className={`text-[10px] font-bold font-mono tabular-nums ${isToday ? 'text-[#ff6b6b]' : daysUntil <= 7 ? 'text-[#ffb066]' : 'text-[#9cb4d4]'}`}>
+                          <span className={`text-[10px] font-bold font-mono tabular-nums ${isToday ? 'text-[#ff3b3b]' : daysUntil <= 7 ? 'text-[#ffb066]' : 'text-[#888]'}`}>
                             {isToday ? 'TODAY' : `${daysUntil}d`}
                           </span>
                         </td>

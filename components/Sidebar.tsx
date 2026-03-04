@@ -36,7 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className="h-[48px] px-4 text-[12px] font-semibold uppercase tracking-[0.06em] transition-colors relative"
+                  className="h-[48px] px-4 text-[11px] font-semibold uppercase tracking-[0.08em] transition-colors relative font-mono"
                   style={{ color: isActive ? '#fff' : '#555' }}
                 >
                   {item.label}
@@ -57,7 +57,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
             </div>
 
             <button
-              className="h-7 px-3 text-[11px] font-semibold uppercase tracking-[0.04em] text-white bg-[#2762bc] hover:bg-[#3578d8] transition-colors rounded-[3px]"
+              className="h-7 px-3 text-[10px] font-semibold uppercase tracking-[0.08em] text-white bg-[#2762bc] hover:bg-[#3578d8] transition-colors rounded-[2px] font-mono"
               onClick={() => setActiveTab(TabView.ASK)}
             >
               Upgrade
@@ -76,7 +76,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab }) => 
                 onClick={() => setActiveTab(item.id)}
                 className="flex flex-col items-center justify-center flex-1 py-2.5 relative transition-colors"
               >
-                <span className="text-[10px] font-semibold uppercase tracking-[0.06em]" style={{ color: isActive ? '#fff' : '#555' }}>{item.label}</span>
+                <span className="text-[10px] font-semibold uppercase tracking-[0.08em] font-mono" style={{ color: isActive ? '#fff' : '#555' }}>{item.label}</span>
                 {isActive && <span className="absolute top-0 left-3 right-3 h-[2px] bg-white" />}
               </button>
             );

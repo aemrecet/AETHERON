@@ -163,27 +163,27 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
       <div className="card p-3 sm:p-4">
         <div className="flex items-start justify-between gap-3 flex-wrap">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.12em] text-[#888] font-semibold">{activeMarket} Market Matrix</p>
-            <h2 className="text-[17px] sm:text-[19px] font-semibold text-[#fff] tracking-[-0.02em] mt-1">Institutional Signal Board</h2>
+            <p className="text-[10px] uppercase tracking-[0.12em] text-[#555] font-semibold font-mono">{activeMarket} Market Matrix</p>
+            <h2 className="text-[15px] sm:text-[17px] font-bold text-[#fff] tracking-[-0.01em] mt-1 font-mono uppercase">{activeMarket} Overview</h2>
           </div>
           <span className="badge badge-accent text-[10px] uppercase tracking-[0.06em]">Live Universe</span>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-3">
           <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Assets</p>
+            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Assets</p>
             <p className="text-[17px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{marketSummary.assetCount}</p>
           </div>
           <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Total Cap</p>
+            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Total Cap</p>
             <p className="text-[17px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{formatCompactCurrency(marketSummary.totalMarketCap)}</p>
           </div>
           <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Breadth</p>
+            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Breadth</p>
             <p className="text-[15px] font-semibold text-[#fff] font-mono tabular-nums mt-0.5">{marketSummary.advancers}/{marketSummary.decliners}</p>
           </div>
           <div className="rounded-[4px] border border-[#1e1e1e] bg-[#0a0a0a] px-3 py-2.5">
-            <p className="text-[10px] text-[#888] uppercase tracking-[0.06em]">Avg Move</p>
+            <p className="text-[10px] text-[#555] uppercase tracking-[0.08em] font-mono">Avg Move</p>
             <p className={`text-[17px] font-semibold font-mono tabular-nums mt-0.5 ${marketSummary.avgChange >= 0 ? 'text-[#00c076]' : 'text-[#ff3b3b]'}`}>
               {marketSummary.avgChange >= 0 ? '+' : ''}{marketSummary.avgChange.toFixed(2)}%
             </p>
@@ -279,30 +279,30 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
             <table className="w-full text-left">
               <thead>
                 <tr className="table-header" style={{ borderBottom: '1px solid var(--color-border)' }}>
-                  <th className="py-2.5 px-3 text-[10px] uppercase tracking-[0.07em] font-semibold" style={{ color: 'var(--color-text-tertiary)' }}>Ticker</th>
+                  <th className="py-2.5 px-3 text-[10px] uppercase tracking-[0.08em] font-semibold font-mono" style={{ color: 'var(--color-text-tertiary)' }}>Ticker</th>
                   <th
-                    className="py-2.5 px-3 text-[10px] uppercase tracking-[0.07em] font-semibold text-right cursor-pointer select-none"
+                    className="py-2.5 px-3 text-[10px] uppercase tracking-[0.08em] font-semibold font-mono text-right cursor-pointer select-none"
                     style={{ color: 'var(--color-text-tertiary)' }}
                     onClick={() => handleSort('price')}
                   >
                     <div className="flex items-center justify-end gap-1">Price {renderSortIcon('price')}</div>
                   </th>
                   <th
-                    className="py-2.5 px-3 text-[10px] uppercase tracking-[0.07em] font-semibold text-right cursor-pointer select-none"
+                    className="py-2.5 px-3 text-[10px] uppercase tracking-[0.08em] font-semibold font-mono text-right cursor-pointer select-none"
                     style={{ color: 'var(--color-text-tertiary)' }}
                     onClick={() => handleSort('changePercent')}
                   >
                     <div className="flex items-center justify-end gap-1">Change {renderSortIcon('changePercent')}</div>
                   </th>
                   <th
-                    className="hidden lg:table-cell py-2.5 px-3 text-[10px] uppercase tracking-[0.07em] font-semibold text-right cursor-pointer select-none"
+                    className="hidden lg:table-cell py-2.5 px-3 text-[10px] uppercase tracking-[0.08em] font-semibold font-mono text-right cursor-pointer select-none"
                     style={{ color: 'var(--color-text-tertiary)' }}
                     onClick={() => handleSort('marketCap')}
                   >
                     <div className="flex items-center justify-end gap-1">Mkt Cap {renderSortIcon('marketCap')}</div>
                   </th>
                   <th
-                    className="hidden xl:table-cell py-2.5 px-3 text-[10px] uppercase tracking-[0.07em] font-semibold text-right cursor-pointer select-none"
+                    className="hidden xl:table-cell py-2.5 px-3 text-[10px] uppercase tracking-[0.08em] font-semibold font-mono text-right cursor-pointer select-none"
                     style={{ color: 'var(--color-text-tertiary)' }}
                     onClick={() => handleSort('volume')}
                   >
@@ -324,16 +324,16 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
                       <td className="py-2 px-3">
                         <div className="flex items-center gap-2.5">
                           {stock.logo ? (
-                            <div className="w-7 h-7 rounded-lg flex items-center justify-center overflow-hidden shrink-0" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--color-border-subtle)' }}>
+                            <div className="w-7 h-7 rounded-[3px] flex items-center justify-center overflow-hidden shrink-0" style={{ background: '#111', border: '1px solid #1e1e1e' }}>
                               <img src={stock.logo} alt={stock.symbol} className="w-full h-full object-contain" />
                             </div>
                           ) : (
-                            <div className="w-7 h-7 rounded-lg flex items-center justify-center font-semibold text-[9px] shrink-0" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--color-border-subtle)', color: 'var(--color-text-tertiary)' }}>
+                            <div className="w-7 h-7 rounded-[3px] flex items-center justify-center font-semibold text-[9px] font-mono shrink-0" style={{ background: '#111', border: '1px solid #1e1e1e', color: '#555' }}>
                               {stock.symbol.substring(0, 2)}
                             </div>
                           )}
                           <div className="min-w-0">
-                            <div className="font-semibold text-[11px]" style={{ color: 'var(--color-text-primary)' }}>{stock.symbol}</div>
+                            <div className="font-semibold text-[11px] font-mono" style={{ color: 'var(--color-text-primary)' }}>{stock.symbol}</div>
                             <div className="text-[9px] truncate max-w-[140px]" style={{ color: 'var(--color-text-tertiary)' }}>{stock.name}</div>
                           </div>
                         </div>
@@ -378,12 +378,12 @@ export const MarketsView: React.FC<MarketsViewProps> = ({ stocks, onStockSelect 
                       <img src={stock.logo} alt={stock.symbol} className="w-full h-full object-contain" />
                     </div>
                   ) : (
-                    <div className="w-8 h-8 rounded-lg flex items-center justify-center font-semibold text-[9px] shrink-0" style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid var(--color-border-subtle)', color: 'var(--color-text-tertiary)' }}>
+                    <div className="w-8 h-8 rounded-[3px] flex items-center justify-center font-semibold text-[9px] font-mono shrink-0" style={{ background: '#111', border: '1px solid #1e1e1e', color: '#555' }}>
                       {stock.symbol.substring(0, 2)}
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-[11px]" style={{ color: 'var(--color-text-primary)' }}>{stock.symbol}</div>
+                    <div className="font-semibold text-[11px] font-mono" style={{ color: 'var(--color-text-primary)' }}>{stock.symbol}</div>
                     <div className="text-[9px] truncate" style={{ color: 'var(--color-text-tertiary)' }}>{stock.name}</div>
                   </div>
                   <div className="text-right shrink-0">

@@ -81,8 +81,8 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
         className={`fixed bottom-6 right-6 z-40 group focus-ring rounded-full hidden md:flex ${isOpen ? '!hidden' : ''}`}
       >
         <div className="relative">
-          <div className="relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-105" style={{ background: '#1c1d24', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px -4px rgba(0,0,0,0.5)' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#e4e8ee" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className="relative w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 group-hover:scale-105" style={{ background: '#111', border: '1px solid rgba(255,255,255,0.08)', boxShadow: '0 8px 32px -4px rgba(0,0,0,0.5)' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 2L2 7l10 5 10-5-10-5z" />
               <path d="M2 17l10 5 10-5" />
               <path d="M2 12l10 5 10-5" />
@@ -102,8 +102,8 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
         
         <div className="flex items-center justify-between px-4 py-2.5" style={{ borderBottom: '1px solid var(--color-border)', background: '#0d0e12' }}>
           <div className="flex items-center gap-2.5">
-            <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ background: '#1c1d24', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#e4e8ee" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <div className="w-6 h-6 rounded-full flex items-center justify-center" style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" />
                 <path d="M2 17l10 5 10-5" />
                 <path d="M2 12l10 5 10-5" />
@@ -142,8 +142,8 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
             {messages.map((msg, idx) => (
               <div key={idx} className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                 {msg.role === 'ai' && (
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: '#1c1d24', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#4c8bf5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#5a9aee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 2L2 7l10 5 10-5-10-5z" />
                       <path d="M2 17l10 5 10-5" />
                       <path d="M2 12l10 5 10-5" />
@@ -159,7 +159,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
                           components={{
                             h3: ({children}) => <h3 className="text-[14px] font-semibold mt-4 mb-1.5 first:mt-0" style={{ color: 'var(--color-text-primary)' }}>{children}</h3>,
                             h4: ({children}) => <h4 className="text-[13px] font-semibold mt-3 mb-1" style={{ color: 'var(--color-text-primary)' }}>{children}</h4>,
-                            strong: ({children}) => <strong className="font-semibold" style={{ color: '#e4e8ee' }}>{children}</strong>,
+                            strong: ({children}) => <strong className="font-semibold" style={{ color: '#fff' }}>{children}</strong>,
                             em: ({children}) => <em className="not-italic" style={{ color: 'var(--color-accent)' }}>{children}</em>,
                             p: ({children}) => <p className="mb-3 last:mb-0">{children}</p>,
                             ul: ({children}) => <ul className="mb-3 space-y-1.5 list-none">{children}</ul>,
@@ -170,7 +170,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
                                 <table className="w-full text-[12px] border-collapse">{children}</table>
                               </div>
                             ),
-                            thead: ({children}) => <thead style={{ background: '#1c1d24' }}>{children}</thead>,
+                            thead: ({children}) => <thead style={{ background: '#111' }}>{children}</thead>,
                             th: ({children}) => <th className="text-left px-3 py-2 text-[10px] uppercase tracking-[0.06em] font-medium" style={{ color: 'var(--color-text-secondary)', borderBottom: '1px solid var(--color-border)' }}>{children}</th>,
                             td: ({children}) => <td className="px-3 py-2 text-[12px] font-mono tabular-nums" style={{ color: 'var(--color-text-primary)', borderBottom: '1px solid var(--color-border-subtle)' }}>{children}</td>,
                             code: ({children, className}) => {
@@ -187,7 +187,7 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
                       </div>
                     </div>
                   ) : (
-                    <div className="inline-block max-w-[85%] px-4 py-2.5 rounded-2xl rounded-br-md text-[13px] leading-[1.5]" style={{ background: '#2a2b33', color: 'var(--color-text-primary)' }}>
+                    <div className="inline-block max-w-[85%] px-4 py-2.5 rounded-2xl rounded-br-md text-[13px] leading-[1.5]" style={{ background: '#161616', color: 'var(--color-text-primary)' }}>
                       {msg.text}
                     </div>
                   )}
@@ -196,8 +196,8 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
             ))}
             {loading && (
                <div className="flex gap-3">
-                  <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: '#1c1d24', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#4c8bf5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <div className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)' }}>
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#5a9aee" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 2L2 7l10 5 10-5-10-5z" />
                       <path d="M2 17l10 5 10-5" />
                       <path d="M2 12l10 5 10-5" />
@@ -205,9 +205,9 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
                   </div>
                   <div className="flex items-center gap-1.5 py-2">
                     <div className="flex gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: '#555962' }}></span>
-                      <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: '#555962', animationDelay: '0.15s' }}></span>
-                      <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: '#555962', animationDelay: '0.3s' }}></span>
+                      <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: '#555' }}></span>
+                      <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: '#555', animationDelay: '0.15s' }}></span>
+                      <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ background: '#555', animationDelay: '0.3s' }}></span>
                     </div>
                   </div>
                </div>
@@ -217,21 +217,21 @@ export const AIAssistant: React.FC<AIAssistantProps> = ({ marketContext, isOpenE
         </div>
 
         <div className="px-3 py-2.5" style={{ borderTop: '1px solid var(--color-border)', background: '#0d0e12' }}>
-          <div className="flex items-center gap-2 rounded-full px-4" style={{ background: '#1c1d24', border: '1px solid rgba(255,255,255,0.06)' }}>
+          <div className="flex items-center gap-2 rounded-full px-4" style={{ background: '#111', border: '1px solid rgba(255,255,255,0.06)' }}>
             <input 
               type="text" 
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder={`Message \u00C6thron AI...`} 
-              className="flex-1 bg-transparent border-none outline-none text-[12px] placeholder-[#555962] py-2.5"
+              className="flex-1 bg-transparent border-none outline-none text-[12px] placeholder-[#555] py-2.5"
               style={{ color: 'var(--color-text-primary)' }}
             />
             <button 
                 onClick={() => handleSend()}
                 disabled={!query.trim() || loading}
                 className="w-7 h-7 rounded-full flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed shrink-0 transition-all"
-                style={{ background: query.trim() ? '#ffffff' : 'rgba(255,255,255,0.06)', color: query.trim() ? '#0d0e12' : '#555962' }}
+                style={{ background: query.trim() ? '#ffffff' : 'rgba(255,255,255,0.06)', color: query.trim() ? '#0d0e12' : '#555' }}
             >
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                 <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94l18.04-8.01a.75.75 0 000-1.36L3.478 2.405z" />

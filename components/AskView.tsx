@@ -115,20 +115,20 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
         <section className="flex-1 flex flex-col justify-center px-4 sm:px-6 py-8">
           <div className="max-w-[900px] w-full mx-auto">
             <div className="flex items-center justify-center gap-3 mb-6">
-              <span className="text-[10px] uppercase tracking-[0.12em] px-2 py-0.5 text-[#555] border border-[#1e1e1e] font-mono">
+              <span className="text-[9px] uppercase tracking-[0.12em] px-2 py-0.5 text-[#555] border border-[#1e1e1e] font-mono rounded-[2px]">
                 AI Research
               </span>
-              <span className="text-[10px] uppercase tracking-[0.12em] px-2 py-0.5 text-[#555] border border-[#1e1e1e] font-mono">
+              <span className="text-[9px] uppercase tracking-[0.12em] px-2 py-0.5 text-[#555] border border-[#1e1e1e] font-mono rounded-[2px]">
                 Live Markets
               </span>
             </div>
 
-            <h1 className="text-center text-[28px] sm:text-[42px] font-bold tracking-[-0.02em] leading-[1.1] text-white max-w-[700px] mx-auto font-mono uppercase">
+            <h1 className="text-center text-[24px] sm:text-[36px] font-bold tracking-[0.04em] leading-[1.1] text-white max-w-[700px] mx-auto font-mono uppercase">
               Market Intelligence
             </h1>
 
-            <p className="text-center text-[13px] text-[#555] leading-relaxed max-w-[520px] mx-auto mt-4 mb-8">
-              Macro context, technical structure, flow data, and executable insights in a single prompt.
+            <p className="text-center text-[12px] text-[#555] leading-relaxed max-w-[520px] mx-auto mt-4 mb-8 font-mono">
+              Macro context, technical structure, flow data, and executable insights.
             </p>
 
             <div className="max-w-[680px] mx-auto mb-8">
@@ -163,25 +163,25 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
                 <button
                   key={index}
                   onClick={() => handleSubmit(prompt.value)}
-                  className="ask-chip text-left p-3 border border-[#1e1e1e] bg-[#0a0a0a] hover:bg-[#111] hover:border-[#2a2a2a] transition-colors rounded-[4px]"
+                  className="ask-chip text-left p-3 border border-[#1e1e1e] bg-[#0a0a0a] hover:bg-[#111] hover:border-[#2a2a2a] transition-colors rounded-[3px]"
                 >
-                  <p className="text-[10px] font-bold text-[#666] uppercase tracking-[0.08em] font-mono">{prompt.title}</p>
+                  <p className="text-[9px] font-bold text-[#555] uppercase tracking-[0.1em] font-mono">{prompt.title}</p>
                   <p className="text-[11px] text-[#444] leading-relaxed mt-1">{prompt.value}</p>
                 </button>
               ))}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-2 max-w-[780px] mx-auto">
-              <div className="border border-[#1e1e1e] bg-[#0a0a0a] p-4 rounded-[4px]">
-                <p className="text-[10px] uppercase tracking-[0.1em] text-[#555] font-mono font-bold mb-3">Research Layer</p>
+              <div className="border border-[#1e1e1e] bg-[#0a0a0a] p-4 rounded-[3px]">
+                <p className="text-[9px] uppercase tracking-[0.12em] text-[#555] font-mono font-semibold mb-3">Research Layer</p>
                 <ul className="space-y-1.5 text-[12px] text-[#666]">
                   <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Cross-market context from equities, crypto, and macro.</li>
                   <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Signal + narrative synthesis in one response.</li>
                   <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Live ticker context stitched into every answer.</li>
                 </ul>
               </div>
-              <div className="border border-[#1e1e1e] bg-[#0a0a0a] p-4 rounded-[4px]">
-                <p className="text-[10px] uppercase tracking-[0.1em] text-[#555] font-mono font-bold mb-3">Execution Layer</p>
+              <div className="border border-[#1e1e1e] bg-[#0a0a0a] p-4 rounded-[3px]">
+                <p className="text-[9px] uppercase tracking-[0.12em] text-[#555] font-mono font-semibold mb-3">Execution Layer</p>
                 <ul className="space-y-1.5 text-[12px] text-[#666]">
                   <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Actionable levels, invalidation zones, and risk framing.</li>
                   <li className="flex items-start gap-2"><span className="text-[#333] mt-0.5">-</span>Scenario-based recommendations instead of generic takes.</li>
@@ -200,7 +200,7 @@ export const AskView: React.FC<AskViewProps> = ({ stocks }) => {
       <div className="flex-1 max-w-[800px] w-full mx-auto px-4 sm:px-6 pt-4 pb-32">
         <div className="mb-4 inline-flex items-center gap-2">
           <span className="w-1.5 h-1.5 rounded-full bg-[#00c076]" />
-          <span className="text-[10px] uppercase tracking-[0.08em] text-[#555] font-mono">Conversation</span>
+          <span className="text-[9px] uppercase tracking-[0.1em] text-[#555] font-mono font-semibold">Conversation</span>
         </div>
 
         <div className="space-y-4">

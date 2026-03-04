@@ -43,7 +43,7 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({ stock }) => 
                "hide_legend": false,
                "save_image": false,
                "container_id": containerRef.current.id,
-               "toolbar_bg": "#16171c",
+               "toolbar_bg": "#0d0d0d",
                "allow_symbol_change": true,
                "details": true,
                "hotlist": true,
@@ -66,7 +66,7 @@ export const TradingViewChart: React.FC<TradingViewChartProps> = ({ stock }) => 
   }, [stock]);
 
   return (
-    <div className="w-full h-full rounded-lg overflow-hidden border border-[#ffffff0f]">
+    <div className="w-full h-full rounded-lg overflow-hidden border border-[#1e1e1e]">
        <div id={`tradingview_${stock.symbol}`} ref={containerRef} className="w-full h-full min-h-[500px]" />
     </div>
   );
